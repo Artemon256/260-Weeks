@@ -22,7 +22,7 @@ namespace Proto0
 
         private void ShowPresidentStats()
         {
-            Console.WriteLine(String.Format("Public popularity = {0}", game.Player.PublicPopularity));
+            Console.WriteLine(String.Format("Rating = {0}", game.Player.AdjustedRating));
         }
 
         private void ShowBusinessmenStats()
@@ -32,9 +32,9 @@ namespace Proto0
             foreach(var businessman in game.Businessmen)
             {
                 string Message = String.Format("\tName = {0}\n", businessman.Name)
-                                + String.Format("\tPopularity = {0}\n", businessman.PublicPopularity.ToString())
-                                + String.Format("\tabsFriendship = {0}\n", businessman.AbsoluteFriendship.ToString())
-                                + String.Format("\tadjFriendship = {0}\n", businessman.AdjustedFriendship.ToString("N5"))
+                                + String.Format("\tRating = {0}\n", businessman.AdjustedRating.ToString())
+                                + String.Format("\tabsFriendship = {0}\n", businessman.AbsoluteLoyalty.ToString())
+                                + String.Format("\tadjFriendship = {0}\n", businessman.AdjustedLoyalty.ToString("N5"))
                                 + String.Format("\tService points = {0}\n", businessman.ServicePoint.ToString());
                 Console.WriteLine(Message); 
             }
@@ -50,8 +50,8 @@ namespace Proto0
             {
                 string Message = String.Format("\tName = {0}\n", media.Name)
                                 + String.Format("\tOwner = {0}\n", media.Owner.Name)
-                                + String.Format("\tFriendship with owner = {0}\n", media.Owner.AdjustedFriendship.ToString("N5"))
-                                + String.Format("\tPopularity = {0}\n", media.PublicPopularity.ToString())
+                                + String.Format("\tFriendship with owner = {0}\n", media.Owner.AdjustedLoyalty.ToString("N5"))
+                                + String.Format("\tPopularity = {0}\n", media.AdjustedRating.ToString())
                                 + String.Format("\tPolitical influence = {0}\n", media.PoliticalInfluence.ToString())
                                 + String.Format("\tIf you want to start a campaign with that media, enter {0}\n", id.ToString());
 

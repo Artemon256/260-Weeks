@@ -5,15 +5,15 @@ using System.Text;
 
 namespace The260WeeksGame
 {
-    class MassMediaUnit : IPubliclyExposed
+    class MassMediaUnit : GameMember
     { 
         class Campaign
         {
-            public IPubliclyExposed Target;
+            public GameMember Target;
             public int TurnsLeft;
             public bool Against;
 
-            public Campaign(IPubliclyExposed target, int turnsLength, bool against)
+            public Campaign(GameMember target, int turnsLength, bool against)
             {
                 Target = target;
                 TurnsLeft = turnsLength;
@@ -25,8 +25,6 @@ namespace The260WeeksGame
         private Businessman owner;
         private string name = "";
         private int politicalInfluence;
-        private double publicPopularity;
-
 
 
         public Businessman Owner
@@ -58,29 +56,18 @@ namespace The260WeeksGame
                 politicalInfluence = value;
             }
         }
-        public double PublicPopularity
-        {
-            get
-            {
-                return publicPopularity;
-            }
-            set
-            {
-                publicPopularity = value;
-            }
-        }
 
-        public MassMediaUnit(string name, int politicalInfluence, double publicPopularity)
+        public MassMediaUnit(string name, int politicalInfluence, double absoluteRating)
         {
             this.name = name;
 
             PoliticalInfluence = politicalInfluence;
-            PublicPopularity = publicPopularity;
+            AbsoluteRating = absoluteRating;
             campaigns = new List<Campaign>();
 
         }
 
-        public bool AddCampaign(IPubliclyExposed target, int turnsLength, bool against)
+        public bool AddCampaign(GameMember target, int turnsLength, bool against)
         {
             if (Owner.ServicePoint < turnsLength)
                 return false;
@@ -102,11 +89,15 @@ namespace The260WeeksGame
                 else
                     modif = 1;
 
-                campaigns[i].Target.PublicPopularity += modif * politicalInfluence;
+                campaigns[i].Target.AbsoluteRating += modif * politicalInfluence;
                 campaigns[i].TurnsLeft--;
             }
 
             campaigns.RemoveAll(item => item.TurnsLeft == 0);
+        }
+
+        public override void Turn() {
+
         }
 
         public static MassMediaUnit GenerateRandom()

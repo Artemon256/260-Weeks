@@ -5,25 +5,9 @@ using System.Text;
 
 namespace The260WeeksGame
 {
-    class President : IPubliclyExposed
-    {
-    
+    class President : GameMember
+    {    
         private string name = "Mr. President";
-        private double publicPopularity;
-
-        public double PublicPopularity
-        {
-            get
-            {
-                return publicPopularity;
-            }
-
-            set
-            {
-                publicPopularity = value;
-            }
-        }
-
         public String Name
         {
             get
@@ -32,9 +16,13 @@ namespace The260WeeksGame
             }
         }
 
+        public override void Turn() {
+
+        }
+
         public President()
         {
-            PublicPopularity = 50;
+            AbsoluteRating = 50;
         }
     }
 }

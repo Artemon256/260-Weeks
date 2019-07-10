@@ -89,10 +89,10 @@ namespace The260WeeksGame
             foreach(var media in massMedia)
             {
                 double P = Convert.ToDouble(media.PoliticalInfluence) / 100;
-                double D = media.Owner.AdjustedFriendship;
+                double D = media.Owner.AdjustedLoyalty;
                 double R = random.NextDouble() / 2 + 0.5;
 
-                Player.PublicPopularity += P * D * R;
+                Player.AbsoluteRating += P * D * R;
 
                 media.ActCampaigns();
             }

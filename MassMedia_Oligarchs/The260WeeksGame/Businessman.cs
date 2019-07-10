@@ -5,58 +5,21 @@ using System.Text;
 
 namespace The260WeeksGame
 {
-    class Businessman : IPubliclyExposed
+    class Businessman : GameMember
     {
-        //private List<MassMediaUnit> massMedia;
-        private double publicPopularity;
-        private int absoluteFriendship;
-        private int servicePoint;
         private string name = "";
 
-        
+        public int ServicePoint;
 
-        public double PublicPopularity
+        public int AbsoluteLoyalty;
+        public double AdjustedLoyalty
         {
             get
             {
-                return publicPopularity;
+                return adjust(AbsoluteLoyalty);
             }
+        }
 
-            set
-            {
-                publicPopularity = value;
-            }
-        }
-        public int AbsoluteFriendship
-        {
-            get
-            {
-                return absoluteFriendship;
-            }
-
-            set
-            {
-                absoluteFriendship = value; 
-            }
-        }
-        public int ServicePoint
-        {
-            get
-            {
-                return servicePoint;
-            }
-            set
-            {
-                servicePoint = value;
-            }
-        }
-        public double AdjustedFriendship
-        {
-            get
-            {
-                return GameCore.AdjustFriendship(absoluteFriendship);
-            }
-        }
         public string Name
         {
             get
@@ -65,14 +28,16 @@ namespace The260WeeksGame
             }
         }
 
-
-
-        public Businessman(string name, int publicPopularity, int absoluteFriendship, int servicePoint)
+        public Businessman(string name, int absoluteRating, int absoluteLoyalty, int servicePoint)
         {
             this.name = name;
-            PublicPopularity = publicPopularity;
-            AbsoluteFriendship = absoluteFriendship;
+            AbsoluteRating = absoluteRating;
+            AbsoluteLoyalty = absoluteLoyalty;
             ServicePoint = servicePoint;
+        }
+
+        public override void Turn() {
+
         }
 
         public static Businessman GenerateRandom()
