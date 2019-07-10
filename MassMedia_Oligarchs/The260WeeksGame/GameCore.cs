@@ -7,27 +7,34 @@ namespace The260WeeksGame
 {
     class GameCore
     {
-        private bool gameOn;
+        private bool gameOn; // ???
 
-        private List<Businessman> businessmen;
-        private List<MassMediaUnit> massMedia;
+        public List<GameMember> Members;
 
         public List<Businessman> Businessmen
         {
             get
             {
-                return businessmen;
+                var result = new List<Businessman>();
+                foreach (var member in Members)
+                    if (member is Businessman)
+                        result.Add(member as Businessman);
+                return result;
             }
         }
         public List<MassMediaUnit> MassMedia
         {
             get
             {
-                return massMedia;
+                var result = new List<MassMediaUnit>();
+                foreach (var member in Members)
+                    if (member is MassMediaUnit)
+                        result.Add(member as MassMediaUnit);
+                return result;
             }
         }
 
-        public bool GameOn()
+        public bool GameOn() // ???
         {
             return gameOn;
         }
@@ -36,6 +43,8 @@ namespace The260WeeksGame
 
         public GameCore()
         {
+            Members = new List<GameMember>();
+
             if(FirstNameList.Count == 0)
             {
                 InitFirstNameList();
@@ -53,11 +62,13 @@ namespace The260WeeksGame
         public void StartGame()
         {
             gameOn = true;
-            Player = new President();
-            businessmen = new List<Businessman>();
-            massMedia = new List<MassMediaUnit>();
 
-            int numberOfBusinessmen = random.Next(1,5);
+            Player = new President();
+
+            var businessmen = new List<Businessman>();
+            var massMedia = new List<MassMediaUnit>();
+
+            int numberOfBusinessmen = random.Next(1, 5); // TODO: A sensible way to define these numbers
             int numberOfMassMedia = random.Next(1, 10);
 
             for(int i = 0; i < numberOfBusinessmen; i++)
@@ -70,7 +81,7 @@ namespace The260WeeksGame
                 massMedia.Add(MassMediaUnit.GenerateRandom());
             }
 
-            for(int i = 0; i < numberOfBusinessmen; i++)
+            for(int i = 0; i < numberOfBusinessmen; i++) // Assign an owner to a MassMediaUnit
             {
                 for(int j = 0; j < numberOfMassMedia; j++)
                 {
@@ -83,35 +94,20 @@ namespace The260WeeksGame
                     }
                 }
             }
+
+            Members.AddRange(businessmen);
+            Members.AddRange(massMedia);
+            
+            Members.Add(Player); // Player ALWAYS moves AFTER other members
         }
         public void NextTurn()
         {
-            foreach(var media in massMedia)
-            {
-                double P = Convert.ToDouble(media.PoliticalInfluence) / 100;
-                double D = media.Owner.AdjustedLoyalty;
-                double R = random.NextDouble() / 2 + 0.5;
-
-                Player.AbsoluteRating += P * D * R;
-
-                media.ActCampaigns();
-            }
+            foreach (var member in Members)
+                member.Turn();
         }
 
         public static Random random = new Random();
-        public static double AdjustFriendship(int absoluteFriendShip)
-        {
-            double result = Math.Atan(Math.Exp(0.06 * Convert.ToDouble(absoluteFriendShip))) * 1.27 - 1;
-
-            if (result < -1)
-                return -1;
-
-            if(result > 1)
-                return 1;
-
-            return result;
-        }
-        public static List<string> FirstNameList = new List<string>();
+        public static List<string> FirstNameList = new List<string>(); // TODO: REFACTOR THIS SHIT
         public static List<string> SecondNameList = new List<string>();
         public static List<string> MediaNameList = new List<string>();
 
