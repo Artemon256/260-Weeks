@@ -22,7 +22,7 @@ namespace Proto0
 
         private void ShowPresidentStats()
         {
-            Console.WriteLine(String.Format("Rating = {0}", game.Player.AdjustedRating));
+            Console.WriteLine(String.Format("Rating = {0}", GameCore.Player.AdjustedRating));
         }
 
         private void ShowBusinessmenStats()
@@ -51,8 +51,7 @@ namespace Proto0
                 string Message = String.Format("\tName = {0}\n", media.Name)
                                 + String.Format("\tOwner = {0}\n", media.Owner.Name)
                                 + String.Format("\tFriendship with owner = {0}\n", media.Owner.AdjustedLoyalty.ToString("N5"))
-                                + String.Format("\tPopularity = {0}\n", media.AdjustedRating.ToString())
-                                + String.Format("\tPolitical influence = {0}\n", media.PoliticalInfluence.ToString())
+                                + String.Format("\tRating = {0}\n", media.AdjustedRating.ToString())
                                 + String.Format("\tIf you want to start a campaign with that media, enter {0}\n", id.ToString());
 
                 

@@ -11,6 +11,12 @@ namespace The260WeeksGame
 
         public List<GameMember> Members;
 
+        public static President Player;
+        public static Random random = new Random();
+        public static List<string> FirstNameList = new List<string>(); // TODO: REFACTOR THIS SHIT
+        public static List<string> SecondNameList = new List<string>();
+        public static List<string> MediaNameList = new List<string>();
+
         public List<Businessman> Businessmen
         {
             get
@@ -39,11 +45,11 @@ namespace The260WeeksGame
             return gameOn;
         }
 
-        public President Player;
-
         public GameCore()
         {
             Members = new List<GameMember>();
+
+            Player = new President();
 
             if(FirstNameList.Count == 0)
             {
@@ -62,8 +68,6 @@ namespace The260WeeksGame
         public void StartGame()
         {
             gameOn = true;
-
-            Player = new President();
 
             var businessmen = new List<Businessman>();
             var massMedia = new List<MassMediaUnit>();
@@ -106,11 +110,6 @@ namespace The260WeeksGame
                 member.Turn();
         }
 
-        public static Random random = new Random();
-        public static List<string> FirstNameList = new List<string>(); // TODO: REFACTOR THIS SHIT
-        public static List<string> SecondNameList = new List<string>();
-        public static List<string> MediaNameList = new List<string>();
-
         public static string RandomObjectFromStringList(List<string> from)
         {
             if (from.Count == 0)
@@ -118,6 +117,7 @@ namespace The260WeeksGame
             return from[random.Next(0, from.Count)];
         }
 
+        // TODO: REFACTOR THAT SHIT
         private void InitFirstNameList()
         {
             FirstNameList.Add("John");

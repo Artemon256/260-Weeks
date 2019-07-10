@@ -7,17 +7,23 @@ namespace The260WeeksGame
 {
     class MassMediaUnit : GameMember
     { 
-        class Campaign
+        
+        public class Campaign
         {
+            public enum CampaignMode
+            {
+                Against,
+                Pro
+            }
             public GameMember Target;
             public int TurnsLeft;
-            public bool Against;
+            public CampaignMode Mode;
 
-            public Campaign(GameMember target, int turnsLength, bool against)
+            public Campaign(GameMember target, int duration, CampaignMode mode)
             {
                 Target = target;
-                TurnsLeft = turnsLength;
-                Against = against;
+                TurnsLeft = duration;
+                Mode = mode;
             }
         }
         private List<Campaign> campaigns;
@@ -57,53 +63,60 @@ namespace The260WeeksGame
             }
         }
 
-        public MassMediaUnit(string name, int politicalInfluence, double absoluteRating)
+        public MassMediaUnit(string name, double absoluteRating)
         {
             this.name = name;
 
-            PoliticalInfluence = politicalInfluence;
             AbsoluteRating = absoluteRating;
             campaigns = new List<Campaign>();
-
         }
 
-        public bool AddCampaign(GameMember target, int turnsLength, bool against)
+        public bool AddCampaign(GameMember target, int duration, Campaign.CampaignMode mode)
         {
-            if (Owner.ServicePoint < turnsLength)
+            if (Owner.ServicePoint < duration)
                 return false;
-            Owner.ServicePoint -= turnsLength;
+            Owner.ServicePoint -= duration;
 
-            campaigns.Add(new Campaign(target, turnsLength, against));
+            campaigns.Add(new Campaign(target, duration, mode));
 
             return true;
         }
         
-        public void ActCampaigns()
+        private void actCampaigns()
         {
             for(int i = 0; i < campaigns.Count; i++)
             {
-                int modif;
+                int modifier = 0;
 
-                if (campaigns[i].Against)
-                    modif = -1;
-                else
-                    modif = 1;
+                if (campaigns[i].Mode == Campaign.CampaignMode.Against)
+                    modifier = -1;
+                if (campaigns[i].Mode == Campaign.CampaignMode.Pro)
+                    modifier = 1;
 
-                campaigns[i].Target.AbsoluteRating += modif * politicalInfluence;
+                double random = GameCore.random.NextDouble();
+
+                campaigns[i].Target.AbsoluteRating += Math.Ceiling(modifier * AbsoluteRating * random * 0.2); // TODO: 0.2 coefficient must be bind to the game difficulty
                 campaigns[i].TurnsLeft--;
             }
 
             campaigns.RemoveAll(item => item.TurnsLeft == 0);
         }
 
-        public override void Turn() {
-
+        private void actPresident() {
+            double random = GameCore.random.NextDouble();
+            GameCore.Player.AbsoluteRating += Math.Round(AbsoluteRating * Owner.AdjustedLoyalty * random * 0.5); // TODO: 0.5 coefficient must be bind to the game difficulty
         }
 
-        public static MassMediaUnit GenerateRandom()
+        public override void Turn() {
+            actCampaigns();
+            actPresident();
+        }
+
+        public static MassMediaUnit GenerateRandom() // TODO: Remove and make another function which will base on the game difficulty
         {
             MassMediaUnit result = new MassMediaUnit(GameCore.RandomObjectFromStringList(GameCore.MediaNameList),
-                                                    GameCore.random.Next(0, 100), GameCore.random.Next(-10, 100));
+                                                    GameCore.random.Next(0, 30));
+            GameCore.MediaNameList.Remove(result.name);
             return result;
         }
     }

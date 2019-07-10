@@ -40,11 +40,13 @@ namespace The260WeeksGame
 
         }
 
-        public static Businessman GenerateRandom()
+        public static Businessman GenerateRandom() // TODO: Remove and make another function which will base on the game difficulty
         {
-            Businessman result = new Businessman(GameCore.RandomObjectFromStringList(GameCore.FirstNameList) + " " + GameCore.RandomObjectFromStringList(GameCore.SecondNameList)
-                                                ,GameCore.random.Next(-100, 100), GameCore.random.Next(0, 100), GameCore.random.Next(0, 10));
-
+            var firstName = GameCore.RandomObjectFromStringList(GameCore.FirstNameList);
+            var secondName = GameCore.RandomObjectFromStringList(GameCore.SecondNameList);
+            Businessman result = new Businessman(firstName + " " + secondName, GameCore.random.Next(-30, 30), 
+                                                GameCore.random.Next(-30, 30), GameCore.random.Next(0, 10));
+            GameCore.SecondNameList.Remove(secondName);
             return result;
         }
     }
