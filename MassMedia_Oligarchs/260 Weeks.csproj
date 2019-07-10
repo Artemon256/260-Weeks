@@ -41,13 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="The260DaysGame\Businessman.cs" />
-    <Compile Include="The260DaysGame\IPubliclyExposed.cs" />
-    <Compile Include="The260DaysGame\MassMediaUnit.cs" />
+    <Compile Include="The260WeeksGame\Businessman.cs" />
+    <Compile Include="The260WeeksGame\IPubliclyExposed.cs" />
+    <Compile Include="The260WeeksGame\MassMediaUnit.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="The260DaysGame\GameCore.cs" />
-    <Compile Include="The260DaysGame\President.cs" />
+    <Compile Include="The260WeeksGame\GameCore.cs" />
+    <Compile Include="The260WeeksGame\President.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

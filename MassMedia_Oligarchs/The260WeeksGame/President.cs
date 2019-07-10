@@ -8,7 +8,7 @@ namespace The260WeeksGame
     class President : IPubliclyExposed
     {
     
-        private string name;
+        private string name = "Mr. President";
         private double publicPopularity;
 
         public double PublicPopularity
