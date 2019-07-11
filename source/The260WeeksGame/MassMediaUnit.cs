@@ -87,7 +87,7 @@ namespace The260WeeksGame
 
                 double RandomGenerator = GameCore.RandomGenerator.NextDouble();
 
-                campaigns[i].Target.AbsoluteRating += Math.Ceiling(modifier * AbsoluteRating * RandomGenerator * 0.2); // TODO: 0.2 coefficient must be bind to the game difficulty
+                // campaigns[i].Target.AbsoluteRating += Math.Ceiling(modifier * AbsoluteRating * RandomGenerator * 0.2); // TODO: 0.2 coefficient must be bind to the game difficulty
                 campaigns[i].TurnsLeft--;
             }
 
@@ -96,7 +96,7 @@ namespace The260WeeksGame
 
         private void actPresident() {
             double RandomGenerator = GameCore.RandomGenerator.NextDouble();
-            GameCore.getInstance().Player.AbsoluteRating += Math.Round(AbsoluteRating * Owner.AdjustedLoyalty * RandomGenerator * 0.5); // TODO: 0.5 coefficient must be bind to the game difficulty
+            // GameCore.getInstance().Player.AbsoluteRating += Math.Round(AbsoluteRating * Owner.AdjustedLoyalty * RandomGenerator * 0.5); // TODO: 0.5 coefficient must be bind to the game difficulty
         }
 
         public override void Turn() {

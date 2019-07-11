@@ -10,25 +10,24 @@ namespace The260WeeksGame
 
         public int ServicePoint;
 
-        public int AbsoluteLoyalty;
-        public double AdjustedLoyalty
-        {
-            get
-            {
-                return adjust(AbsoluteLoyalty);
-            }
-        }
+        // public int AbsoluteLoyalty;
+        // public double AdjustedLoyalty
+        // {
+        //     get
+        //     {
+        //         return adjust(AbsoluteLoyalty);
+        //     }
+        // }
 
         public Businessman(string name, int absoluteRating, int absoluteLoyalty, int servicePoint)
         {
             this.name = name;
-            AbsoluteRating = absoluteRating;
-            AbsoluteLoyalty = absoluteLoyalty;
+            // AbsoluteLoyalty = absoluteLoyalty;
             ServicePoint = servicePoint;
         }
 
         public override void Turn() {
-            AbsoluteLoyalty += (int) Math.Round(ServicePoint * 0.2);
+            // AbsoluteLoyalty += (int) Math.Round(ServicePoint * 0.2);
             ServicePoint = (int) Math.Round(ServicePoint * 0.8);
         }
 
