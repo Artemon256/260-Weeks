@@ -16,7 +16,7 @@ namespace Proto0
 
         public void StartGame()
         {
-            game = new GameCore();
+            game = new GameCore(GameCore.Difficulty.Moderate);
             game.StartGame();
         }
 

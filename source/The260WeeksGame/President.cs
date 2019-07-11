@@ -22,7 +22,24 @@ namespace The260WeeksGame
 
         public President()
         {
-            AbsoluteRating = GameCore.random.Next(-30, 30); // TODO: Remove and make another function which will base on the game difficulty
+            switch (GameCore.GameDifficulty)
+            {
+                case GameCore.Difficulty.Easy:
+                    AbsoluteRating = GameCore.random.Next(15, 30);
+                    break;
+                case GameCore.Difficulty.Moderate:
+                    AbsoluteRating = GameCore.random.Next(5, 20);
+                    break;
+                case GameCore.Difficulty.Medium:
+                    AbsoluteRating = GameCore.random.Next(-5, 10);
+                    break;
+                case GameCore.Difficulty.Complicated:
+                    AbsoluteRating = GameCore.random.Next(-10, 5);
+                    break;
+                case GameCore.Difficulty.Hard:
+                    AbsoluteRating = GameCore.random.Next(-15, -5);
+                    break;
+            }
         }
     }
 }
