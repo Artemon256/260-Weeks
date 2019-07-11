@@ -9,10 +9,19 @@ namespace The260WeeksGame
     {
         private bool gameOn; // ???
 
-        public List<GameMember> Members;
-
-        public static President Player;
         public static Random random = new Random();
+        public List<GameMember> Members = new List<GameMember>();
+        public static President Player = new President();
+        public static Difficulty GameDifficulty;
+
+        public enum Difficulty {
+            Easy,
+            Moderate,
+            Medium,
+            Complicated,
+            Hard
+        }
+
         public static List<string> FirstNameList = new List<string>(); // TODO: REFACTOR THIS SHIT
         public static List<string> SecondNameList = new List<string>();
         public static List<string> MediaNameList = new List<string>();
@@ -45,11 +54,9 @@ namespace The260WeeksGame
             return gameOn;
         }
 
-        public GameCore()
+        public GameCore(Difficulty difficulty)
         {
-            Members = new List<GameMember>();
-
-            Player = new President();
+            GameDifficulty = difficulty;
 
             if(FirstNameList.Count == 0)
             {
@@ -75,28 +82,21 @@ namespace The260WeeksGame
             int numberOfBusinessmen = random.Next(1, 5); // TODO: A sensible way to define these numbers
             int numberOfMassMedia = random.Next(1, 10);
 
-            for(int i = 0; i < numberOfBusinessmen; i++)
+            for (int i = 0; i < numberOfBusinessmen; i++)
             {
                 businessmen.Add(Businessman.GenerateRandom());
             }
 
-            for(int i = 0; i < numberOfMassMedia; i++)
+            for (int i = 0; i < numberOfMassMedia; i++)
             {
                 massMedia.Add(MassMediaUnit.GenerateRandom());
             }
 
-            for(int i = 0; i < numberOfBusinessmen; i++) // Assign an owner to a MassMediaUnit
+            var businessmen_copy = new List<Businessman>(businessmen);
+            foreach (var unit in massMedia)
             {
-                for(int j = 0; j < numberOfMassMedia; j++)
-                {
-                    if(massMedia[j].Owner == null)
-                    {
-                        if (random.Next(2) == 0 || i == numberOfBusinessmen - 1)
-                        {
-                            massMedia[j].Owner = businessmen[i];
-                        }
-                    }
-                }
+                unit.Owner = businessmen_copy[random.Next(0, businessmen_copy.Count)];
+                businessmen_copy.Remove(unit.Owner);
             }
 
             Members.AddRange(businessmen);
