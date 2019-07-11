@@ -4,6 +4,16 @@ namespace The260WeeksGame
 {
     public abstract class GameMember
     {
+        protected string name="";
+
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+        }
+
         public double AbsoluteRating = 0;
         public double AdjustedRating
         {

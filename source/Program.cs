@@ -54,31 +54,96 @@ namespace Proto0
             }
         } 
 
-        private void ShowMediaStats()
+        private GameMember selectTarget()
         {
-            Console.WriteLine(String.Format("Number of media = {0}", game.MassMedia.Count));
+            Console.Clear();
 
-            int id = 0;
+            Console.WriteLine("Choose the target:");
 
-            foreach (var media in game.MassMedia)
+            for(int i = 0; i < game.Members.Count; i++)
             {
-                string Message = String.Format("\tName = {0}\n", media.Name)
-                                + String.Format("\tOwner = {0}\n", media.Owner.Name)
-                                + String.Format("\tFriendship with owner = {0}\n", media.Owner.AdjustedLoyalty.ToString("N5"))
-                                + String.Format("\tRating = {0}\n", media.AdjustedRating.ToString())
-                                + String.Format("\tIf you want to start a campaign with that media, enter {0}\n", id.ToString());
-
-                
-                
-                Console.WriteLine(Message);
+                Console.WriteLine(game.Members[i].Name + " (" + i.ToString() + ")");
             }
 
-            Console.WriteLine("If you wish to close the panel, press any key except for those which stand for starting a campaign\n");
+            int targetId = Convert.ToInt32(Console.ReadLine());
 
-            ConsoleKeyInfo key = Console.ReadKey();
+            return game.Members[targetId];
+        }
 
-            if(key.KeyChar < game.MassMedia.Count)
+        private int selectDuration()
+        {
+            Console.Clear();
+
+            Console.Write("Duration of the campaign:");
+
+            return Convert.ToInt32(Console.ReadLine());
+        }
+
+        private MassMediaUnit.Campaign.CampaignMode selectCampaignMode()
+        {
+            Console.Clear();
+
+            Console.WriteLine("Select mode:");
+
+            Console.WriteLine("Against (0)");
+            Console.WriteLine("Pro (1)");
+
+            int mode = Convert.ToInt32(Console.ReadLine());
+
+            return (MassMediaUnit.Campaign.CampaignMode)mode;
+        }
+
+        private void ShowMediaStats()
+        {
+            while (true)
             {
+                Console.Clear();
+                Console.WriteLine(String.Format("Number of media = {0}", game.MassMedia.Count));
+
+                int id = 0;
+
+                foreach (var media in game.MassMedia)
+                {
+                    string Message = String.Format("\tName = {0}\n", media.Name)
+                                    + String.Format("\tOwner = {0}\n", media.Owner.Name)
+                                    + String.Format("\tFriendship with owner = {0}\n", media.Owner.AdjustedLoyalty.ToString("N5"))
+                                    + String.Format("\tRating = {0}\n", media.AdjustedRating.ToString())
+                                    + String.Format("\tIf you want to start a campaign with that media, enter {0}\n", id.ToString());
+
+
+                    id++;
+                    Console.WriteLine(Message);
+                }
+
+                Console.WriteLine(String.Format("If you want to exit the panel, enter any number that is greater than or equal to {0}", game.MassMedia.Count));
+
+                int command = 0;
+
+                if (!int.TryParse(Console.ReadLine(), out command))
+                {
+                    Console.WriteLine("Enter numbers, please!");
+                    continue;
+                }
+
+                if (command >= game.MassMedia.Count)
+                    return;
+
+                var chosenMedia = game.MassMedia[command];
+
+                var target = selectTarget();
+                var duration = selectDuration();
+                var campaignMode = selectCampaignMode();
+
+                if(chosenMedia.AddCampaign(target, duration, campaignMode))
+                {
+                    Console.WriteLine("Campaign succefully started!");
+                }
+                else
+                {
+                    Console.WriteLine("The owner refused to start the campaign");
+                }
+
+                Console.ReadKey();
 
             }
         }
@@ -127,6 +192,9 @@ namespace Proto0
             }       
         }
     }
+
+
+
 
     class Program
     {

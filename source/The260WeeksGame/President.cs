@@ -7,14 +7,7 @@ namespace The260WeeksGame
 {
     class President : GameMember
     {    
-        private string name = "Mr. President";
-        public String Name
-        {
-            get
-            {
-                return name;
-            }
-        }
+      
 
         public override void Turn() {
 
@@ -22,6 +15,8 @@ namespace The260WeeksGame
 
         public President()
         {
+            name = "Mr. President";
+
             switch (GameCore.GameDifficulty)
             {
                 case GameCore.Difficulty.Easy:

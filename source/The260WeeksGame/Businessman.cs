@@ -7,7 +7,6 @@ namespace The260WeeksGame
 {
     class Businessman : GameMember
     {
-        private string name = "";
 
         public int ServicePoint;
 
@@ -20,13 +19,7 @@ namespace The260WeeksGame
             }
         }
 
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-        }
+        
 
         public Businessman(string name, int absoluteRating, int absoluteLoyalty, int servicePoint)
         {
@@ -68,7 +61,7 @@ namespace The260WeeksGame
                     break;
             }
 
-            Businessman result = new Businessman(fullName, rating, loyalty, 0);
+            Businessman result = new Businessman(fullName, rating, loyalty, 50); // Service points on start are equal to 50 until we develop ways to earn them
             GameCore.SecondNameList.Remove(secondName);
             return result;
         }

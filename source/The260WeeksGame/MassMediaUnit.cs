@@ -29,7 +29,6 @@ namespace The260WeeksGame
         private List<Campaign> campaigns;
 
         private Businessman owner;
-        private string name = "";
         private int politicalInfluence;
 
 
@@ -44,13 +43,7 @@ namespace The260WeeksGame
                 owner = value;
             }
         }
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-        }
+        
         public int PoliticalInfluence
         {
             get
