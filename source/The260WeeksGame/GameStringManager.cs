@@ -12,10 +12,13 @@ namespace The260WeeksGame
         private readonly static string FirstNamesFile = "First Names.txt";
         private readonly static string SecondNamesFile = "Second Names.txt";
         private readonly static string MediaNamesFile = "Media Names.txt";
+        private readonly static string SocialGroupNamesFile = "Social Groups.json";
 
         public List<string> FirstNames;
         public List<string> SecondNames;
         public List<string> MediaNames;
+
+        public string SocialGroups;
 
         private Assembly assembly;
 
@@ -34,6 +37,18 @@ namespace The260WeeksGame
             }
         }
 
+        private void ReadIntoString(ref string receiver, string fileName)
+        {
+            string resourceName = assembly.GetManifestResourceNames()
+                                  .Single(str => str.EndsWith(fileName));
+
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                receiver = reader.ReadToEnd();
+            }
+        }
+
         private GameStringManager()
         {
             FirstNames = new List<string>();
@@ -45,6 +60,7 @@ namespace The260WeeksGame
             ReadResource(FirstNames, FirstNamesFile);
             ReadResource(SecondNames, SecondNamesFile);
             ReadResource(MediaNames, MediaNamesFile);
+            ReadIntoString(ref SocialGroups, SocialGroupNamesFile);
         }
 
         private static GameStringManager instance;
