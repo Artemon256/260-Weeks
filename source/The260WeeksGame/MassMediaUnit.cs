@@ -56,11 +56,10 @@ namespace The260WeeksGame
             }
         }
 
-        public MassMediaUnit(string name, double absoluteRating)
+        public MassMediaUnit(string name)
         {
             this.name = name;
 
-            AbsoluteRating = absoluteRating;
             campaigns = new List<Campaign>();
         }
 

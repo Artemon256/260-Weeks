@@ -1,25 +1,18 @@
 using System;
+using System.Collections.Generic;
 
 namespace The260WeeksGame
 {
     public abstract class GameMember
     {
         protected string name="";
+        public Dictionary<GameMember, double> Opinions;
 
         public string Name
         {
             get
             {
                 return name;
-            }
-        }
-
-        public double AbsoluteRating = 0;
-        public double AdjustedRating
-        {
-            get
-            {
-                return adjust((double) AbsoluteRating);
             }
         }
 
