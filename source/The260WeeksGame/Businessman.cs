@@ -42,8 +42,8 @@ namespace The260WeeksGame
 
         public static Businessman GenerateRandom()
         {
-            var firstName = GameCore.RandomObjectFromStringList(GameCore.FirstNameList);
-            var secondName = GameCore.RandomObjectFromStringList(GameCore.SecondNameList); 
+            var firstName = GameCore.RandomObjectFromList(GameCore.FirstNameList);
+            var secondName = GameCore.RandomObjectFromList(GameCore.SecondNameList); 
 
             var fullName = firstName + " " + secondName;
             var rating = GameCore.random.Next(-10, 30);

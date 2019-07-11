@@ -26,6 +26,8 @@ namespace The260WeeksGame
         public static List<string> SecondNameList = new List<string>();
         public static List<string> MediaNameList = new List<string>();
 
+        public static GameStringManager gameStringManager = new GameStringManager();
+
         public List<Businessman> Businessmen
         {
             get
@@ -83,17 +85,15 @@ namespace The260WeeksGame
                 massMedia.Add(MassMediaUnit.GenerateRandom());
             }
 
-            var businessmen_copy = new List<Businessman>(businessmen);
             foreach (var unit in massMedia)
             {
-                unit.Owner = businessmen_copy[random.Next(0, businessmen_copy.Count)];
-                businessmen_copy.Remove(unit.Owner);
+                unit.Owner = RandomObjectFromList(businessmen);
             }
 
             Members.AddRange(businessmen);
             Members.AddRange(massMedia);
             
-           // Members.Add(Player); // Player ALWAYS moves AFTER other members
+            Members.Add(Player); // Player ALWAYS moves AFTER other members
         }
         public void NextTurn()
         {
@@ -101,13 +101,11 @@ namespace The260WeeksGame
                 member.Turn();
         }
 
-        public static string RandomObjectFromStringList(List<string> from)
+        public static T RandomObjectFromList<T>(List<T> list)
         {
-            if (from.Count == 0)
-                return null;
-            return from[random.Next(0, from.Count)];
+            if (list.Count == 0)
+                return default(T);
+            return list[random.Next(0, list.Count)];
         }
-
-        public static GameStringManager gameStringManager = new GameStringManager();
     }
 }
