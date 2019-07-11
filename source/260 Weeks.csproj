@@ -44,7 +44,6 @@
     <EmbeddedResource Include="The260WeeksGame\String data\First Names.txt" />
     <EmbeddedResource Include="The260WeeksGame\String data\Media Names.txt" />
     <EmbeddedResource Include="The260WeeksGame\String data\Second Names.txt" />
-
     <Compile Include="The260WeeksGame\Businessman.cs" />
     <Compile Include="The260WeeksGame\GameParams.cs" />
     <Compile Include="The260WeeksGame\GameStringManager.cs" />
@@ -54,7 +53,7 @@
     <Compile Include="The260WeeksGame\GameCore.cs" />
     <Compile Include="The260WeeksGame\President.cs" />
     <Compile Include="The260WeeksGame\GameMember.cs" />
-    <Compile Include="The260WeeksGame\People.cs" />
+    <Compile Include="The260WeeksGame\SocialGroup.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
