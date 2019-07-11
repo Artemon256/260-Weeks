@@ -7,6 +7,8 @@ namespace The260WeeksGame
 {
     class GameCore
     {
+       
+
         private bool gameOn; // ???
 
         public static Random random = new Random();
@@ -18,15 +20,15 @@ namespace The260WeeksGame
             Easy,
             Moderate,
             Medium,
-            Complicated,
-            Hard
+            Hard,
+            Nightmare
         }
 
         public static List<string> FirstNameList = new List<string>(); // TODO: REFACTOR THIS SHIT
         public static List<string> SecondNameList = new List<string>();
         public static List<string> MediaNameList = new List<string>();
 
-        public static GameStringManager gameStringManager = new GameStringManager();
+        public static GameStringManager StringManager = new GameStringManager();
 
         public List<Businessman> Businessmen
         {
@@ -60,9 +62,9 @@ namespace The260WeeksGame
         {
             GameDifficulty = difficulty;
 
-            FirstNameList = new List<string>(gameStringManager.FirstNames);
-            SecondNameList = new List<string>(gameStringManager.SecondNames);
-            MediaNameList = new List<string>(gameStringManager.MediaNames);
+            FirstNameList = new List<string>(StringManager.FirstNames);
+            SecondNameList = new List<string>(StringManager.SecondNames);
+            MediaNameList = new List<string>(StringManager.MediaNames);
         }
 
         public void StartGame()

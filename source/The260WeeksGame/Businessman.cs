@@ -60,10 +60,10 @@ namespace The260WeeksGame
                 case GameCore.Difficulty.Medium:
                     loyalty = GameCore.random.Next(-10, 10);
                     break;
-                case GameCore.Difficulty.Complicated:
+                case GameCore.Difficulty.Hard:
                     loyalty = GameCore.random.Next(-20, 5);
                     break;
-                case GameCore.Difficulty.Hard:
+                case GameCore.Difficulty.Nightmare:
                     loyalty = GameCore.random.Next(-20, -5);
                     break;
             }

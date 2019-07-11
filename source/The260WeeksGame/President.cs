@@ -33,10 +33,10 @@ namespace The260WeeksGame
                 case GameCore.Difficulty.Medium:
                     AbsoluteRating = GameCore.random.Next(-5, 10);
                     break;
-                case GameCore.Difficulty.Complicated:
+                case GameCore.Difficulty.Hard:
                     AbsoluteRating = GameCore.random.Next(-10, 5);
                     break;
-                case GameCore.Difficulty.Hard:
+                case GameCore.Difficulty.Nightmare:
                     AbsoluteRating = GameCore.random.Next(-15, -5);
                     break;
             }
