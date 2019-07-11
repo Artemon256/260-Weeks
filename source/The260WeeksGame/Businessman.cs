@@ -30,7 +30,8 @@ namespace The260WeeksGame
         }
 
         public override void Turn() {
-            
+            AbsoluteLoyalty += (int) Math.Round(ServicePoint * 0.2);
+            ServicePoint = (int) Math.Round(ServicePoint * 0.8);
         }
 
         public static Businessman GenerateRandom()

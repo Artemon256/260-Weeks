@@ -16,6 +16,8 @@ namespace Proto0
 
         private GameCore.Difficulty ChooseDifficulty()
         {
+            Console.Clear();
+            
             Console.WriteLine("Choose difficulty:");
             Console.WriteLine("Easy (1)");
             Console.WriteLine("Moderate (2)");
