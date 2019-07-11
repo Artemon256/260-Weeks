@@ -51,18 +51,9 @@ namespace The260WeeksGame
 
             Player = new President();
 
-            if(FirstNameList.Count == 0)
-            {
-                InitFirstNameList();
-            }
-            if(SecondNameList.Count == 0)
-            {
-                InitSecondNameList();
-            }
-            if(MediaNameList.Count == 0)
-            {
-                InitMediaNameList();
-            }
+            FirstNameList = new List<string>(gameStringManager.FirstNames);
+            SecondNameList = new List<string>(gameStringManager.SecondNames);
+            MediaNameList = new List<string>(gameStringManager.MediaNames);
         }
 
         public void StartGame()
@@ -102,7 +93,7 @@ namespace The260WeeksGame
             Members.AddRange(businessmen);
             Members.AddRange(massMedia);
             
-            Members.Add(Player); // Player ALWAYS moves AFTER other members
+           // Members.Add(Player); // Player ALWAYS moves AFTER other members
         }
         public void NextTurn()
         {
@@ -117,27 +108,6 @@ namespace The260WeeksGame
             return from[random.Next(0, from.Count)];
         }
 
-        // TODO: REFACTOR THAT SHIT
-        private void InitFirstNameList()
-        {
-            FirstNameList.Add("John");
-            FirstNameList.Add("Vasily");
-            FirstNameList.Add("Ihor");
-            FirstNameList.Add("Abraham");
-        }
-
-        private void InitSecondNameList()
-        {
-            SecondNameList.Add("Miller");
-            SecondNameList.Add("Simpson");
-            SecondNameList.Add("Galushka");
-        }
-
-        private void InitMediaNameList()
-        {
-            MediaNameList.Add("Inter");
-            MediaNameList.Add("Pohoda FM");
-            MediaNameList.Add("Zhopa UA");
-        }
+        public static GameStringManager gameStringManager = new GameStringManager();
     }
 }

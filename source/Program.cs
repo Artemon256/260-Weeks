@@ -71,6 +71,7 @@ namespace Proto0
 
         public void Play()
         {
+            
             while (game.GameOn())
             {
                 Console.Clear();
