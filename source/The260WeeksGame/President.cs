@@ -5,7 +5,7 @@ using System.Text;
 
 namespace The260WeeksGame
 {
-    class President : GameMember
+    public class President : GameMember
     {    
       
 

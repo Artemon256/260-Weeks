@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace The260WeeksGame
 {
-    class GameStringManager
+    public class GameStringManager
     {
         private readonly string FirstNamesFile = "First Names.txt";
         private readonly string SecondNamesFile = "Second Names.txt";

@@ -9,6 +9,7 @@ namespace Proto0
     class GameRepresenter
     {
         private GameCore game;
+        private GameParams gameParams;
 
         public GameRepresenter()
         { 
@@ -32,7 +33,8 @@ namespace Proto0
 
         public void StartGame()
         {
-            game = new GameCore(ChooseDifficulty());
+            gameParams = new GameParams(GameCore.random.Next(1, 10), GameCore.random.Next(1, 10), ChooseDifficulty());
+            game = new GameCore(gameParams);
             game.StartGame();
         }
 

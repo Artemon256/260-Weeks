@@ -5,11 +5,14 @@ using System.Text;
 
 namespace The260WeeksGame
 {
-    class GameCore
+    public class GameCore
     {
        
 
-        private bool gameOn; // ???
+        private bool gameOn; // ??? 
+        private GameParams gameParams;
+        private int numberOfBusinessmen;
+        private int numberOfMassMedia;
 
         public static Random random = new Random();
         public List<GameMember> Members = new List<GameMember>();
@@ -53,14 +56,32 @@ namespace The260WeeksGame
             }
         }
 
+        public int NumberOfBusinessmen
+        {
+            get
+            {
+                return numberOfBusinessmen;
+            }
+        }
+
+        public int NumberOfMassMedia
+        {
+            get
+            {
+                return numberOfMassMedia;
+            }
+        }
+
         public bool GameOn() // ???
         {
             return gameOn;
         }
+        
+        
 
-        public GameCore(Difficulty difficulty)
+        public GameCore(GameParams gameParams)
         {
-            GameDifficulty = difficulty;
+            this.gameParams = gameParams;
 
             FirstNameList = new List<string>(StringManager.FirstNames);
             SecondNameList = new List<string>(StringManager.SecondNames);
@@ -69,13 +90,14 @@ namespace The260WeeksGame
 
         public void StartGame()
         {
+            GameDifficulty = gameParams.Difficulty;
+            numberOfBusinessmen = gameParams.NumberOfBusinessmen;
+            numberOfMassMedia = gameParams.NumberOfMassMedia;
+
             gameOn = true;
 
             var businessmen = new List<Businessman>();
             var massMedia = new List<MassMediaUnit>();
-
-            int numberOfBusinessmen = random.Next(1, 5); // TODO: A sensible way to define these numbers
-            int numberOfMassMedia = random.Next(1, 10);
 
             for (int i = 0; i < numberOfBusinessmen; i++)
             {

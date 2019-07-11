@@ -5,7 +5,7 @@ using System.Text;
 
 namespace The260WeeksGame
 {
-    class MassMediaUnit : GameMember
+    public class MassMediaUnit : GameMember
     { 
         
         public class Campaign
