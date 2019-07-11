@@ -5,7 +5,7 @@ using System.Text;
 
 namespace The260WeeksGame
 {
-    class Businessman : GameMember
+    public class Businessman : GameMember
     {
 
         public int ServicePoint;
