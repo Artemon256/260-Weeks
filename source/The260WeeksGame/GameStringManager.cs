@@ -9,9 +9,9 @@ namespace The260WeeksGame
 {
     public class GameStringManager
     {
-        private readonly string FirstNamesFile = "First Names.txt";
-        private readonly string SecondNamesFile = "Second Names.txt";
-        private readonly string MediaNamesFile = "Media Names.txt";
+        private readonly static string FirstNamesFile = "First Names.txt";
+        private readonly static string SecondNamesFile = "Second Names.txt";
+        private readonly static string MediaNamesFile = "Media Names.txt";
 
         public List<string> FirstNames;
         public List<string> SecondNames;
@@ -34,7 +34,7 @@ namespace The260WeeksGame
             }
         }
 
-        public GameStringManager()
+        private GameStringManager()
         {
             FirstNames = new List<string>();
             SecondNames = new List<string>();
@@ -45,6 +45,13 @@ namespace The260WeeksGame
             ReadResource(FirstNames, FirstNamesFile);
             ReadResource(SecondNames, SecondNamesFile);
             ReadResource(MediaNames, MediaNamesFile);
+        }
+
+        private static GameStringManager instance;
+        public static GameStringManager getInstance() {
+            if (instance == null)
+                instance = new GameStringManager();
+            return instance;
         }
     }
 }

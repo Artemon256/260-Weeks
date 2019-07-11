@@ -15,7 +15,7 @@ namespace Proto0
         { 
         }
 
-        private GameCore.Difficulty ChooseDifficulty()
+        private GameParams.DifficultyLevel ChooseDifficulty()
         {
             Console.Clear();
             
@@ -26,21 +26,28 @@ namespace Proto0
             Console.WriteLine("Hard (4)");
             Console.WriteLine("Nightmare (5)");
 
-            int answer = Convert.ToInt32(Console.ReadLine());
+            int answer = 0;
+            if (!Int32.TryParse(Console.ReadLine(), out answer))
+                answer = 2;
 
-            return (GameCore.Difficulty)answer;
+            return (GameParams.DifficultyLevel)answer;
         }
 
         public void StartGame()
         {
-            gameParams = new GameParams(GameCore.random.Next(1, 10), GameCore.random.Next(1, 10), ChooseDifficulty());
-            game = new GameCore(gameParams);
+            game = GameCore.getInstance();
+            gameParams = GameParams.getInstance();
+
+            gameParams.Difficulty = ChooseDifficulty();
+            gameParams.NumberOfBusinessmen = GameCore.RandomGenerator.Next(1, 10);
+            gameParams.NumberOfMassMedia = GameCore.RandomGenerator.Next(1, 10);            
+
             game.StartGame();
         }
 
         private void ShowPresidentStats()
         {
-            Console.WriteLine(String.Format("Rating = {0}", GameCore.Player.AdjustedRating));
+            Console.WriteLine(String.Format("Rating = {0}", game.Player.AdjustedRating));
         }
 
         private void ShowBusinessmenStats()

@@ -17,22 +17,22 @@ namespace The260WeeksGame
         {
             name = "Mr. President";
 
-            switch (GameCore.GameDifficulty)
+            switch (GameParams.getInstance().Difficulty)
             {
-                case GameCore.Difficulty.Easy:
-                    AbsoluteRating = GameCore.random.Next(15, 30);
+                case GameParams.DifficultyLevel.Easy:
+                    AbsoluteRating = GameCore.RandomGenerator.Next(15, 30);
                     break;
-                case GameCore.Difficulty.Moderate:
-                    AbsoluteRating = GameCore.random.Next(5, 20);
+                case GameParams.DifficultyLevel.Moderate:
+                    AbsoluteRating = GameCore.RandomGenerator.Next(5, 20);
                     break;
-                case GameCore.Difficulty.Medium:
-                    AbsoluteRating = GameCore.random.Next(-5, 10);
+                case GameParams.DifficultyLevel.Medium:
+                    AbsoluteRating = GameCore.RandomGenerator.Next(-5, 10);
                     break;
-                case GameCore.Difficulty.Hard:
-                    AbsoluteRating = GameCore.random.Next(-10, 5);
+                case GameParams.DifficultyLevel.Hard:
+                    AbsoluteRating = GameCore.RandomGenerator.Next(-10, 5);
                     break;
-                case GameCore.Difficulty.Nightmare:
-                    AbsoluteRating = GameCore.random.Next(-15, -5);
+                case GameParams.DifficultyLevel.Nightmare:
+                    AbsoluteRating = GameCore.RandomGenerator.Next(-15, -5);
                     break;
             }
         }

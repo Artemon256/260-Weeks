@@ -7,31 +7,10 @@ namespace The260WeeksGame
 {
     public class GameCore
     {
-       
-
         private bool gameOn; // ??? 
-        private GameParams gameParams;
-        private int numberOfBusinessmen;
-        private int numberOfMassMedia;
-
-        public static Random random = new Random();
-        public List<GameMember> Members = new List<GameMember>();
-        public static President Player = new President();
-        public static Difficulty GameDifficulty;
-
-        public enum Difficulty {
-            Easy,
-            Moderate,
-            Medium,
-            Hard,
-            Nightmare
-        }
-
-        public static List<string> FirstNameList = new List<string>(); // TODO: REFACTOR THIS SHIT
-        public static List<string> SecondNameList = new List<string>();
-        public static List<string> MediaNameList = new List<string>();
-
-        public static GameStringManager StringManager = new GameStringManager();
+        public List<GameMember> Members;
+        public President Player;
+        public static Random RandomGenerator = new Random();
 
         public List<Businessman> Businessmen
         {
@@ -56,55 +35,31 @@ namespace The260WeeksGame
             }
         }
 
-        public int NumberOfBusinessmen
-        {
-            get
-            {
-                return numberOfBusinessmen;
-            }
-        }
-
-        public int NumberOfMassMedia
-        {
-            get
-            {
-                return numberOfMassMedia;
-            }
-        }
-
         public bool GameOn() // ???
         {
             return gameOn;
         }
         
-        
+        private GameCore() {
 
-        public GameCore(GameParams gameParams)
-        {
-            this.gameParams = gameParams;
-
-            FirstNameList = new List<string>(StringManager.FirstNames);
-            SecondNameList = new List<string>(StringManager.SecondNames);
-            MediaNameList = new List<string>(StringManager.MediaNames);
         }
 
         public void StartGame()
         {
-            GameDifficulty = gameParams.Difficulty;
-            numberOfBusinessmen = gameParams.NumberOfBusinessmen;
-            numberOfMassMedia = gameParams.NumberOfMassMedia;
-
             gameOn = true;
+
+            Members = new List<GameMember>();
+            Player = new President();
 
             var businessmen = new List<Businessman>();
             var massMedia = new List<MassMediaUnit>();
 
-            for (int i = 0; i < numberOfBusinessmen; i++)
+            for (int i = 0; i < GameParams.instance.NumberOfBusinessmen; i++)
             {
                 businessmen.Add(Businessman.GenerateRandom());
             }
 
-            for (int i = 0; i < numberOfMassMedia; i++)
+            for (int i = 0; i < GameParams.instance.NumberOfMassMedia; i++)
             {
                 massMedia.Add(MassMediaUnit.GenerateRandom());
             }
@@ -125,11 +80,18 @@ namespace The260WeeksGame
                 member.Turn();
         }
 
-        public static T RandomObjectFromList<T>(List<T> list)
+        public T RandomObjectFromList<T>(List<T> list)
         {
             if (list.Count == 0)
                 return default(T);
-            return list[random.Next(0, list.Count)];
+            return list[RandomGenerator.Next(0, list.Count)];
+        }
+
+        private static GameCore instance = null;
+        public static GameCore getInstance() {
+            if (instance == null)
+                instance = new GameCore();
+            return instance;
         }
     }
 }

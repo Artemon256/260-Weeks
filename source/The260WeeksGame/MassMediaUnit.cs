@@ -86,9 +86,9 @@ namespace The260WeeksGame
                 if (campaigns[i].Mode == Campaign.CampaignMode.Pro)
                     modifier = 1;
 
-                double random = GameCore.random.NextDouble();
+                double RandomGenerator = GameCore.RandomGenerator.NextDouble();
 
-                campaigns[i].Target.AbsoluteRating += Math.Ceiling(modifier * AbsoluteRating * random * 0.2); // TODO: 0.2 coefficient must be bind to the game difficulty
+                campaigns[i].Target.AbsoluteRating += Math.Ceiling(modifier * AbsoluteRating * RandomGenerator * 0.2); // TODO: 0.2 coefficient must be bind to the game difficulty
                 campaigns[i].TurnsLeft--;
             }
 
@@ -96,8 +96,8 @@ namespace The260WeeksGame
         }
 
         private void actPresident() {
-            double random = GameCore.random.NextDouble();
-            GameCore.Player.AbsoluteRating += Math.Round(AbsoluteRating * Owner.AdjustedLoyalty * random * 0.5); // TODO: 0.5 coefficient must be bind to the game difficulty
+            double RandomGenerator = GameCore.RandomGenerator.NextDouble();
+            GameCore.getInstance().Player.AbsoluteRating += Math.Round(AbsoluteRating * Owner.AdjustedLoyalty * RandomGenerator * 0.5); // TODO: 0.5 coefficient must be bind to the game difficulty
         }
 
         public override void Turn() {
@@ -107,8 +107,8 @@ namespace The260WeeksGame
 
         public static MassMediaUnit GenerateRandom() // TODO: Remove and make another function which will base on the game difficulty
         {
-            MassMediaUnit result = new MassMediaUnit(GameCore.RandomObjectFromList(GameCore.MediaNameList), GameCore.random.Next(0, 30));
-            GameCore.MediaNameList.Remove(result.name);
+            MassMediaUnit result = new MassMediaUnit(GameCore.getInstance().RandomObjectFromList(GameStringManager.getInstance().MediaNames), GameCore.RandomGenerator.Next(0, 30));
+            GameStringManager.getInstance().MediaNames.Remove(result.name);
             return result;
         }
     }

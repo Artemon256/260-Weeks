@@ -9,13 +9,27 @@ namespace The260WeeksGame
     {
         public int NumberOfBusinessmen;
         public int NumberOfMassMedia;
-        public GameCore.Difficulty Difficulty;
+        public DifficultyLevel Difficulty;
 
-        public GameParams(int numberOfBusinessmen, int numberOfMassMedia, GameCore.Difficulty difficulty)
-        {
-            NumberOfBusinessmen = numberOfBusinessmen;
-            NumberOfMassMedia = numberOfMassMedia;
-            Difficulty = difficulty;
+        public enum DifficultyLevel {
+            Easy,
+            Moderate,
+            Medium,
+            Hard,
+            Nightmare
+        }
+
+
+        private GameParams() {
+
+        }
+
+        public static GameParams instance;
+
+        public static GameParams getInstance() {
+            if (instance == null)
+                instance = new GameParams();
+            return instance;
         }
     }
 }

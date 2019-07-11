@@ -218,3 +218,7 @@ _Pvt_Extensions
 
 #VSCode
 .vscode/*.*
+
+#Exe and debug
+**/*.exe
+**/*.mdb
