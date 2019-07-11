@@ -114,7 +114,7 @@ namespace The260WeeksGame
 
         public static MassMediaUnit GenerateRandom() // TODO: Remove and make another function which will base on the game difficulty
         {
-            MassMediaUnit result = new MassMediaUnit(GameCore.RandomObjectFromStringList(GameCore.MediaNameList), GameCore.random.Next(0, 30));
+            MassMediaUnit result = new MassMediaUnit(GameCore.RandomObjectFromList(GameCore.MediaNameList), GameCore.random.Next(0, 30));
             GameCore.MediaNameList.Remove(result.name);
             return result;
         }
