@@ -12,7 +12,6 @@ namespace The260WeeksGame
         public static List<SocialGroup> getSocialGroups() {
             if (socialGroups == null) {
                 socialGroups = new List<SocialGroup>();
-                // INIT
             }
             return socialGroups;
         }
