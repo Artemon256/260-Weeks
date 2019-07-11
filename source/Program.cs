@@ -14,9 +14,23 @@ namespace Proto0
         { 
         }
 
+        private GameCore.Difficulty ChooseDifficulty()
+        {
+            Console.WriteLine("Choose difficulty:");
+            Console.WriteLine("Easy (1)");
+            Console.WriteLine("Moderate (2)");
+            Console.WriteLine("Medium (3)");
+            Console.WriteLine("Hard (4)");
+            Console.WriteLine("Nightmare (5)");
+
+            int answer = Convert.ToInt32(Console.ReadLine());
+
+            return (GameCore.Difficulty)answer;
+        }
+
         public void StartGame()
         {
-            game = new GameCore(GameCore.Difficulty.Moderate);
+            game = new GameCore(ChooseDifficulty());
             game.StartGame();
         }
 
