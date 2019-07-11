@@ -30,7 +30,7 @@ namespace The260WeeksGame
         }
 
         public override void Turn() {
-
+            
         }
 
         public static Businessman GenerateRandom()
