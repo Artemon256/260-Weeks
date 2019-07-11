@@ -9,9 +9,9 @@ namespace The260WeeksGame
 {
     class GameStringManager
     {
-        private readonly string FirstNamesFile = @"First Names.txt";
-        private readonly string SecondNamesFile = @"Second Names.txt";
-        private readonly string MediaNamesFile = @"Media Names.txt";
+        private readonly string FirstNamesFile = "First Names.txt";
+        private readonly string SecondNamesFile = "Second Names.txt";
+        private readonly string MediaNamesFile = "Media Names.txt";
 
         public List<string> FirstNames;
         public List<string> SecondNames;
