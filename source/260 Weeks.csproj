@@ -7,8 +7,8 @@
     <ProjectGuid>{6DAB5EC9-8559-46F2-BE7F-0378A3A3AD52}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MassMedia_Oligarchs</RootNamespace>
-    <AssemblyName>MassMedia_Oligarchs</AssemblyName>
+    <RootNamespace>The260WeeksGame</RootNamespace>
+    <AssemblyName>The260WeeksGame</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
