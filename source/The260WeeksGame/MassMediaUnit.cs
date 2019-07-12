@@ -80,10 +80,8 @@ namespace The260WeeksGame
                 if (campaign.Mode == Campaign.CampaignMode.Pro)
                     modifier = 1;
 
-                double random = GameCore.RandomGenerator.NextDouble();
-
                 foreach (var group in GameCore.getInstance().SocialGroups)
-                    group.Opinions[campaign.Target] += modifier * random * group.Opinions[this] * 10;
+                    group.RevaluateOpinion(this, campaign.Target, modifier);
                 campaign.TurnsLeft--;
             }
 
@@ -91,9 +89,8 @@ namespace The260WeeksGame
         }
 
         private void actPresident() {
-            double random = GameCore.RandomGenerator.NextDouble();
             foreach (var group in GameCore.getInstance().SocialGroups)
-                group.Opinions[GameCore.getInstance().Player] += Owner.Opinions[GameCore.getInstance().Player] * random * group.Opinions[this] * 10;
+                group.RevaluateOpinion(this, GameCore.getInstance().Player, Owner.Opinions[GameCore.getInstance().Player]);
         }
 
         public override void Turn() {

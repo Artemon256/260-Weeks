@@ -16,6 +16,22 @@ namespace The260WeeksGame
             
         }
 
+        public void RevaluateOpinion(GameMember sender, GameMember target, double delta) {
+            if (this == target)
+                return;
+
+            double senderRating;
+            if (!Opinions.TryGetValue(sender, out senderRating))
+                return;
+
+            if (Adjust(senderRating) < 0) // If this social group doesn't like this media
+                if (GameCore.RandomGenerator.Next(0, 1) == 0) // Stop changing opinion with a chance of 50%
+                    return;
+            
+            double random = GameCore.RandomDouble(0, 0.2);
+            Opinions[target] += delta * senderRating * random;            
+        }
+
         public override void GenerateOpinions() {
             foreach (var subject in GameCore.getInstance().Members)
             {
@@ -24,7 +40,7 @@ namespace The260WeeksGame
                 if (subject is Businessman)
                     Opinions[subject] = OverallBusinessmenOpinion + subject.Opinions[this];
                 if (subject is MassMediaUnit)
-                    Opinions[subject] = OverallMassMediaOpinion + (subject as MassMediaUnit).Owner.Opinions[this];
+                    Opinions[subject] = OverallMassMediaOpinion + Opinions[(subject as MassMediaUnit).Owner];
             }
         }
 
