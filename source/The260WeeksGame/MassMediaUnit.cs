@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace The260WeeksGame
 {
@@ -86,7 +83,7 @@ namespace The260WeeksGame
                 double random = GameCore.RandomGenerator.NextDouble();
 
                 foreach (var group in GameCore.getInstance().SocialGroups)
-                    group.Opinions[campaign.Target] += modifier * random * group.Opinions[this];
+                    group.Opinions[campaign.Target] += modifier * random * group.Opinions[this] * 10;
                 campaign.TurnsLeft--;
             }
 
@@ -96,7 +93,7 @@ namespace The260WeeksGame
         private void actPresident() {
             double random = GameCore.RandomGenerator.NextDouble();
             foreach (var group in GameCore.getInstance().SocialGroups)
-                group.Opinions[GameCore.getInstance().Player] += Owner.Opinions[GameCore.getInstance().Player] * random * group.Opinions[this];
+                group.Opinions[GameCore.getInstance().Player] += Owner.Opinions[GameCore.getInstance().Player] * random * group.Opinions[this] * 10;
         }
 
         public override void Turn() {
