@@ -46,6 +46,7 @@
     <EmbeddedResource Include="The260WeeksGame\String data\Second Names.txt" />
     <EmbeddedResource Include="The260WeeksGame\String data\Social Groups.xml" />
     <Compile Include="The260WeeksGame\Businessman.cs" />
+    <Compile Include="The260WeeksGame\GameEvent.cs" />
     <Compile Include="The260WeeksGame\GameParams.cs" />
     <Compile Include="The260WeeksGame\GameStringManager.cs" />
     <Compile Include="The260WeeksGame\MassMediaUnit.cs" />

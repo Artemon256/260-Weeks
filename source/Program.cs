@@ -222,7 +222,6 @@ namespace Proto0
     {
         static void Main(string[] args)
         {
-           
             GameRepresenter gr = new GameRepresenter();
 
             gr.StartGame();
