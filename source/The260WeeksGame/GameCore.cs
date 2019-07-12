@@ -41,15 +41,13 @@ namespace The260WeeksGame
         }
         
         private GameCore() {
-
+            Player = new President();
+            Members = new List<GameMember>();
         }
 
         public void StartGame()
         {
             gameOn = true;
-
-            Members = new List<GameMember>();
-            Player = new President();
 
             var businessmen = new List<Businessman>();
             var massMedia = new List<MassMediaUnit>();
@@ -69,15 +67,20 @@ namespace The260WeeksGame
                 unit.Owner = RandomObjectFromList(businessmen);
             }
 
+            // ORDER IS IMPORTANT, GROUPS DEFINE THEIR OPINIONS BASED ON OPINIONS OF BUSINESSMEN AND MASS MEDIA
             Members.AddRange(businessmen);
             Members.AddRange(massMedia);
-            
+            Members.AddRange(SocialGroup.getSocialGroups());
             Members.Add(Player); // Player ALWAYS moves AFTER other members
         }
         public void NextTurn()
         {
             foreach (var member in Members)
                 member.Turn();
+        }
+
+        public static double RandomDouble(double min, double max) {
+            return RandomGenerator.NextDouble() * (max - min) + min;
         }
 
         public T RandomObjectFromList<T>(List<T> list)

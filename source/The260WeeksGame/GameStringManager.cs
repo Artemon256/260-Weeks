@@ -12,7 +12,7 @@ namespace The260WeeksGame
         private readonly static string FirstNamesFile = "First Names.txt";
         private readonly static string SecondNamesFile = "Second Names.txt";
         private readonly static string MediaNamesFile = "Media Names.txt";
-        private readonly static string SocialGroupNamesFile = "Social Groups.json";
+        private readonly static string SocialGroupNamesFile = "Social Groups.xml";
 
         public List<string> FirstNames;
         public List<string> SecondNames;
@@ -22,7 +22,7 @@ namespace The260WeeksGame
 
         private Assembly assembly;
 
-        private void ReadResource(List<string> receiver, string fileName)
+        private void ReadIntoList(List<string> receiver, string fileName)
         {
             string resourceName = assembly.GetManifestResourceNames()
                                   .Single(str => str.EndsWith(fileName));
@@ -57,9 +57,9 @@ namespace The260WeeksGame
 
             assembly = Assembly.GetExecutingAssembly();
 
-            ReadResource(FirstNames, FirstNamesFile);
-            ReadResource(SecondNames, SecondNamesFile);
-            ReadResource(MediaNames, MediaNamesFile);
+            ReadIntoList(FirstNames, FirstNamesFile);
+            ReadIntoList(SecondNames, SecondNamesFile);
+            ReadIntoList(MediaNames, MediaNamesFile);
             ReadIntoString(ref SocialGroups, SocialGroupNamesFile);
         }
 

@@ -38,6 +38,17 @@ namespace Proto0
             game = GameCore.getInstance();
             gameParams = GameParams.getInstance();
 
+            List<SocialGroup> sg = SocialGroup.getSocialGroups();
+
+            foreach (var group in sg)
+            {
+                Console.WriteLine(group.Name);
+                foreach (var opinion in group.Opinions)
+                    Console.WriteLine("\t" + opinion.Key.Name + " : " + GameMember.Adjust(opinion.Value).ToString("N5"));
+            }
+
+            Console.ReadKey();
+
             gameParams.Difficulty = ChooseDifficulty();
             gameParams.NumberOfBusinessmen = GameCore.RandomGenerator.Next(1, 10);
             gameParams.NumberOfMassMedia = GameCore.RandomGenerator.Next(1, 10);            

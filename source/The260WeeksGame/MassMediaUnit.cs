@@ -56,10 +56,8 @@ namespace The260WeeksGame
             }
         }
 
-        public MassMediaUnit(string name)
+        public MassMediaUnit(string name) : base(name)
         {
-            this.name = name;
-
             campaigns = new List<Campaign>();
         }
 

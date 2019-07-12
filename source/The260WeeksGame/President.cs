@@ -13,9 +13,8 @@ namespace The260WeeksGame
 
         }
 
-        public President()
+        public President() : base("Mr. President")
         {
-            name = "Mr. President";
 
             // switch (GameParams.getInstance().Difficulty)
             // {
