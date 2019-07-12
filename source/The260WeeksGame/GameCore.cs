@@ -34,6 +34,17 @@ namespace The260WeeksGame
                 return result;
             }
         }
+        public List<SocialGroup> SocialGroups
+        {
+            get
+            {
+                var result = new List<SocialGroup>();
+                foreach (var member in Members)
+                    if (member is SocialGroup)
+                        result.Add(member as SocialGroup);
+                return result;
+            }
+        } 
 
         public bool GameOn() // ???
         {

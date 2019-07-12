@@ -19,13 +19,12 @@ namespace The260WeeksGame
         public override void GenerateOpinions() {
             foreach (var subject in GameCore.getInstance().Members)
             {
-                var random = Unadjust(GameCore.RandomGenerator.NextDouble() * 2 - 1);
                 if (subject is SocialGroup || subject is President)
                     continue; // Social groups have predefined opinions about other groups and president
                 if (subject is Businessman)
-                    Opinions[subject] = OverallBusinessmenOpinion + subject.Opinions[this] + random;
+                    Opinions[subject] = OverallBusinessmenOpinion + subject.Opinions[this];
                 if (subject is MassMediaUnit)
-                    Opinions[subject] = OverallMassMediaOpinion + (subject as MassMediaUnit).Owner.Opinions[this] + random;
+                    Opinions[subject] = OverallMassMediaOpinion + (subject as MassMediaUnit).Owner.Opinions[this];
             }
         }
 

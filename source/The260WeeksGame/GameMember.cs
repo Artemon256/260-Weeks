@@ -44,36 +44,6 @@ namespace The260WeeksGame
         }
 
         public abstract void GenerateOpinions();
-        // {
-        //     foreach (var member in GameCore.getInstance().Members)
-        //     {
-        //         switch (this)
-        //         {
-        //             case President p: // Has no opinion
-        //                 break;
-        //             case MassMediaUnit m: // Has no opinion
-        //                 break;
-
-        //             case Businessman b:
-        //                 foreach (var subject in GameCore.getInstance().Members)
-        //                     if (subject == b) // Has no opinion about himself
-        //                         continue;
-        //                     else
-        //                         Opinions[subject] = Unadjust(GameCore.RandomGenerator.NextDouble() * 2 - 1);
-        //                 break;
-        //             case SocialGroup g:
-        //                 foreach (var subject in GameCore.getInstance().Members)
-        //                     if (subject is SocialGroup) // Opinions about other groups are predefined, see String data/Social Groups.xml
-        //                         continue;
-        //                     else if (subject is Businessman)
-        //                         Opinions[subject] = Opinions
-        //                     else
-        //                         Opinions[subject] = Unadjust(GameCore.RandomGenerator.NextDouble() * 2 - 1);
-        //                 break;
-        //         }
-        //     }
-        // }
-
         public abstract void Turn();
     }
 }

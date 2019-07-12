@@ -19,13 +19,27 @@ namespace The260WeeksGame
         {
             foreach (var subject in GameCore.getInstance().Members)
             {
-                switch (GameParams.getInstance().Difficulty)
-                {
-                    case GameParams.DifficultyLevel.Easy:
-                        Opinions[subject] = Unadjust(GameCore.RandomDouble(-0.2, 1));
-                        break;
-                    case GameParams.DifficultyLevel.Moderate:
-                }
+                if (subject is President)
+                    switch (GameParams.getInstance().Difficulty)
+                    {
+                        case GameParams.DifficultyLevel.Easy:
+                            Opinions[subject] = Unadjust(GameCore.RandomDouble(-0.1, 1));
+                            break;
+                        case GameParams.DifficultyLevel.Moderate:
+                            Opinions[subject] = Unadjust(GameCore.RandomDouble(-0.3, 0.7));
+                            break;
+                        case GameParams.DifficultyLevel.Medium:
+                            Opinions[subject] = Unadjust(GameCore.RandomDouble(-0.5, 0.5));
+                            break;
+                        case GameParams.DifficultyLevel.Hard:
+                            Opinions[subject] = Unadjust(GameCore.RandomDouble(-0.7, 0.3));
+                            break;
+                        case GameParams.DifficultyLevel.Nightmare:
+                            Opinions[subject] = Unadjust(GameCore.RandomDouble(-1, 0.1));
+                            break;
+                    }
+                else
+                    Opinions[subject] = Unadjust(GameCore.RandomDouble(-1, 1));
             }
         }
 

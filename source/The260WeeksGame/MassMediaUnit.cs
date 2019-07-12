@@ -74,27 +74,29 @@ namespace The260WeeksGame
         
         private void actCampaigns()
         {
-            for(int i = 0; i < campaigns.Count; i++)
+            foreach (var campaign in campaigns)
             {
                 int modifier = 0;
 
-                if (campaigns[i].Mode == Campaign.CampaignMode.Against)
+                if (campaign.Mode == Campaign.CampaignMode.Against)
                     modifier = -1;
-                if (campaigns[i].Mode == Campaign.CampaignMode.Pro)
+                if (campaign.Mode == Campaign.CampaignMode.Pro)
                     modifier = 1;
 
-                double RandomGenerator = GameCore.RandomGenerator.NextDouble();
+                double random = GameCore.RandomGenerator.NextDouble();
 
-                // campaigns[i].Target.AbsoluteRating += Math.Ceiling(modifier * AbsoluteRating * RandomGenerator * 0.2); // TODO: 0.2 coefficient must be bind to the game difficulty
-                campaigns[i].TurnsLeft--;
+                foreach (var group in GameCore.getInstance().SocialGroups)
+                    group.Opinions[campaign.Target] += modifier * random * group.Opinions[this];
+                campaign.TurnsLeft--;
             }
 
             campaigns.RemoveAll(item => item.TurnsLeft == 0);
         }
 
         private void actPresident() {
-            double RandomGenerator = GameCore.RandomGenerator.NextDouble();
-            // GameCore.getInstance().Player.AbsoluteRating += Math.Round(AbsoluteRating * Owner.AdjustedLoyalty * RandomGenerator * 0.5); // TODO: 0.5 coefficient must be bind to the game difficulty
+            double random = GameCore.RandomGenerator.NextDouble();
+            foreach (var group in GameCore.getInstance().SocialGroups)
+                group.Opinions[GameCore.getInstance().Player] += Owner.Opinions[GameCore.getInstance().Player] * random * group.Opinions[this];
         }
 
         public override void Turn() {
@@ -107,6 +109,10 @@ namespace The260WeeksGame
             MassMediaUnit result = new MassMediaUnit(GameCore.getInstance().RandomObjectFromList(GameStringManager.getInstance().MediaNames));
             GameStringManager.getInstance().MediaNames.Remove(result.name);
             return result;
+        }
+
+        public override void GenerateOpinions() {
+            
         }
     }
 }
