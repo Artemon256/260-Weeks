@@ -39,7 +39,7 @@ namespace Proto0
             {
                 if (whoseOpinion.Opinions.ContainsKey(aboutWhom))
                 {
-                    string message = whoseOpinion.Name + "  (" + whoseOpinion.GetType().Name + ")  " + whoseOpinion.Opinions[aboutWhom].ToString("N4") + " => " + aboutWhom.Name + "  (" + aboutWhom.GetType().Name + ")";
+                    string message = whoseOpinion.Name + "  (" + whoseOpinion.GetType().Name + ")  " + GameMember.Adjust(whoseOpinion.Opinions[aboutWhom]).ToString("N4") + " => " + aboutWhom.Name + "  (" + aboutWhom.GetType().Name + ")";
 
                     Console.WriteLine(message);
                 }
@@ -52,7 +52,7 @@ namespace Proto0
             {
                 if (whoseOpinion.Opinions.ContainsKey(aboutWhom))
                 {
-                    string message = whoseOpinion.Name + "  (" + whoseOpinion.GetType().Name + ")  " + whoseOpinion.Opinions[aboutWhom].ToString("N4") + " => " + aboutWhom.Name + "  (" + aboutWhom.GetType().Name + ")";
+                    string message = whoseOpinion.Name + "  (" + whoseOpinion.GetType().Name + ")  " + GameMember.Adjust(whoseOpinion.Opinions[aboutWhom]).ToString("N4") + " => " + aboutWhom.Name + "  (" + aboutWhom.GetType().Name + ")";
 
                     Console.WriteLine(message);
                 }
@@ -69,10 +69,6 @@ namespace Proto0
                 Console.WriteLine();
             }
         }
-
-        
-
-        
 
         public void StartGame()
         {
@@ -92,7 +88,7 @@ namespace Proto0
 
         private void ShowPresidentStats()
         {
-            // Console.WriteLine(String.Format("Rating = {0}", game.Player.AdjustedRating));
+            showOpinionsAboutGameMember(GameCore.getInstance().Player);
         }
 
         private void ShowBusinessmenStats()

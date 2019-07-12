@@ -16,6 +16,8 @@ namespace The260WeeksGame
         {
             foreach (var subject in GameCore.getInstance().Members)
             {
+                if (subject == this)
+                    continue;
                 if (subject is President)
                     switch (GameParams.getInstance().Difficulty)
                     {
