@@ -81,6 +81,16 @@ namespace The260WeeksGame
             Members.AddRange(massMedia);
             Members.AddRange(SocialGroup.getSocialGroups());
             Members.Add(Player); // Player ALWAYS moves AFTER other members
+
+            foreach(var businessman in businessmen)
+            {
+                businessman.GenerateOpinions();
+            }
+            
+            foreach(var group in SocialGroups)
+            {
+                group.GenerateOpinions();
+            }
         }
         public void NextTurn()
         {

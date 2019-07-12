@@ -26,12 +26,14 @@ namespace The260WeeksGame
             }
         }
 
-        public event Action NextTurn;
+        public Action NextTurnAction;
 
-        public GameEvent(string name, string text)
+        public GameEvent(string name, string text, Action nextTurnAction)
         {
             this.name = name;
             this.text = text;
+
+            NextTurnAction = nextTurnAction;
         }
     }
 }
