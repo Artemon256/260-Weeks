@@ -21,17 +21,16 @@ namespace The260WeeksGame
             }
         }
 
+        public static readonly double MaxOpinion = 300;
+        public static readonly double MinOpinion = -300;
+
         public static double Adjust(double value)
         {
+            const double bound = 0.99999999999999991;
+
             double result = (Math.Atan(Math.Exp(0.06 * value)) * 4)/Math.PI - 1;
-            
-            if (result <= -1)
-                return -1 + double.Epsilon;
 
-            if(result >= 1)
-                return 1 - double.Epsilon;
-
-            return result;
+            return ConstraintValue(result, -bound, bound);
         }
 
         public static double Unadjust(double value)
@@ -41,7 +40,16 @@ namespace The260WeeksGame
             if (value >= 1)
                 return double.PositiveInfinity;
 
-            return Math.Log(Math.Tan((value + 1) * Math.PI * 0.25)) / 0.06;
+            return Math.Log(Math.Tan((value + 1d) * Math.PI * 0.25d)) / 0.06d;
+        }
+
+        public static double ConstraintValue(double value, double leftBound, double rightBound)
+        {
+            if (value >= rightBound)
+                return rightBound;
+            if (value <= leftBound)
+                return leftBound;
+            return value;
         }
 
         public abstract void GenerateOpinions();

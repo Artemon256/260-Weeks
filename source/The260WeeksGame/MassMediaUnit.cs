@@ -23,11 +23,11 @@ namespace The260WeeksGame
                 Mode = mode;
             }
         }
+
         private List<Campaign> campaigns;
 
         private Businessman owner;
-        private int politicalInfluence;
-
+        private double passiveInfluence = 1;
 
         public Businessman Owner
         {
@@ -41,15 +41,15 @@ namespace The260WeeksGame
             }
         }
         
-        public int PoliticalInfluence
+        public double PassiveInfluence
         {
             get
             {
-                return politicalInfluence;
+                return passiveInfluence;
             }
             set
             {
-                politicalInfluence = value;
+                passiveInfluence = value;
             }
         }
 
@@ -90,7 +90,7 @@ namespace The260WeeksGame
 
         private void actPresident() {
             foreach (var group in GameCore.getInstance().SocialGroups)
-                group.RevaluateOpinion(this, GameCore.getInstance().Player, Owner.Opinions[GameCore.getInstance().Player]);
+                group.RevaluateOpinion(this, GameCore.getInstance().Player, passiveInfluence * Adjust(Owner.Opinions[GameCore.getInstance().Player]));
         }
 
         public override void Turn() {

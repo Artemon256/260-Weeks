@@ -202,7 +202,7 @@ namespace Proto0
                 foreach (var media in game.MassMedia)
                 {
                     string Message = String.Format("\tName = {0}\n", media.Name)
-                                    + String.Format("\tOwner = {0}\n", media.Owner.Name)
+                                    + String.Format("\tOwner = {0}   (Opinion about you = {1})\n", media.Owner.Name, media.Owner.Opinions[game.Player])
                                     + String.Format("\tIf you want list of opinions ABOUT IT, enter {0}\n", id)
                                     + String.Format("\tIf you want to start a campaign with that media, enter {0}\n", id + 1);
 

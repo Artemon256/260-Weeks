@@ -24,12 +24,20 @@ namespace The260WeeksGame
             if (!Opinions.TryGetValue(sender, out senderRating))    
                 return;
 
-            if (Adjust(senderRating) < 0) // If this social group doesn't like this media
-                if (GameCore.RandomGenerator.Next(0, 1) == 0) // Stop changing opinion with a chance of 50%
+            senderRating = Adjust(senderRating);
+
+            if (senderRating < 0) // If this social group doesn't like this media
+            {
+                if (GameCore.RandomGenerator.Next(0, 2) == 0) // Don't change opinion with a chance of 50%
                     return;
-            
+            }
+
+            senderRating += 2; // The best way to keep using negative rating so that influence still proportional on rating 
+
             double random = GameCore.RandomDouble(0, 0.2);
-            Opinions[target] += delta * senderRating * random;            
+            Opinions[target] += delta * senderRating * random;
+
+            Opinions[target] = ConstraintValue(Opinions[target], MinOpinion, MaxOpinion);            
         }
 
         public override void GenerateOpinions() {

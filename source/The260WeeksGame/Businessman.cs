@@ -43,8 +43,12 @@ namespace The260WeeksGame
         }
 
         public override void Turn() {
-            Opinions[GameCore.getInstance().Player] += (int) Math.Round(ServicePoint * 0.2);
-            ServicePoint = (int) Math.Round(ServicePoint * 0.8);
+            int transferedPoint = (int)Math.Round(ServicePoint * 0.2);
+
+            Opinions[GameCore.getInstance().Player] += transferedPoint;
+            Opinions[GameCore.getInstance().Player] = ConstraintValue(Opinions[GameCore.getInstance().Player], MinOpinion, MaxOpinion);
+
+            ServicePoint -= transferedPoint;
         }
 
         public static Businessman GenerateRandom()
