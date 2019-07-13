@@ -23,13 +23,13 @@ namespace The260WeeksGame
 
         public static double Adjust(double value)
         {
-            double result = Math.Atan(Math.Exp(0.06 * value)) * 1.27 - 1;
+            double result = (Math.Atan(Math.Exp(0.06 * value)) * 4)/Math.PI - 1;
+            
+            if (result <= -1)
+                return -1 + double.Epsilon;
 
-            if (result < -1)
-                return -1;
-
-            if(result > 1)
-                return 1;
+            if(result >= 1)
+                return 1 - double.Epsilon;
 
             return result;
         }
@@ -40,7 +40,8 @@ namespace The260WeeksGame
                 return -double.NegativeInfinity;
             if (value >= 1)
                 return double.PositiveInfinity;
-            return 16.6666 * Math.Log( Math.Tan( 0.7874 * (value + 1) ) );
+
+            return Math.Log(Math.Tan((value + 1) * Math.PI * 0.25)) / 0.06;
         }
 
         public abstract void GenerateOpinions();

@@ -21,7 +21,7 @@ namespace The260WeeksGame
                 return;
 
             double senderRating;
-            if (!Opinions.TryGetValue(sender, out senderRating))
+            if (!Opinions.TryGetValue(sender, out senderRating))    
                 return;
 
             if (Adjust(senderRating) < 0) // If this social group doesn't like this media

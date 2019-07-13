@@ -39,7 +39,7 @@ namespace Proto0
             {
                 if (whoseOpinion.Opinions.ContainsKey(aboutWhom))
                 {
-                    string message = whoseOpinion.Name + "  (" + whoseOpinion.GetType().Name + ")  " + GameMember.Adjust(whoseOpinion.Opinions[aboutWhom]).ToString("N4") + " => " + aboutWhom.Name + "  (" + aboutWhom.GetType().Name + ")";
+                    string message = whoseOpinion.Name + "  (" + whoseOpinion.GetType().Name + ")  " + GameMember.Adjust(whoseOpinion.Opinions[aboutWhom]).ToString("N7") + " => " + aboutWhom.Name + "  (" + aboutWhom.GetType().Name + ")";
 
                     Console.WriteLine(message);
                 }
@@ -52,7 +52,7 @@ namespace Proto0
             {
                 if (whoseOpinion.Opinions.ContainsKey(aboutWhom))
                 {
-                    string message = whoseOpinion.Name + "  (" + whoseOpinion.GetType().Name + ")  " + GameMember.Adjust(whoseOpinion.Opinions[aboutWhom]).ToString("N4") + " => " + aboutWhom.Name + "  (" + aboutWhom.GetType().Name + ")";
+                    string message = whoseOpinion.Name + "  (" + whoseOpinion.GetType().Name + ")  " + GameMember.Adjust(whoseOpinion.Opinions[aboutWhom]).ToString("N7") + " => " + aboutWhom.Name + "  (" + aboutWhom.GetType().Name + ")";
 
                     Console.WriteLine(message);
                 }
@@ -311,7 +311,7 @@ namespace Proto0
     class Program
     {
         static void Main(string[] args)
-        {   
+        {
             GameRepresenter gr = new GameRepresenter();
 
             gr.StartGame();
