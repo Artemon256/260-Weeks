@@ -37,7 +37,7 @@ namespace The260WeeksGame
             double random = GameCore.RandomDouble(0, 0.2);
             Opinions[target] += delta * senderRating * random;
 
-            Opinions[target] = ConstraintValue(Opinions[target], MinOpinion, MaxOpinion);            
+            Opinions[target] = ConstraintOpinion(Opinions[target]);            
         }
 
         public override void GenerateOpinions() {

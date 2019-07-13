@@ -43,6 +43,11 @@ namespace The260WeeksGame
             return Math.Log(Math.Tan((value + 1d) * Math.PI * 0.25d)) / 0.06d;
         }
 
+        public static double ConstraintOpinion(double opinion)
+        {
+            return ConstraintValue(opinion, MinOpinion, MaxOpinion);
+        }
+
         public static double ConstraintValue(double value, double leftBound, double rightBound)
         {
             if (value >= rightBound)

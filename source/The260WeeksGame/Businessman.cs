@@ -46,7 +46,7 @@ namespace The260WeeksGame
             int transferedPoint = (int)Math.Round(ServicePoint * 0.2);
 
             Opinions[GameCore.getInstance().Player] += transferedPoint;
-            Opinions[GameCore.getInstance().Player] = ConstraintValue(Opinions[GameCore.getInstance().Player], MinOpinion, MaxOpinion);
+            Opinions[GameCore.getInstance().Player] = ConstraintOpinion(Opinions[GameCore.getInstance().Player]);
 
             ServicePoint -= transferedPoint;
         }

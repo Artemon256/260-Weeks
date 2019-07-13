@@ -264,7 +264,7 @@ namespace Proto0
             Console.WriteLine("NOTICE: If a name contains spaces, replace them with '_' symbol\n(e.g. Instead of 'Mr. President' you should write 'Mr._President'\n");
 
             Console.WriteLine("opinion $whoseOpinion$ $aboutWhom$ $value$");
-            Console.WriteLine("\t\t--- Sets $whoseOpinion$ about $aboutWhom$ to $value$");
+            Console.WriteLine("\t\t--- Sets $whoseOpinion$ about $aboutWhom$ to $value$ (in unadjusted format)");
             Console.WriteLine();
 
             Console.WriteLine("owner $media$ $newOwner$");
