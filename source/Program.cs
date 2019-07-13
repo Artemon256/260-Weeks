@@ -256,6 +256,22 @@ namespace Proto0
             }
         }
 
+        private void showCheatCodeHelp()
+        {
+            Console.Clear();
+
+            Console.WriteLine("Here is some help on cheat codes:\n");
+            Console.WriteLine("NOTICE: If a name contains spaces, replace them with '_' symbol\n(e.g. Instead of 'Mr. President' you should write 'Mr._President'\n");
+
+            Console.WriteLine("opinion $whoseOpinion$ $aboutWhom$ $value$");
+            Console.WriteLine("\t\t--- Sets $whoseOpinion$ about $aboutWhom$ to $value$");
+            Console.WriteLine();
+
+            Console.WriteLine("owner $media$ $newOwner$");
+            Console.WriteLine("\t\t--- Sets $newOwner$ as an owner of $media$");
+            Console.WriteLine();
+        }
+
         public void Play()
         {
             
@@ -269,7 +285,8 @@ namespace Proto0
                 Console.WriteLine("Info about mass media (3)");
                 Console.WriteLine("Pass to next turn (4)");
                 Console.WriteLine("Show all opinions (5)");
-                Console.WriteLine("End Game (6)");
+                Console.WriteLine("Help on cheat codes (6)");
+                Console.WriteLine("End Game (7)");
 
                 string answer = Console.ReadLine();
 
@@ -291,11 +308,17 @@ namespace Proto0
                         showAllOpinions();
                         break;
                     case "6":
+                        showCheatCodeHelp();
+                        break;
+                    case "7":
                         Console.WriteLine("Goodbye!\n Press any key to continue...");
                         Console.ReadKey();
                         return;
                     default:
-                        Console.WriteLine("Wrong Command!");
+                        if (!CheatCodeParser.getInstance().ParseCheatCode(answer))
+                            Console.WriteLine("Wrong Command!");
+                        else
+                            Console.WriteLine("Cheat code activated!");
                         break;
                 }
 

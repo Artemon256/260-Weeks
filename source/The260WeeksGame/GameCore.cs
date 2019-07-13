@@ -9,6 +9,7 @@ namespace The260WeeksGame
         public List<GameMember> Members;
         public President Player;
         public static Random RandomGenerator = new Random();
+       
 
         public List<Businessman> Businessmen
         {
@@ -42,7 +43,7 @@ namespace The260WeeksGame
                         result.Add(member as SocialGroup);
                 return result;
             }
-        } 
+        }  
 
         public bool GameOn() // ???
         {
@@ -92,10 +93,21 @@ namespace The260WeeksGame
                 group.GenerateOpinions();
             }
         }
+
         public void NextTurn()
         {
             foreach (var member in Members)
                 member.Turn();
+        }
+
+        public GameMember GetGameMemberByName(string name)
+        {
+            foreach(var member in Members)
+            {
+                if (member.Name == name)
+                    return member;
+            }
+            return null;
         }
 
         public static double RandomDouble(double min, double max) {
