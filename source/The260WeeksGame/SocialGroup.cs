@@ -16,7 +16,7 @@ namespace The260WeeksGame
             
         }
 
-        public void RevaluateOpinion(GameMember sender, GameMember target, double delta) {
+        public override void RevaluateOpinion(GameMember sender, GameMember target, double delta) {
             if (this == target)
                 return;
 

@@ -64,5 +64,9 @@ namespace The260WeeksGame
             GameStringManager.getInstance().SecondNames.Remove(secondName);
             return result;
         }
+
+        public override void RevaluateOpinion(GameMember sender, GameMember target, double delta) {
+            
+        }
     }
 }

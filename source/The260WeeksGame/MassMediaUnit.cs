@@ -97,5 +97,9 @@ namespace The260WeeksGame
         public override void GenerateOpinions() {
             
         }
+
+        public override void RevaluateOpinion(GameMember sender, GameMember target, double delta) {
+            
+        }
     }
 }

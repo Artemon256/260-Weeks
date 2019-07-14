@@ -94,5 +94,7 @@ namespace The260WeeksGame
 
         public abstract void GenerateOpinions();
         public abstract void Turn();
+
+        public abstract void RevaluateOpinion(GameMember sender, GameMember target, double delta);
     }
 }
