@@ -27,7 +27,8 @@ namespace The260WeeksGame
         private List<Campaign> campaigns;
 
         private Businessman owner;
-        private double passiveInfluence = 1;
+        public double passiveInfluence = 1;
+        public double campaignInfluence = 1;
 
         public Businessman Owner
         {
@@ -38,18 +39,6 @@ namespace The260WeeksGame
             set
             {
                 owner = value;
-            }
-        }
-        
-        public double PassiveInfluence
-        {
-            get
-            {
-                return passiveInfluence;
-            }
-            set
-            {
-                passiveInfluence = value;
             }
         }
 
@@ -81,7 +70,7 @@ namespace The260WeeksGame
                     modifier = 1;
 
                 foreach (var group in GameCore.getInstance().SocialGroups)
-                    group.RevaluateOpinion(this, campaign.Target, modifier);
+                    group.RevaluateOpinion(this, campaign.Target, modifier * campaignInfluence);
                 campaign.TurnsLeft--;
             }
 
