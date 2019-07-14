@@ -7,8 +7,8 @@
     <ProjectGuid>{6DAB5EC9-8559-46F2-BE7F-0378A3A3AD52}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MassMedia_Oligarchs</RootNamespace>
-    <AssemblyName>MassMedia_Oligarchs</AssemblyName>
+    <RootNamespace>The260WeeksGame</RootNamespace>
+    <AssemblyName>The260WeeksGame</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -41,7 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="The260WeeksGame\String data\First Names.txt" />
+    <EmbeddedResource Include="The260WeeksGame\String data\Media Names.txt" />
+    <EmbeddedResource Include="The260WeeksGame\String data\Second Names.txt" />
+    <EmbeddedResource Include="The260WeeksGame\String data\Social Groups.xml" />
     <Compile Include="The260WeeksGame\Businessman.cs" />
+    <Compile Include="The260WeeksGame\CheatCodeParser.cs" />
+    <Compile Include="The260WeeksGame\GameEvent.cs" />
     <Compile Include="The260WeeksGame\GameParams.cs" />
     <Compile Include="The260WeeksGame\GameStringManager.cs" />
     <Compile Include="The260WeeksGame\MassMediaUnit.cs" />
@@ -50,11 +56,7 @@
     <Compile Include="The260WeeksGame\GameCore.cs" />
     <Compile Include="The260WeeksGame\President.cs" />
     <Compile Include="The260WeeksGame\GameMember.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="The260WeeksGame\String data\First Names.txt" />
-    <EmbeddedResource Include="The260WeeksGame\String data\Media Names.txt" />
-    <EmbeddedResource Include="The260WeeksGame\String data\Second Names.txt" />
+    <Compile Include="The260WeeksGame\SocialGroup.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

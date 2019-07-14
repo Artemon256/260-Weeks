@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.IO;
 using System.Reflection;
 
@@ -9,17 +7,20 @@ namespace The260WeeksGame
 {
     public class GameStringManager
     {
-        private readonly string FirstNamesFile = "First Names.txt";
-        private readonly string SecondNamesFile = "Second Names.txt";
-        private readonly string MediaNamesFile = "Media Names.txt";
+        private readonly static string FirstNamesFile = "First Names.txt";
+        private readonly static string SecondNamesFile = "Second Names.txt";
+        private readonly static string MediaNamesFile = "Media Names.txt";
+        private readonly static string SocialGroupNamesFile = "Social Groups.xml";
 
         public List<string> FirstNames;
         public List<string> SecondNames;
         public List<string> MediaNames;
 
+        public string SocialGroups;
+
         private Assembly assembly;
 
-        private void ReadResource(List<string> receiver, string fileName)
+        private void ReadIntoList(List<string> receiver, string fileName)
         {
             string resourceName = assembly.GetManifestResourceNames()
                                   .Single(str => str.EndsWith(fileName));
@@ -34,7 +35,19 @@ namespace The260WeeksGame
             }
         }
 
-        public GameStringManager()
+        private void ReadIntoString(ref string receiver, string fileName)
+        {
+            string resourceName = assembly.GetManifestResourceNames()
+                                  .Single(str => str.EndsWith(fileName));
+
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                receiver = reader.ReadToEnd();
+            }
+        }
+
+        private GameStringManager()
         {
             FirstNames = new List<string>();
             SecondNames = new List<string>();
@@ -42,9 +55,17 @@ namespace The260WeeksGame
 
             assembly = Assembly.GetExecutingAssembly();
 
-            ReadResource(FirstNames, FirstNamesFile);
-            ReadResource(SecondNames, SecondNamesFile);
-            ReadResource(MediaNames, MediaNamesFile);
+            ReadIntoList(FirstNames, FirstNamesFile);
+            ReadIntoList(SecondNames, SecondNamesFile);
+            ReadIntoList(MediaNames, MediaNamesFile);
+            ReadIntoString(ref SocialGroups, SocialGroupNamesFile);
+        }
+
+        private static GameStringManager instance;
+        public static GameStringManager getInstance() {
+            if (instance == null)
+                instance = new GameStringManager();
+            return instance;
         }
     }
 }

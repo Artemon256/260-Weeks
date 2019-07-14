@@ -1,40 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace The260WeeksGame
+﻿namespace The260WeeksGame
 {
     public class President : GameMember
     {    
-      
-
         public override void Turn() {
 
         }
 
-        public President()
+        public President() : base("Mr. President")
         {
-            name = "Mr. President";
+        }
 
-            switch (GameCore.GameDifficulty)
-            {
-                case GameCore.Difficulty.Easy:
-                    AbsoluteRating = GameCore.random.Next(15, 30);
-                    break;
-                case GameCore.Difficulty.Moderate:
-                    AbsoluteRating = GameCore.random.Next(5, 20);
-                    break;
-                case GameCore.Difficulty.Medium:
-                    AbsoluteRating = GameCore.random.Next(-5, 10);
-                    break;
-                case GameCore.Difficulty.Hard:
-                    AbsoluteRating = GameCore.random.Next(-10, 5);
-                    break;
-                case GameCore.Difficulty.Nightmare:
-                    AbsoluteRating = GameCore.random.Next(-15, -5);
-                    break;
-            }
+        public override void GenerateOpinions() {
+
+        }
+
+        public override void RevaluateOpinion(GameMember sender, GameMember target, double delta) {
+            
         }
     }
 }

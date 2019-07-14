@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace The260WeeksGame
 {
@@ -26,11 +23,12 @@ namespace The260WeeksGame
                 Mode = mode;
             }
         }
+
         private List<Campaign> campaigns;
 
         private Businessman owner;
-        private int politicalInfluence;
-
+        public double passiveInfluence = 1;
+        public double campaignInfluence = 1;
 
         public Businessman Owner
         {
@@ -43,24 +41,9 @@ namespace The260WeeksGame
                 owner = value;
             }
         }
-        
-        public int PoliticalInfluence
-        {
-            get
-            {
-                return politicalInfluence;
-            }
-            set
-            {
-                politicalInfluence = value;
-            }
-        }
 
-        public MassMediaUnit(string name, double absoluteRating)
+        public MassMediaUnit(string name) : base(name)
         {
-            this.name = name;
-
-            AbsoluteRating = absoluteRating;
             campaigns = new List<Campaign>();
         }
 
@@ -77,27 +60,26 @@ namespace The260WeeksGame
         
         private void actCampaigns()
         {
-            for(int i = 0; i < campaigns.Count; i++)
+            foreach (Campaign campaign in campaigns)
             {
                 int modifier = 0;
 
-                if (campaigns[i].Mode == Campaign.CampaignMode.Against)
+                if (campaign.Mode == Campaign.CampaignMode.Against)
                     modifier = -1;
-                if (campaigns[i].Mode == Campaign.CampaignMode.Pro)
+                if (campaign.Mode == Campaign.CampaignMode.Pro)
                     modifier = 1;
 
-                double random = GameCore.random.NextDouble();
-
-                campaigns[i].Target.AbsoluteRating += Math.Ceiling(modifier * AbsoluteRating * random * 0.2); // TODO: 0.2 coefficient must be bind to the game difficulty
-                campaigns[i].TurnsLeft--;
+                foreach (SocialGroup group in GameCore.getInstance().SocialGroups)
+                    group.RevaluateOpinion(this, campaign.Target, modifier * campaignInfluence);
+                campaign.TurnsLeft--;
             }
 
             campaigns.RemoveAll(item => item.TurnsLeft == 0);
         }
 
         private void actPresident() {
-            double random = GameCore.random.NextDouble();
-            GameCore.Player.AbsoluteRating += Math.Round(AbsoluteRating * Owner.AdjustedLoyalty * random * 0.5); // TODO: 0.5 coefficient must be bind to the game difficulty
+            foreach (SocialGroup group in GameCore.getInstance().SocialGroups)
+                group.RevaluateOpinion(this, GameCore.getInstance().Player, passiveInfluence * Adjust(Owner.Opinions[GameCore.getInstance().Player]));
         }
 
         public override void Turn() {
@@ -107,9 +89,17 @@ namespace The260WeeksGame
 
         public static MassMediaUnit GenerateRandom() // TODO: Remove and make another function which will base on the game difficulty
         {
-            MassMediaUnit result = new MassMediaUnit(GameCore.RandomObjectFromList(GameCore.MediaNameList), GameCore.random.Next(0, 30));
-            GameCore.MediaNameList.Remove(result.name);
+            MassMediaUnit result = new MassMediaUnit(GameCore.getInstance().RandomObjectFromList(GameStringManager.getInstance().MediaNames));
+            GameStringManager.getInstance().MediaNames.Remove(result.name);
             return result;
+        }
+
+        public override void GenerateOpinions() {
+            
+        }
+
+        public override void RevaluateOpinion(GameMember sender, GameMember target, double delta) {
+            
         }
     }
 }

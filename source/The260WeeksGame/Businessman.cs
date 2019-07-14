@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace The260WeeksGame
 {
@@ -10,61 +7,66 @@ namespace The260WeeksGame
 
         public int ServicePoint;
 
-        public int AbsoluteLoyalty;
-        public double AdjustedLoyalty
+        public Businessman(string name, int servicePoint) : base(name)
         {
-            get
-            {
-                return adjust(AbsoluteLoyalty);
-            }
-        }
-
-        
-
-        public Businessman(string name, int absoluteRating, int absoluteLoyalty, int servicePoint)
-        {
-            this.name = name;
-            AbsoluteRating = absoluteRating;
-            AbsoluteLoyalty = absoluteLoyalty;
             ServicePoint = servicePoint;
         }
 
+        public override void GenerateOpinions()
+        {
+            foreach (GameMember subject in GameCore.getInstance().Members)
+            {
+                if (subject == this)
+                    continue;
+                if (subject is President)
+                    switch (GameParams.getInstance().Difficulty)
+                    {
+                        case GameParams.DifficultyLevel.Easy:
+                            Opinions[subject] = Unadjust(GameCore.RandomDouble(-0.1, 1));
+                            break;
+                        case GameParams.DifficultyLevel.Moderate:
+                            Opinions[subject] = Unadjust(GameCore.RandomDouble(-0.3, 0.7));
+                            break;
+                        case GameParams.DifficultyLevel.Medium:
+                            Opinions[subject] = Unadjust(GameCore.RandomDouble(-0.5, 0.5));
+                            break;
+                        case GameParams.DifficultyLevel.Hard:
+                            Opinions[subject] = Unadjust(GameCore.RandomDouble(-0.7, 0.3));
+                            break;
+                        case GameParams.DifficultyLevel.Nightmare:
+                            Opinions[subject] = Unadjust(GameCore.RandomDouble(-1, 0.1));
+                            break;
+                    }
+                else
+                    Opinions[subject] = Unadjust(GameCore.RandomDouble(-1, 1));
+            }
+        }
+
         public override void Turn() {
-            AbsoluteLoyalty += (int) Math.Round(ServicePoint * 0.2);
-            ServicePoint = (int) Math.Round(ServicePoint * 0.8);
+            int transferedPoint = (int)Math.Round(ServicePoint * 0.2);
+
+            Opinions[GameCore.getInstance().Player] += transferedPoint;
+            Opinions[GameCore.getInstance().Player] = ConstraintOpinion(Opinions[GameCore.getInstance().Player]);
+
+            ServicePoint -= transferedPoint;
         }
 
         public static Businessman GenerateRandom()
         {
-            var firstName = GameCore.RandomObjectFromList(GameCore.FirstNameList);
-            var secondName = GameCore.RandomObjectFromList(GameCore.SecondNameList); 
+            GameCore core = GameCore.getInstance();
+            string firstName = core.RandomObjectFromList(GameStringManager.getInstance().FirstNames);
+            string secondName = core.RandomObjectFromList(GameStringManager.getInstance().SecondNames); 
 
-            var fullName = firstName + " " + secondName;
-            var rating = GameCore.random.Next(-10, 30);
-            int loyalty = 0;
+            string fullName = firstName + " " + secondName;
 
-            switch (GameCore.GameDifficulty)
-            {
-                case GameCore.Difficulty.Easy:
-                    loyalty = GameCore.random.Next(5, 20);
-                    break;
-                case GameCore.Difficulty.Moderate:
-                    loyalty = GameCore.random.Next(-5, 20);
-                    break;
-                case GameCore.Difficulty.Medium:
-                    loyalty = GameCore.random.Next(-10, 10);
-                    break;
-                case GameCore.Difficulty.Hard:
-                    loyalty = GameCore.random.Next(-20, 5);
-                    break;
-                case GameCore.Difficulty.Nightmare:
-                    loyalty = GameCore.random.Next(-20, -5);
-                    break;
-            }
-
-            Businessman result = new Businessman(fullName, rating, loyalty, 50); // Service points on start are equal to 50 until we develop ways to earn them
-            GameCore.SecondNameList.Remove(secondName);
+            Businessman result = new Businessman(fullName, 50); // Service points on start are equal to 50 until we develop ways to earn them
+            
+            GameStringManager.getInstance().SecondNames.Remove(secondName);
             return result;
+        }
+
+        public override void RevaluateOpinion(GameMember sender, GameMember target, double delta) {
+            
         }
     }
 }

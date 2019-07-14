@@ -1,44 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace The260WeeksGame
 {
     public class GameCore
     {
-       
-
         private bool gameOn; // ??? 
-        private GameParams gameParams;
-        private int numberOfBusinessmen;
-        private int numberOfMassMedia;
-
-        public static Random random = new Random();
-        public List<GameMember> Members = new List<GameMember>();
-        public static President Player = new President();
-        public static Difficulty GameDifficulty;
-
-        public enum Difficulty {
-            Easy,
-            Moderate,
-            Medium,
-            Hard,
-            Nightmare
-        }
-
-        public static List<string> FirstNameList = new List<string>(); // TODO: REFACTOR THIS SHIT
-        public static List<string> SecondNameList = new List<string>();
-        public static List<string> MediaNameList = new List<string>();
-
-        public static GameStringManager StringManager = new GameStringManager();
+        public List<GameMember> Members;
+        public President Player;
+        public static Random RandomGenerator = new Random();
+       
 
         public List<Businessman> Businessmen
         {
             get
             {
-                var result = new List<Businessman>();
-                foreach (var member in Members)
+                List<Businessman> result = new List<Businessman>();
+                foreach (GameMember member in Members)
                     if (member is Businessman)
                         result.Add(member as Businessman);
                 return result;
@@ -48,88 +26,96 @@ namespace The260WeeksGame
         {
             get
             {
-                var result = new List<MassMediaUnit>();
-                foreach (var member in Members)
+                List<MassMediaUnit> result = new List<MassMediaUnit>();
+                foreach (GameMember member in Members)
                     if (member is MassMediaUnit)
                         result.Add(member as MassMediaUnit);
                 return result;
             }
         }
-
-        public int NumberOfBusinessmen
+        public List<SocialGroup> SocialGroups
         {
             get
             {
-                return numberOfBusinessmen;
+                List<SocialGroup> result = new List<SocialGroup>();
+                foreach (GameMember member in Members)
+                    if (member is SocialGroup)
+                        result.Add(member as SocialGroup);
+                return result;
             }
-        }
-
-        public int NumberOfMassMedia
-        {
-            get
-            {
-                return numberOfMassMedia;
-            }
-        }
+        }  
 
         public bool GameOn() // ???
         {
             return gameOn;
         }
         
-        
-
-        public GameCore(GameParams gameParams)
-        {
-            this.gameParams = gameParams;
-
-            FirstNameList = new List<string>(StringManager.FirstNames);
-            SecondNameList = new List<string>(StringManager.SecondNames);
-            MediaNameList = new List<string>(StringManager.MediaNames);
+        private GameCore() {
+            Player = new President();
+            Members = new List<GameMember>();
         }
 
         public void StartGame()
         {
-            GameDifficulty = gameParams.Difficulty;
-            numberOfBusinessmen = gameParams.NumberOfBusinessmen;
-            numberOfMassMedia = gameParams.NumberOfMassMedia;
-
             gameOn = true;
 
-            var businessmen = new List<Businessman>();
-            var massMedia = new List<MassMediaUnit>();
+            List<Businessman> businessmen = new List<Businessman>();
+            List<MassMediaUnit> massMedia = new List<MassMediaUnit>();
 
-            for (int i = 0; i < numberOfBusinessmen; i++)
+            for (int i = 0; i < GameParams.instance.NumberOfBusinessmen; i++)
             {
                 businessmen.Add(Businessman.GenerateRandom());
             }
 
-            for (int i = 0; i < numberOfMassMedia; i++)
+            for (int i = 0; i < GameParams.instance.NumberOfMassMedia; i++)
             {
                 massMedia.Add(MassMediaUnit.GenerateRandom());
             }
 
-            foreach (var unit in massMedia)
+            foreach (MassMediaUnit media in massMedia)
             {
-                unit.Owner = RandomObjectFromList(businessmen);
+                media.Owner = RandomObjectFromList(businessmen);
             }
 
+            // ORDER IS IMPORTANT, GROUPS DEFINE THEIR OPINIONS BASED ON OPINIONS OF BUSINESSMEN AND MASS MEDIA
             Members.AddRange(businessmen);
             Members.AddRange(massMedia);
-            
+            Members.AddRange(SocialGroup.getSocialGroups());
             Members.Add(Player); // Player ALWAYS moves AFTER other members
+
+            foreach(Businessman businessman in businessmen)
+            {
+                businessman.GenerateOpinions();
+            }
+            
+            foreach(SocialGroup group in SocialGroups)
+            {
+                group.GenerateOpinions();
+            }
         }
+
         public void NextTurn()
         {
-            foreach (var member in Members)
+            foreach (GameMember member in Members)
                 member.Turn();
         }
 
-        public static T RandomObjectFromList<T>(List<T> list)
+        public static double RandomDouble(double min, double max) {
+            return RandomGenerator.NextDouble() * (max - min) + min;
+        }
+
+        public T RandomObjectFromList<T>(List<T> list)
         {
             if (list.Count == 0)
                 return default(T);
-            return list[random.Next(0, list.Count)];
+            return list[RandomGenerator.Next(0, list.Count)];
+        }
+
+        private static GameCore instance = null;
+        public static GameCore getInstance() {
+            if (instance == null)
+                instance = new GameCore();
+            return instance;
         }
     }
 }
