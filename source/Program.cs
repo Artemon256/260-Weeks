@@ -20,11 +20,11 @@ namespace Proto0
             Console.Clear();
             
             Console.WriteLine("Choose difficulty:");
-            Console.WriteLine("Easy (1)");
-            Console.WriteLine("Moderate (2)");
-            Console.WriteLine("Medium (3)");
-            Console.WriteLine("Hard (4)");
-            Console.WriteLine("Nightmare (5)");
+            Console.WriteLine("Easy (0)");
+            Console.WriteLine("Moderate (1)");
+            Console.WriteLine("Medium (2)");
+            Console.WriteLine("Hard (3)");
+            Console.WriteLine("Nightmare (4)");
 
             int answer = 0;
             if (!Int32.TryParse(Console.ReadLine(), out answer))
@@ -77,7 +77,7 @@ namespace Proto0
 
             gameParams.Difficulty = ChooseDifficulty();
             gameParams.NumberOfBusinessmen = GameCore.RandomGenerator.Next(1, 10);
-            gameParams.NumberOfMassMedia = GameCore.RandomGenerator.Next(1, 10);            
+            gameParams.NumberOfMassMedia = GameCore.RandomGenerator.Next(1, 10);
 
             game.StartGame();
 
