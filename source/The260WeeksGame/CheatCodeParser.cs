@@ -14,8 +14,17 @@ namespace The260WeeksGame
             if (command.Length != 4)
                 return false;
 
-            GameMember whose = game.GetGameMemberByName(command[1].Replace('_', ' '));
-            GameMember aboutWhom = game.GetGameMemberByName(command[2].Replace('_', ' '));
+            int whoseID = 0;
+            int aboutWhomID = 0;
+
+            if (!int.TryParse(command[1], out whoseID))
+                return false;
+
+            if (!int.TryParse(command[2], out aboutWhomID))
+                return false;
+
+            GameMember whose = GameMember.GetGameMemberById(whoseID);
+            GameMember aboutWhom = GameMember.GetGameMemberById(aboutWhomID);
             double value = Convert.ToDouble(command[3]);
 
             if (whose == null || aboutWhom == null)
@@ -31,8 +40,16 @@ namespace The260WeeksGame
             if (command.Length != 3)
                 return false;
 
-            GameMember mediaMember = game.GetGameMemberByName(command[1].Replace('_', ' '));
-            GameMember ownerMember = game.GetGameMemberByName(command[2].Replace('_', ' '));
+            int mediaId, ownerId;
+
+            if(!int.TryParse(command[1], out mediaId))
+                return false;
+            
+            if(!int.TryParse(command[2], out ownerId))
+                return false;
+
+            GameMember mediaMember = GameMember.GetGameMemberById(mediaId);
+            GameMember ownerMember = GameMember.GetGameMemberById(ownerId);
 
             if (mediaMember == null || ownerMember == null)
                 return false;

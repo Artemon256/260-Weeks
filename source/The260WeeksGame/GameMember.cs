@@ -5,12 +5,27 @@ namespace The260WeeksGame
 {
     public abstract class GameMember
     {
+
+        private static int numberOfMembers = 0;
+        private static Dictionary<int, GameMember> idMemberPairs = new Dictionary<int, GameMember>();
+
+        public static readonly double MaxOpinion = 300;
+        public static readonly double MinOpinion = -300;
+
+        protected int id = 0;
         protected string name="";
         public Dictionary<GameMember, double> Opinions;
 
+        
+
+
         public GameMember(string name) {
+            numberOfMembers++;
+
             this.name = name;
+            id = numberOfMembers;
             Opinions = new Dictionary<GameMember, double>();
+            idMemberPairs[id] = this;
         }
 
         public string Name
@@ -21,8 +36,15 @@ namespace The260WeeksGame
             }
         }
 
-        public static readonly double MaxOpinion = 300;
-        public static readonly double MinOpinion = -300;
+        public int Id
+        {
+            get
+            {
+                return id;
+            }
+        }
+
+        
 
         public static double Adjust(double value)
         {
@@ -55,6 +77,19 @@ namespace The260WeeksGame
             if (value <= leftBound)
                 return leftBound;
             return value;
+        }
+
+        public static GameMember GetGameMemberById(int id)
+        {
+            GameMember result = null;
+            if(idMemberPairs.TryGetValue(id, out result))
+            {
+                return result;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public abstract void GenerateOpinions();

@@ -100,16 +100,6 @@ namespace The260WeeksGame
                 member.Turn();
         }
 
-        public GameMember GetGameMemberByName(string name)
-        {
-            foreach(var member in Members)
-            {
-                if (member.Name == name)
-                    return member;
-            }
-            return null;
-        }
-
         public static double RandomDouble(double min, double max) {
             return RandomGenerator.NextDouble() * (max - min) + min;
         }

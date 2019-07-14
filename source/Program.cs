@@ -88,6 +88,7 @@ namespace Proto0
 
         private void ShowPresidentStats()
         {
+            Console.WriteLine("ID = {0}", game.Player.Id);
             showOpinionsAboutGameMember(GameCore.getInstance().Player);
         }
 
@@ -104,6 +105,7 @@ namespace Proto0
                 foreach (var businessman in game.Businessmen)
                 {
                     string message = String.Format("\tName = {0}\n", businessman.Name)
+                                    +String.Format("\tID = {0}\n", businessman.Id)
                                     +String.Format("\tTo show list of HIS opinions, enter {0}\n", id)
                                     +String.Format("\tTo show list of opinions ABOUT HIM, enter {0}\n", id+1);
                           
@@ -202,6 +204,7 @@ namespace Proto0
                 foreach (var media in game.MassMedia)
                 {
                     string Message = String.Format("\tName = {0}\n", media.Name)
+                                    +String.Format("\tID = {0}\n", media.Id)
                                     + String.Format("\tOwner = {0}   (Opinion about you = {1})\n", media.Owner.Name, media.Owner.Opinions[game.Player])
                                     + String.Format("\tIf you want list of opinions ABOUT IT, enter {0}\n", id)
                                     + String.Format("\tIf you want to start a campaign with that media, enter {0}\n", id + 1);
@@ -261,13 +264,13 @@ namespace Proto0
             Console.Clear();
 
             Console.WriteLine("Here is some help on cheat codes:\n");
-            Console.WriteLine("NOTICE: If a name contains spaces, replace them with '_' symbol\n(e.g. Instead of 'Mr. President' you should write 'Mr._President'\n");
+          //  Console.WriteLine("NOTICE: If a name contains spaces, replace them with '_' symbol\n(e.g. Instead of 'Mr. President' you should write 'Mr._President'\n");
 
-            Console.WriteLine("opinion $whoseOpinion$ $aboutWhom$ $value$");
+            Console.WriteLine("opinion $whoseOpinion_id$ $aboutWhom_id$ $value$");
             Console.WriteLine("\t\t--- Sets $whoseOpinion$ about $aboutWhom$ to $value$ (in unadjusted format)");
             Console.WriteLine();
 
-            Console.WriteLine("owner $media$ $newOwner$");
+            Console.WriteLine("owner $media_id$ $newOwner_id$");
             Console.WriteLine("\t\t--- Sets $newOwner$ as an owner of $media$");
             Console.WriteLine();
         }
