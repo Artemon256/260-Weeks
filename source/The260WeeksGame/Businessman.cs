@@ -14,7 +14,7 @@ namespace The260WeeksGame
 
         public override void GenerateOpinions()
         {
-            foreach (var subject in GameCore.getInstance().Members)
+            foreach (GameMember subject in GameCore.getInstance().Members)
             {
                 if (subject == this)
                     continue;
@@ -54,10 +54,10 @@ namespace The260WeeksGame
         public static Businessman GenerateRandom()
         {
             GameCore core = GameCore.getInstance();
-            var firstName = core.RandomObjectFromList(GameStringManager.getInstance().FirstNames);
-            var secondName = core.RandomObjectFromList(GameStringManager.getInstance().SecondNames); 
+            string firstName = core.RandomObjectFromList(GameStringManager.getInstance().FirstNames);
+            string secondName = core.RandomObjectFromList(GameStringManager.getInstance().SecondNames); 
 
-            var fullName = firstName + " " + secondName;
+            string fullName = firstName + " " + secondName;
 
             Businessman result = new Businessman(fullName, 50); // Service points on start are equal to 50 until we develop ways to earn them
             

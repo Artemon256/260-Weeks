@@ -15,8 +15,8 @@ namespace The260WeeksGame
         {
             get
             {
-                var result = new List<Businessman>();
-                foreach (var member in Members)
+                List<Businessman> result = new List<Businessman>();
+                foreach (GameMember member in Members)
                     if (member is Businessman)
                         result.Add(member as Businessman);
                 return result;
@@ -26,8 +26,8 @@ namespace The260WeeksGame
         {
             get
             {
-                var result = new List<MassMediaUnit>();
-                foreach (var member in Members)
+                List<MassMediaUnit> result = new List<MassMediaUnit>();
+                foreach (GameMember member in Members)
                     if (member is MassMediaUnit)
                         result.Add(member as MassMediaUnit);
                 return result;
@@ -37,8 +37,8 @@ namespace The260WeeksGame
         {
             get
             {
-                var result = new List<SocialGroup>();
-                foreach (var member in Members)
+                List<SocialGroup> result = new List<SocialGroup>();
+                foreach (GameMember member in Members)
                     if (member is SocialGroup)
                         result.Add(member as SocialGroup);
                 return result;
@@ -59,8 +59,8 @@ namespace The260WeeksGame
         {
             gameOn = true;
 
-            var businessmen = new List<Businessman>();
-            var massMedia = new List<MassMediaUnit>();
+            List<Businessman> businessmen = new List<Businessman>();
+            List<MassMediaUnit> massMedia = new List<MassMediaUnit>();
 
             for (int i = 0; i < GameParams.instance.NumberOfBusinessmen; i++)
             {
@@ -72,9 +72,9 @@ namespace The260WeeksGame
                 massMedia.Add(MassMediaUnit.GenerateRandom());
             }
 
-            foreach (var unit in massMedia)
+            foreach (MassMediaUnit media in massMedia)
             {
-                unit.Owner = RandomObjectFromList(businessmen);
+                media.Owner = RandomObjectFromList(businessmen);
             }
 
             // ORDER IS IMPORTANT, GROUPS DEFINE THEIR OPINIONS BASED ON OPINIONS OF BUSINESSMEN AND MASS MEDIA
@@ -83,12 +83,12 @@ namespace The260WeeksGame
             Members.AddRange(SocialGroup.getSocialGroups());
             Members.Add(Player); // Player ALWAYS moves AFTER other members
 
-            foreach(var businessman in businessmen)
+            foreach(Businessman businessman in businessmen)
             {
                 businessman.GenerateOpinions();
             }
             
-            foreach(var group in SocialGroups)
+            foreach(SocialGroup group in SocialGroups)
             {
                 group.GenerateOpinions();
             }
@@ -96,7 +96,7 @@ namespace The260WeeksGame
 
         public void NextTurn()
         {
-            foreach (var member in Members)
+            foreach (GameMember member in Members)
                 member.Turn();
         }
 

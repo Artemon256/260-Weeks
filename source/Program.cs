@@ -35,7 +35,7 @@ namespace Proto0
 
         private void showGameMembersOpinions(GameMember whoseOpinion)
         {
-            foreach (var aboutWhom in game.Members)
+            foreach (GameMember aboutWhom in game.Members)
             {
                 if (whoseOpinion.Opinions.ContainsKey(aboutWhom))
                 {
@@ -48,7 +48,7 @@ namespace Proto0
 
         private void showOpinionsAboutGameMember(GameMember aboutWhom)
         {
-            foreach (var whoseOpinion in game.Members)
+            foreach (GameMember whoseOpinion in game.Members)
             {
                 if (whoseOpinion.Opinions.ContainsKey(aboutWhom))
                 {
@@ -63,7 +63,7 @@ namespace Proto0
         {
             Console.Clear();
 
-            foreach(var whoseOpinion in game.Members)
+            foreach(GameMember whoseOpinion in game.Members)
             {
                 showGameMembersOpinions(whoseOpinion);
                 Console.WriteLine();
@@ -102,7 +102,7 @@ namespace Proto0
 
                 int id = 0;
 
-                foreach (var businessman in game.Businessmen)
+                foreach (Businessman businessman in game.Businessmen)
                 {
                     string message = String.Format("\tName = {0}\n", businessman.Name)
                                     +String.Format("\tID = {0}\n", businessman.Id)
@@ -201,7 +201,7 @@ namespace Proto0
 
                 int id = 0;
 
-                foreach (var media in game.MassMedia)
+                foreach (MassMediaUnit media in game.MassMedia)
                 {
                     string Message = String.Format("\tName = {0}\n", media.Name)
                                     +String.Format("\tID = {0}\n", media.Id)
@@ -227,7 +227,7 @@ namespace Proto0
                 if (command >= 2 * game.MassMedia.Count)
                     return;
 
-                var chosenMedia = game.MassMedia[command / 2];
+                MassMediaUnit chosenMedia = game.MassMedia[command / 2];
 
                 if(command % 2 == 0)
                 {
@@ -239,9 +239,9 @@ namespace Proto0
                 }
                 else
                 {
-                    var target = selectTarget();
-                    var duration = selectDuration();
-                    var campaignMode = selectCampaignMode();
+                    GameMember target = selectTarget();
+                    int duration = selectDuration();
+                    MassMediaUnit.Campaign.CampaignMode campaignMode = selectCampaignMode();
 
                     if (chosenMedia.AddCampaign(target, duration, campaignMode))
                     {

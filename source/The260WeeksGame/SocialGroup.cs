@@ -41,7 +41,7 @@ namespace The260WeeksGame
         }
 
         public override void GenerateOpinions() {
-            foreach (var subject in GameCore.getInstance().Members)
+            foreach (GameMember subject in GameCore.getInstance().Members)
             {
                 if (subject is SocialGroup || subject is President)
                     continue; // Social groups have predefined opinions about other groups and president
@@ -57,19 +57,19 @@ namespace The260WeeksGame
             if (socialGroups == null) {
                 socialGroups = new List<SocialGroup>();
                 
-                var parameters = new XmlDocument();
+                XmlDocument parameters = new XmlDocument();
                 
                 parameters.LoadXml(GameStringManager.getInstance().SocialGroups);
 
-                var groupsXML = parameters.GetElementsByTagName("groups")[0];
+                XmlNode groupsXML = parameters.GetElementsByTagName("groups")[0];
 
-                var groups = new Dictionary<string, SocialGroup>();
+                Dictionary<string, SocialGroup> groups = new Dictionary<string, SocialGroup>();
                 
                 foreach (XmlNode groupXML in groupsXML.ChildNodes) {
                     if (groupXML.Name != "group")
                         continue;
 
-                    var name = groupXML.Attributes.GetNamedItem("name").Value;
+                    string name = groupXML.Attributes.GetNamedItem("name").Value;
     
                     groups.Add(name, new SocialGroup(name));
                 }
@@ -78,15 +78,15 @@ namespace The260WeeksGame
                     if (groupXML.Name != "group")
                         continue;
 
-                    var name = groupXML.Attributes.GetNamedItem("name").Value;
+                    string name = groupXML.Attributes.GetNamedItem("name").Value;
 
-                    var group = groups[name];
+                    SocialGroup group = groups[name];
 
                     foreach (XmlNode opinionXML in groupXML.ChildNodes) {
                         if (opinionXML is XmlComment)
                             continue;
-                        var subject = opinionXML.Attributes.GetNamedItem("subject").Value;
-                        var value = Convert.ToDouble(opinionXML.InnerText);
+                        string subject = opinionXML.Attributes.GetNamedItem("subject").Value;
+                        double value = Convert.ToDouble(opinionXML.InnerText);
                         switch (subject) {
                             case "Mass Media":
                                 group.OverallMassMediaOpinion = value;

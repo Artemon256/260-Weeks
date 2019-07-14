@@ -60,7 +60,7 @@ namespace The260WeeksGame
         
         private void actCampaigns()
         {
-            foreach (var campaign in campaigns)
+            foreach (Campaign campaign in campaigns)
             {
                 int modifier = 0;
 
@@ -69,7 +69,7 @@ namespace The260WeeksGame
                 if (campaign.Mode == Campaign.CampaignMode.Pro)
                     modifier = 1;
 
-                foreach (var group in GameCore.getInstance().SocialGroups)
+                foreach (SocialGroup group in GameCore.getInstance().SocialGroups)
                     group.RevaluateOpinion(this, campaign.Target, modifier * campaignInfluence);
                 campaign.TurnsLeft--;
             }
@@ -78,7 +78,7 @@ namespace The260WeeksGame
         }
 
         private void actPresident() {
-            foreach (var group in GameCore.getInstance().SocialGroups)
+            foreach (SocialGroup group in GameCore.getInstance().SocialGroups)
                 group.RevaluateOpinion(this, GameCore.getInstance().Player, passiveInfluence * Adjust(Owner.Opinions[GameCore.getInstance().Player]));
         }
 
