@@ -259,7 +259,7 @@ namespace Proto0
             }
         }
 
-        private void showCheatCodeHelp()
+        private void ShowCheatCodeHelp()
         {
             Console.Clear();
 
@@ -273,6 +273,23 @@ namespace Proto0
             Console.WriteLine("owner $media_id$ $newOwner_id$");
             Console.WriteLine("\t\t--- Sets $newOwner$ as an owner of $media$");
             Console.WriteLine();
+        }
+
+        private void ShowPopulationInfo()
+        {
+            Console.Clear();
+
+            Console.WriteLine("Population info:\n");
+
+            foreach(var group in game.SocialGroups)
+            {
+                string message = $"Name = \"{group.Name}\"\n"
+                                + $"ID = {group.Id}\n"
+                                + $"Population = {group.Population}  ({100d * group.Population / game.TotalPopulation,5:F3}%)\n"
+                                + $"Eligible for voting = {group.VoteEligible}\n";
+
+                Console.WriteLine(message);
+            }
         }
 
         public void Play()
@@ -289,7 +306,8 @@ namespace Proto0
                 Console.WriteLine("Pass to next turn (4)");
                 Console.WriteLine("Show all opinions (5)");
                 Console.WriteLine("Help on cheat codes (6)");
-                Console.WriteLine("End Game (7)");
+                Console.WriteLine("Show population info (7)");
+                Console.WriteLine("End Game (8)");
 
                 string answer = Console.ReadLine();
 
@@ -311,9 +329,12 @@ namespace Proto0
                         showAllOpinions();
                         break;
                     case "6":
-                        showCheatCodeHelp();
+                        ShowCheatCodeHelp();
                         break;
                     case "7":
+                        ShowPopulationInfo();
+                        break;
+                    case "8":
                         Console.WriteLine("Goodbye!\n Press any key to continue...");
                         Console.ReadKey();
                         return;

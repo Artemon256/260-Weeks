@@ -14,6 +14,8 @@
         <opinion subject = "Mass Media">24.03135721</opinion>
         <opinion subject = "President">-14.64242312</opinion>
         <opinion subject = "Businessmen">-18.6909271</opinion>
+        <population>500000</population>
+        <vote_eligible>true</vote_eligible>
     </group>
 
     <group name = "Teenagers">
@@ -28,6 +30,8 @@
         <opinion subject = "Mass Media">-2.568040346</opinion>
         <opinion subject = "President">-5.268203913</opinion>
         <opinion subject = "Businessmen">18.91873241</opinion>
+        <population>100000</population>
+        <vote_eligible>false</vote_eligible>
     </group>
 
     <group name = "LGBT">
@@ -42,6 +46,8 @@
         <opinion subject = "Mass Media">-30.66903305</opinion>
         <opinion subject = "President">2.703168621</opinion>
         <opinion subject = "Businessmen">11.35363324</opinion>
+        <population>10000</population>
+        <vote_eligible>true</vote_eligible>
     </group>
 
     <group name = "Aged">
@@ -56,6 +62,8 @@
         <opinion subject = "Mass Media">31.10523061</opinion>
         <opinion subject = "President">2.703168621</opinion>
         <opinion subject = "Businessmen">2.703168621</opinion>
+        <population>200000</population>
+        <vote_eligible>true</vote_eligible>
     </group>
 
     <group name = "Children">
@@ -70,6 +78,8 @@
         <opinion subject = "Mass Media">5.408564634</opinion>
         <opinion subject = "President">0.06672806475</opinion>
         <opinion subject = "Businessmen">0.06672806475</opinion>
+        <population>150000</population>
+        <vote_eligible>false</vote_eligible>
     </group>
 
     <group name = "Poor">
@@ -84,6 +94,8 @@
         <opinion subject = "Mass Media">0.06672806475</opinion>
         <opinion subject = "President">-42.3255721</opinion>
         <opinion subject = "Businessmen">-42.3255721</opinion>
+        <population>100000</population>
+        <vote_eligible>true</vote_eligible>
     </group>
 
     <group name = "Criminals">
@@ -98,6 +110,8 @@
         <opinion subject = "Mass Media">-2.568040346</opinion>
         <opinion subject = "President">-8.10953688</opinion>
         <opinion subject = "Businessmen">-2.568040346</opinion>
+        <population>25000</population>
+        <vote_eligible>true</vote_eligible>
     </group>
 
     <group name = "Militarists">
@@ -112,5 +126,7 @@
         <opinion subject = "Mass Media">8.259410234</opinion>
         <opinion subject = "President">18.91873241</opinion>
         <opinion subject = "Businessmen">0.06672806475</opinion>
+        <population>200000</population>
+        <vote_eligible>true</vote_eligible>
     </group>
 </groups>
