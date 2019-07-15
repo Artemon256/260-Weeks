@@ -5,7 +5,8 @@ namespace The260WeeksGame
 {
     public class GameCore
     {
-        private bool gameOn; // ??? 
+        private bool gameOn; // ???
+        private int currentTurn; 
         public List<GameMember> Members;
         public President Player;
         public static Random RandomGenerator = new Random();
@@ -44,6 +45,13 @@ namespace The260WeeksGame
                 return result;
             }
         }  
+        public int CurrentTurn
+        {
+            get
+            {
+                return currentTurn;
+            }
+        }
 
         public bool GameOn() // ???
         {
@@ -58,6 +66,7 @@ namespace The260WeeksGame
         public void StartGame()
         {
             gameOn = true;
+            currentTurn = 1;
 
             List<Businessman> businessmen = new List<Businessman>();
             List<MassMediaUnit> massMedia = new List<MassMediaUnit>();
@@ -96,6 +105,8 @@ namespace The260WeeksGame
 
         public void NextTurn()
         {
+            currentTurn++;
+
             foreach (GameMember member in Members)
                 member.Turn();
         }
