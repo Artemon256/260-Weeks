@@ -6,6 +6,8 @@ namespace The260WeeksGame
 {
     public class SocialGroup : GameMember
     {
+        public int Population;
+        public bool VoteEligible;
         public double OverallMassMediaOpinion, OverallBusinessmenOpinion;
 
         public SocialGroup(string name) : base(name) {
@@ -52,6 +54,37 @@ namespace The260WeeksGame
             }
         }
 
+        private static void ParseOpinions(XmlNode opinionXML, SocialGroup group, Dictionary<string, SocialGroup> groups)
+        {
+            string subject = opinionXML.Attributes.GetNamedItem("subject").Value;
+            double value = Convert.ToDouble(opinionXML.InnerText);
+            switch (subject)
+            {
+                case "Mass Media":
+                    group.OverallMassMediaOpinion = value;
+                    break;
+                case "Businessmen":
+                    group.OverallBusinessmenOpinion = value;
+                    break;
+                case "President":
+                    group.Opinions.Add(GameCore.getInstance().Player, value);
+                    break;
+                default:
+                    group.Opinions.Add(groups[subject], value);
+                    break;
+            }
+        }
+
+        private static void ParsePopulation(XmlNode populationXML, SocialGroup group)
+        {
+            group.Population = Convert.ToInt32(populationXML.InnerText);
+        }
+
+        private static void ParseVoteEligible(XmlNode voteEligibleXML, SocialGroup group)
+        {
+            group.VoteEligible = Convert.ToBoolean(voteEligibleXML.InnerText);
+        }
+
         private static List<SocialGroup> socialGroups = null;
         public static List<SocialGroup> getSocialGroups() {
             if (socialGroups == null) {
@@ -82,25 +115,23 @@ namespace The260WeeksGame
 
                     SocialGroup group = groups[name];
 
-                    foreach (XmlNode opinionXML in groupXML.ChildNodes) {
-                        if (opinionXML is XmlComment)
+                    foreach (XmlNode infoXML in groupXML.ChildNodes) {
+                        if (infoXML is XmlComment)
                             continue;
-                        string subject = opinionXML.Attributes.GetNamedItem("subject").Value;
-                        double value = Convert.ToDouble(opinionXML.InnerText);
-                        switch (subject) {
-                            case "Mass Media":
-                                group.OverallMassMediaOpinion = value;
+
+                        switch (infoXML.Name)
+                        {
+                            case "opinion":
+                                ParseOpinions(infoXML, group, groups);
                                 break;
-                            case "Businessmen":
-                                group.OverallBusinessmenOpinion = value;
+                            case "population":
+                                ParsePopulation(infoXML, group);
                                 break;
-                            case "President":
-                                group.Opinions.Add(GameCore.getInstance().Player, value);
-                                break;
-                            default:
-                                group.Opinions.Add(groups[subject], value);
+                            case "vote_eligible":
+                                ParseVoteEligible(infoXML, group);
                                 break;
                         }
+                        
                     }
                 }
 

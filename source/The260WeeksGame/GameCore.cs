@@ -53,6 +53,21 @@ namespace The260WeeksGame
             }
         }
 
+        public int TotalPopulation
+        {
+            get
+            {
+                int result = 0;
+
+                foreach(var group in SocialGroups)
+                {
+                    result += group.Population;
+                }
+
+                return result;
+            }
+        }
+
         public bool GameOn() // ???
         {
             return gameOn;
