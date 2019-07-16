@@ -62,7 +62,8 @@ namespace The260WeeksGame
         }
 
         private static GameStringManager instance;
-        public static GameStringManager getInstance() {
+        public static GameStringManager getInstance()
+        {
             if (instance == null)
                 instance = new GameStringManager();
             return instance;

@@ -42,10 +42,10 @@ namespace The260WeeksGame
 
             int mediaId, ownerId;
 
-            if(!int.TryParse(command[1], out mediaId))
+            if (!int.TryParse(command[1], out mediaId))
                 return false;
-            
-            if(!int.TryParse(command[2], out ownerId))
+
+            if (!int.TryParse(command[2], out ownerId))
                 return false;
 
             GameMember mediaMember = GameMember.GetGameMemberById(mediaId);
@@ -88,7 +88,7 @@ namespace The260WeeksGame
             this.game = game;
         }
 
-        private static CheatCodeParser cheatCodeParser; 
+        private static CheatCodeParser cheatCodeParser;
 
         public static CheatCodeParser getInstance()
         {

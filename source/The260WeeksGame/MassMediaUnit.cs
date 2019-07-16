@@ -3,8 +3,8 @@
 namespace The260WeeksGame
 {
     public class MassMediaUnit : GameMember
-    { 
-        
+    {
+
         public class Campaign
         {
             public enum CampaignMode
@@ -57,7 +57,7 @@ namespace The260WeeksGame
 
             return true;
         }
-        
+
         private void actCampaigns()
         {
             foreach (Campaign campaign in campaigns)
@@ -77,12 +77,14 @@ namespace The260WeeksGame
             campaigns.RemoveAll(item => item.TurnsLeft == 0);
         }
 
-        private void actPresident() {
+        private void actPresident()
+        {
             foreach (SocialGroup group in GameCore.getInstance().SocialGroups)
                 group.RevaluateOpinion(this, GameCore.getInstance().Player, passiveInfluence * Adjust(Owner.Opinions[GameCore.getInstance().Player]));
         }
 
-        public override void Turn() {
+        public override void Turn()
+        {
             actCampaigns();
             actPresident();
         }
@@ -94,12 +96,14 @@ namespace The260WeeksGame
             return result;
         }
 
-        public override void GenerateOpinions() {
-            
+        public override void GenerateOpinions()
+        {
+
         }
 
-        public override void RevaluateOpinion(GameMember sender, GameMember target, double delta) {
-            
+        public override void RevaluateOpinion(GameMember sender, GameMember target, double delta)
+        {
+
         }
     }
 }

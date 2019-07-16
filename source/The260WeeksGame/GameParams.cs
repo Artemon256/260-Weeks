@@ -6,7 +6,8 @@
         public int NumberOfMassMedia;
         public DifficultyLevel Difficulty;
 
-        public enum DifficultyLevel {
+        public enum DifficultyLevel
+        {
             Easy,
             Moderate,
             Medium,
@@ -15,13 +16,15 @@
         }
 
 
-        private GameParams() {
+        private GameParams()
+        {
 
         }
 
         public static GameParams instance;
 
-        public static GameParams getInstance() {
+        public static GameParams getInstance()
+        {
             if (instance == null)
                 instance = new GameParams();
             return instance;
