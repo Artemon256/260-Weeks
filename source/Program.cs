@@ -18,8 +18,8 @@ namespace Proto0
         private GameParams.DifficultyLevel ChooseDifficulty()
         {
             Console.Clear();
-            
-            Console.WriteLine("Choose difficulty:");
+
+            Console.WriteLine("Choose difficulty:\n");
             Console.WriteLine("Easy (0)");
             Console.WriteLine("Moderate (1)");
             Console.WriteLine("Medium (2)");
@@ -32,6 +32,83 @@ namespace Proto0
 
             return (GameParams.DifficultyLevel)answer;
         }
+
+
+
+        public void StartGame()
+        {
+            game = GameCore.getInstance();
+            gameParams = GameParams.getInstance();
+
+            gameParams.Difficulty = ChooseDifficulty();
+            gameParams.NumberOfBusinessmen = GameCore.RandomGenerator.Next(1, 10);
+            gameParams.NumberOfMassMedia = GameCore.RandomGenerator.Next(1, 10);
+
+            game.StartGame();
+
+
+            menuOptions.Add(new MenuOption("Show president's stats", ShowPresidentStats));
+            menuOptions.Add(new MenuOption("Show businessmen's stats", ShowBusinessmenStats));
+            menuOptions.Add(new MenuOption("Show media stats", ShowMediaStats));
+            menuOptions.Add(new MenuOption("Pass to next turn", NextTurn));
+            menuOptions.Add(new MenuOption("Show all opinions", ShowAllOpinions));
+            menuOptions.Add(new MenuOption("Help on cheat codes", ShowCheatCodeHelp));
+        }
+
+        public void Play()
+        {
+
+            while (game.GameOn())
+            {
+                if (!ShowMenu())
+                    return;
+            }
+        }
+
+        private void ShowPause()
+        {
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+        }
+
+        private bool ShowMenu()
+        {
+            Console.Clear();
+
+            Console.WriteLine($"Current turn = {game.CurrentTurn}");
+            Console.WriteLine("Choose an option:\n");
+
+            for (int i = 0; i < menuOptions.Count; i++)
+            {
+                MenuOption option = menuOptions[i];
+                Console.WriteLine($"{option.Description} ({i})");
+            }
+
+            Console.WriteLine($"Exit ({menuOptions.Count})");
+
+            string answer = Console.ReadLine();
+
+            int command;
+
+            if (!int.TryParse(answer, out command))
+            {
+                if (CheatCodeParser.getInstance().ParseCheatCode(answer))
+                    Console.WriteLine("Cheat code activated!");
+                else
+                    Console.WriteLine("Wrong command!");
+                ShowPause();
+                return true;
+            }
+
+            if (command == menuOptions.Count)
+                return false;
+
+            menuOptions[command].TheAction();
+
+            return true;
+        }
+
+        #region Implementation of menu actions
 
         private void showGameMembersOpinions(GameMember whoseOpinion)
         {
@@ -204,8 +281,8 @@ namespace Proto0
                 foreach (MassMediaUnit media in game.MassMedia)
                 {
                     string Message = String.Format("\tName = {0}\n", media.Name)
-                                    +String.Format("\tID = {0}\n", media.Id)
-                                    + String.Format("\tOwner = {0}   (Opinion about you = {1})\n", media.Owner.Name, media.Owner.Opinions[game.Player])
+                                    + String.Format("\tID = {0}\n", media.Id)
+                                    + String.Format("\tOwner = {0}   (Opinion about you = {1})\n", media.Owner.Name, GameMember.Adjust(media.Owner.Opinions[game.Player]))
                                     + String.Format("\tIf you want list of opinions ABOUT IT, enter {0}\n", id)
                                     + String.Format("\tIf you want to start a campaign with that media, enter {0}\n", id + 1);
 

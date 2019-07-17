@@ -42,11 +42,14 @@ namespace The260WeeksGame
             }
         }
 
-        public override void Turn() {
+        public override void Turn()
+        {
+            base.Turn();
+
             int transferedPoint = (int)Math.Round(ServicePoint * 0.2);
 
             Opinions[GameCore.getInstance().Player] += transferedPoint;
-            Opinions[GameCore.getInstance().Player] = ConstraintOpinion(Opinions[GameCore.getInstance().Player]);
+            Opinions[GameCore.getInstance().Player] = ConstrainOpinion(Opinions[GameCore.getInstance().Player]);
 
             ServicePoint -= transferedPoint;
         }

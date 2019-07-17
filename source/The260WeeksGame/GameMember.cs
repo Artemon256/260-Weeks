@@ -52,7 +52,7 @@ namespace The260WeeksGame
 
             double result = (Math.Atan(Math.Exp(0.06 * value)) * 4)/Math.PI - 1;
 
-            return ConstraintValue(result, -bound, bound);
+            return ConstrainValue(result, -bound, bound);
         }
 
         public static double Unadjust(double value)
@@ -65,12 +65,12 @@ namespace The260WeeksGame
             return Math.Log(Math.Tan((value + 1d) * Math.PI * 0.25d)) / 0.06d;
         }
 
-        public static double ConstraintOpinion(double opinion)
+        public static double ConstrainOpinion(double opinion)
         {
-            return ConstraintValue(opinion, MinOpinion, MaxOpinion);
+            return ConstrainValue(opinion, MinOpinion, MaxOpinion);
         }
 
-        public static double ConstraintValue(double value, double leftBound, double rightBound)
+        public static double ConstrainValue(double value, double leftBound, double rightBound)
         {
             if (value >= rightBound)
                 return rightBound;
@@ -92,9 +92,31 @@ namespace The260WeeksGame
             }
         }
 
-        public abstract void GenerateOpinions();
-        public abstract void Turn();
+        public void RevaluateOpinionsWeighted()
+        {
+            Dictionary<GameMember, double> OpinionsCopy = new Dictionary<GameMember, double>(Opinions);
+            foreach (KeyValuePair<GameMember, double> subject in Opinions)
+            {
+                double value = Adjust(subject.Value);
+                foreach (KeyValuePair<GameMember, double> reference in Opinions)
+                {
+                    if (reference.Key == subject.Key)
+                        continue;
+                    double referenceValue;
+                    if (reference.Key.Opinions.TryGetValue(subject.Key, out referenceValue))
+                        value += Adjust(reference.Value) * Adjust(referenceValue) * 0.01; // An enemy of my enemy is my friend
+                }
+                OpinionsCopy[subject.Key] = ConstrainOpinion(Unadjust(value));
+            }
+            Opinions = OpinionsCopy;
+        }
 
+        public virtual void Turn()
+        {
+            RevaluateOpinionsWeighted();
+        }
+
+        public abstract void GenerateOpinions();
         public abstract void RevaluateOpinion(GameMember sender, GameMember target, double delta);
     }
 }

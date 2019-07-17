@@ -82,7 +82,9 @@ namespace The260WeeksGame
                 group.RevaluateOpinion(this, GameCore.getInstance().Player, passiveInfluence * Adjust(Owner.Opinions[GameCore.getInstance().Player]));
         }
 
-        public override void Turn() {
+        public override void Turn()
+        {
+            base.Turn();
             actCampaigns();
             actPresident();
         }
