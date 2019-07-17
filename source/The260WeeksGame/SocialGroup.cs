@@ -17,6 +17,7 @@ namespace The260WeeksGame
 
         public override void Turn()
         {
+            base.Turn();
 
         }
 
@@ -40,9 +41,9 @@ namespace The260WeeksGame
             senderRating += 2; // The best way to keep using negative rating so that influence still proportional on rating 
 
             double random = GameCore.RandomDouble(0, 0.2);
-            Opinions[target] += delta * senderRating * random;
+            Opinions[target] += Unadjust(Adjust(delta) * Adjust(senderRating) * Adjust(random));
 
-            Opinions[target] = ConstraintOpinion(Opinions[target]);
+            Opinions[target] = ConstrainOpinion(Opinions[target]);
         }
 
         public override void GenerateOpinions()

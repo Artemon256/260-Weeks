@@ -32,7 +32,7 @@ namespace Proto0
         private GameParams.DifficultyLevel ChooseDifficulty()
         {
             Console.Clear();
-            
+
             Console.WriteLine("Choose difficulty:\n");
             Console.WriteLine("Easy (0)");
             Console.WriteLine("Moderate (1)");
@@ -47,7 +47,7 @@ namespace Proto0
             return (GameParams.DifficultyLevel)answer;
         }
 
-        
+
 
         public void StartGame()
         {
@@ -92,7 +92,7 @@ namespace Proto0
             Console.WriteLine($"Current turn = {game.CurrentTurn}");
             Console.WriteLine("Choose an option:\n");
 
-            for(int i = 0; i < menuOptions.Count; i++)
+            for (int i = 0; i < menuOptions.Count; i++)
             {
                 MenuOption option = menuOptions[i];
                 Console.WriteLine($"{option.Description} ({i})");
@@ -284,7 +284,7 @@ namespace Proto0
                 {
                     string Message = String.Format("\tName = {0}\n", media.Name)
                                     + String.Format("\tID = {0}\n", media.Id)
-                                    + String.Format("\tOwner = {0}   (Opinion about you = {1})\n", media.Owner.Name, media.Owner.Opinions[game.Player])
+                                    + String.Format("\tOwner = {0}   (Opinion about you = {1})\n", media.Owner.Name, GameMember.Adjust(media.Owner.Opinions[game.Player]))
                                     + String.Format("\tIf you want list of opinions ABOUT IT, enter {0}\n", id)
                                     + String.Format("\tIf you want to start a campaign with that media, enter {0}\n", id + 1);
 

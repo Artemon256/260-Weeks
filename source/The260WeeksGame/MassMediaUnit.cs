@@ -85,6 +85,7 @@ namespace The260WeeksGame
 
         public override void Turn()
         {
+            base.Turn();
             actCampaigns();
             actPresident();
         }

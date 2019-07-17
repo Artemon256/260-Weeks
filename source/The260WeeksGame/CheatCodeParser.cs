@@ -30,7 +30,7 @@ namespace The260WeeksGame
             if (whose == null || aboutWhom == null)
                 return false;
 
-            whose.Opinions[aboutWhom] = GameMember.ConstraintOpinion(value);
+            whose.Opinions[aboutWhom] = GameMember.ConstrainOpinion(value);
 
             return true;
         }
