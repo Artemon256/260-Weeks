@@ -5,11 +5,12 @@ namespace The260WeeksGame
 {
     public class GameCore
     {
-        private bool gameOn; // ??? 
+        private bool gameOn; // ???
+        private int currentTurn;
         public List<GameMember> Members;
         public President Player;
         public static Random RandomGenerator = new Random();
-       
+
 
         public List<Businessman> Businessmen
         {
@@ -43,7 +44,14 @@ namespace The260WeeksGame
                         result.Add(member as SocialGroup);
                 return result;
             }
-        }  
+        }
+        public int CurrentTurn
+        {
+            get
+            {
+                return currentTurn;
+            }
+        }
 
         public int TotalPopulation
         {
@@ -51,7 +59,7 @@ namespace The260WeeksGame
             {
                 int result = 0;
 
-                foreach(var group in SocialGroups)
+                foreach (var group in SocialGroups)
                 {
                     result += group.Population;
                 }
@@ -64,8 +72,9 @@ namespace The260WeeksGame
         {
             return gameOn;
         }
-        
-        private GameCore() {
+
+        private GameCore()
+        {
             Player = new President();
             Members = new List<GameMember>();
         }
@@ -73,6 +82,7 @@ namespace The260WeeksGame
         public void StartGame()
         {
             gameOn = true;
+            currentTurn = 1;
 
             List<Businessman> businessmen = new List<Businessman>();
             List<MassMediaUnit> massMedia = new List<MassMediaUnit>();
@@ -98,12 +108,12 @@ namespace The260WeeksGame
             Members.AddRange(SocialGroup.getSocialGroups());
             Members.Add(Player); // Player ALWAYS moves AFTER other members
 
-            foreach(Businessman businessman in businessmen)
+            foreach (Businessman businessman in businessmen)
             {
                 businessman.GenerateOpinions();
             }
-            
-            foreach(SocialGroup group in SocialGroups)
+
+            foreach (SocialGroup group in SocialGroups)
             {
                 group.GenerateOpinions();
             }
@@ -111,11 +121,14 @@ namespace The260WeeksGame
 
         public void NextTurn()
         {
+            currentTurn++;
+
             foreach (GameMember member in Members)
                 member.Turn();
         }
 
-        public static double RandomDouble(double min, double max) {
+        public static double RandomDouble(double min, double max)
+        {
             return RandomGenerator.NextDouble() * (max - min) + min;
         }
 
@@ -127,7 +140,8 @@ namespace The260WeeksGame
         }
 
         private static GameCore instance = null;
-        public static GameCore getInstance() {
+        public static GameCore getInstance()
+        {
             if (instance == null)
                 instance = new GameCore();
             return instance;

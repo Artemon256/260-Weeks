@@ -58,18 +58,19 @@ namespace The260WeeksGame
         {
             GameCore core = GameCore.getInstance();
             string firstName = core.RandomObjectFromList(GameStringManager.getInstance().FirstNames);
-            string secondName = core.RandomObjectFromList(GameStringManager.getInstance().SecondNames); 
+            string secondName = core.RandomObjectFromList(GameStringManager.getInstance().SecondNames);
 
             string fullName = firstName + " " + secondName;
 
             Businessman result = new Businessman(fullName, 50); // Service points on start are equal to 50 until we develop ways to earn them
-            
+
             GameStringManager.getInstance().SecondNames.Remove(secondName);
             return result;
         }
 
-        public override void RevaluateOpinion(GameMember sender, GameMember target, double delta) {
-            
+        public override void RevaluateOpinion(GameMember sender, GameMember target, double delta)
+        {
+
         }
     }
 }

@@ -13,13 +13,14 @@ namespace The260WeeksGame
         public static readonly double MinOpinion = -300;
 
         protected int id = 0;
-        protected string name="";
+        protected string name = "";
         public Dictionary<GameMember, double> Opinions;
 
-        
 
 
-        public GameMember(string name) {
+
+        public GameMember(string name)
+        {
             numberOfMembers++;
 
             this.name = name;
@@ -44,13 +45,13 @@ namespace The260WeeksGame
             }
         }
 
-        
+
 
         public static double Adjust(double value)
         {
             const double bound = 0.99999999999999991;
 
-            double result = (Math.Atan(Math.Exp(0.06 * value)) * 4)/Math.PI - 1;
+            double result = (Math.Atan(Math.Exp(0.06 * value)) * 4) / Math.PI - 1;
 
             return ConstrainValue(result, -bound, bound);
         }
@@ -82,7 +83,7 @@ namespace The260WeeksGame
         public static GameMember GetGameMemberById(int id)
         {
             GameMember result = null;
-            if(idMemberPairs.TryGetValue(id, out result))
+            if (idMemberPairs.TryGetValue(id, out result))
             {
                 return result;
             }

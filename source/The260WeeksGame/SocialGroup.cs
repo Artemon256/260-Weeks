@@ -10,7 +10,8 @@ namespace The260WeeksGame
         public bool VoteEligible;
         public double OverallMassMediaOpinion, OverallBusinessmenOpinion;
 
-        public SocialGroup(string name) : base(name) {
+        public SocialGroup(string name) : base(name)
+        {
 
         }
 
@@ -20,12 +21,13 @@ namespace The260WeeksGame
 
         }
 
-        public override void RevaluateOpinion(GameMember sender, GameMember target, double delta) {
+        public override void RevaluateOpinion(GameMember sender, GameMember target, double delta)
+        {
             if (this == target)
                 return;
 
             double senderRating;
-            if (!Opinions.TryGetValue(sender, out senderRating))    
+            if (!Opinions.TryGetValue(sender, out senderRating))
                 return;
 
             senderRating = Adjust(senderRating);
@@ -44,7 +46,8 @@ namespace The260WeeksGame
             Opinions[target] = ConstrainOpinion(Opinions[target]);
         }
 
-        public override void GenerateOpinions() {
+        public override void GenerateOpinions()
+        {
             foreach (GameMember subject in GameCore.getInstance().Members)
             {
                 if (subject is SocialGroup || subject is President)
@@ -88,28 +91,32 @@ namespace The260WeeksGame
         }
 
         private static List<SocialGroup> socialGroups = null;
-        public static List<SocialGroup> getSocialGroups() {
-            if (socialGroups == null) {
+        public static List<SocialGroup> getSocialGroups()
+        {
+            if (socialGroups == null)
+            {
                 socialGroups = new List<SocialGroup>();
-                
+
                 XmlDocument parameters = new XmlDocument();
-                
+
                 parameters.LoadXml(GameStringManager.getInstance().SocialGroups);
 
                 XmlNode groupsXML = parameters.GetElementsByTagName("groups")[0];
 
                 Dictionary<string, SocialGroup> groups = new Dictionary<string, SocialGroup>();
-                
-                foreach (XmlNode groupXML in groupsXML.ChildNodes) {
+
+                foreach (XmlNode groupXML in groupsXML.ChildNodes)
+                {
                     if (groupXML.Name != "group")
                         continue;
 
                     string name = groupXML.Attributes.GetNamedItem("name").Value;
-    
+
                     groups.Add(name, new SocialGroup(name));
                 }
 
-                foreach (XmlNode groupXML in groupsXML.ChildNodes) {
+                foreach (XmlNode groupXML in groupsXML.ChildNodes)
+                {
                     if (groupXML.Name != "group")
                         continue;
 
@@ -117,7 +124,8 @@ namespace The260WeeksGame
 
                     SocialGroup group = groups[name];
 
-                    foreach (XmlNode infoXML in groupXML.ChildNodes) {
+                    foreach (XmlNode infoXML in groupXML.ChildNodes)
+                    {
                         if (infoXML is XmlComment)
                             continue;
 
@@ -133,7 +141,7 @@ namespace The260WeeksGame
                                 ParseVoteEligible(infoXML, group);
                                 break;
                         }
-                        
+
                     }
                 }
 

@@ -8,11 +8,25 @@ namespace Proto0
 {
     class GameRepresenter
     {
+        class MenuOption
+        {
+            public string Description { get; }
+            public Action TheAction { get; }
+
+            public MenuOption(string description, Action theAction)
+            {
+                Description = description;
+                TheAction = theAction;
+            }
+        }
+
+        private List<MenuOption> menuOptions;
         private GameCore game;
         private GameParams gameParams;
 
         public GameRepresenter()
-        { 
+        {
+            menuOptions = new List<MenuOption>();
         }
 
         private GameParams.DifficultyLevel ChooseDifficulty()
@@ -136,37 +150,27 @@ namespace Proto0
             }
         }
 
-        private void showAllOpinions()
+        private void ShowAllOpinions()
         {
             Console.Clear();
 
-            foreach(GameMember whoseOpinion in game.Members)
+            foreach (GameMember whoseOpinion in game.Members)
             {
                 showGameMembersOpinions(whoseOpinion);
                 Console.WriteLine();
             }
-        }
 
-        public void StartGame()
-        {
-            game = GameCore.getInstance();
-            gameParams = GameParams.getInstance();
-
-            gameParams.Difficulty = ChooseDifficulty();
-            gameParams.NumberOfBusinessmen = GameCore.RandomGenerator.Next(1, 10);
-            gameParams.NumberOfMassMedia = GameCore.RandomGenerator.Next(1, 10);
-
-            game.StartGame();
-
-            //showAllOpinions();
-
-
+            ShowPause();
         }
 
         private void ShowPresidentStats()
         {
+            Console.Clear();
+
             Console.WriteLine("ID = {0}", game.Player.Id);
             showOpinionsAboutGameMember(GameCore.getInstance().Player);
+
+            ShowPause();
         }
 
         private void ShowBusinessmenStats()
@@ -182,11 +186,11 @@ namespace Proto0
                 foreach (Businessman businessman in game.Businessmen)
                 {
                     string message = String.Format("\tName = {0}\n", businessman.Name)
-                                    +String.Format("\tID = {0}\n", businessman.Id)
-                                    +String.Format("\tTo show list of HIS opinions, enter {0}\n", id)
-                                    +String.Format("\tTo show list of opinions ABOUT HIM, enter {0}\n", id+1);
-                          
-      
+                                    + String.Format("\tID = {0}\n", businessman.Id)
+                                    + String.Format("\tTo show list of HIS opinions, enter {0}\n", id)
+                                    + String.Format("\tTo show list of opinions ABOUT HIM, enter {0}\n", id + 1);
+
+
 
                     message += String.Format("\tService points = {0}\n", businessman.ServicePoint.ToString());
                     Console.WriteLine(message);
@@ -209,13 +213,12 @@ namespace Proto0
 
                 Businessman chosenBusinessman = game.Businessmen[command / 2];
 
-                if(command % 2 == 0)
+                if (command % 2 == 0)
                 {
                     Console.Clear();
                     Console.WriteLine("List of {0}'s opinions:\n", chosenBusinessman.Name);
                     showGameMembersOpinions(chosenBusinessman);
-                    Console.Write("Press any key to continue...");
-                    Console.ReadKey();
+                    ShowPause();
                     continue;
                 }
                 else
@@ -223,12 +226,11 @@ namespace Proto0
                     Console.Clear();
                     Console.WriteLine("List of opinions about {0}:\n", chosenBusinessman.Name);
                     showOpinionsAboutGameMember(chosenBusinessman);
-                    Console.Write("Press any key to continue...");
-                    Console.ReadKey();
+                    ShowPause();
                     continue;
                 }
             }
-        } 
+        }
 
         private GameMember selectTarget()
         {
@@ -236,7 +238,7 @@ namespace Proto0
 
             Console.WriteLine("Choose the target:");
 
-            for(int i = 0; i < game.Members.Count; i++)
+            for (int i = 0; i < game.Members.Count; i++)
             {
                 Console.WriteLine(game.Members[i].Name + " (" + i.ToString() + ")");
             }
@@ -287,7 +289,7 @@ namespace Proto0
                                     + String.Format("\tIf you want to start a campaign with that media, enter {0}\n", id + 1);
 
 
-                    id+=2;
+                    id += 2;
                     Console.WriteLine(Message);
                 }
 
@@ -306,13 +308,12 @@ namespace Proto0
 
                 MassMediaUnit chosenMedia = game.MassMedia[command / 2];
 
-                if(command % 2 == 0)
+                if (command % 2 == 0)
                 {
                     Console.Clear();
                     Console.WriteLine("List of opinions about {0}:\n", chosenMedia.Name);
                     showOpinionsAboutGameMember(chosenMedia);
-                    Console.Write("Press any key to continue...");
-                    Console.ReadKey();
+                    ShowPause();
                 }
                 else
                 {
@@ -329,7 +330,7 @@ namespace Proto0
                         Console.WriteLine("The owner refused to start the campaign");
                     }
                 }
-                
+
 
                 Console.ReadKey();
 
@@ -341,7 +342,7 @@ namespace Proto0
             Console.Clear();
 
             Console.WriteLine("Here is some help on cheat codes:\n");
-          //  Console.WriteLine("NOTICE: If a name contains spaces, replace them with '_' symbol\n(e.g. Instead of 'Mr. President' you should write 'Mr._President'\n");
+            //  Console.WriteLine("NOTICE: If a name contains spaces, replace them with '_' symbol\n(e.g. Instead of 'Mr. President' you should write 'Mr._President'\n");
 
             Console.WriteLine("opinion $whoseOpinion_id$ $aboutWhom_id$ $value$");
             Console.WriteLine("\t\t--- Sets $whoseOpinion$ about $aboutWhom$ to $value$ (in unadjusted format)");
@@ -350,83 +351,18 @@ namespace Proto0
             Console.WriteLine("owner $media_id$ $newOwner_id$");
             Console.WriteLine("\t\t--- Sets $newOwner$ as an owner of $media$");
             Console.WriteLine();
+
+            ShowPause();
         }
 
-        private void ShowPopulationInfo()
+        private void NextTurn()
         {
-            Console.Clear();
+            game.NextTurn();
 
-            Console.WriteLine("Population info:\n");
-
-            foreach(var group in game.SocialGroups)
-            {
-                string message = $"Name = \"{group.Name}\"\n"
-                                + $"ID = {group.Id}\n"
-                                + $"Population = {group.Population}  ({100d * group.Population / game.TotalPopulation,5:F3}%)\n"
-                                + $"Eligible for voting = {group.VoteEligible}\n";
-
-                Console.WriteLine(message);
-            }
+            ShowPause();
         }
 
-        public void Play()
-        {
-            
-            while (game.GameOn())
-            {
-                Console.Clear();
-
-                Console.WriteLine("What do you want to show?");
-                Console.WriteLine("President stats (1)");
-                Console.WriteLine("Info about businessmen (2)");
-                Console.WriteLine("Info about mass media (3)");
-                Console.WriteLine("Pass to next turn (4)");
-                Console.WriteLine("Show all opinions (5)");
-                Console.WriteLine("Help on cheat codes (6)");
-                Console.WriteLine("Show population info (7)");
-                Console.WriteLine("End Game (8)");
-
-                string answer = Console.ReadLine();
-
-                switch (answer)
-                {
-                    case "1":
-                        ShowPresidentStats();
-                        break;
-                    case "2":
-                        ShowBusinessmenStats();
-                        break;
-                    case "3":
-                        ShowMediaStats();
-                        break;
-                    case "4":
-                        game.NextTurn();
-                        break;
-                    case "5":
-                        showAllOpinions();
-                        break;
-                    case "6":
-                        ShowCheatCodeHelp();
-                        break;
-                    case "7":
-                        ShowPopulationInfo();
-                        break;
-                    case "8":
-                        Console.WriteLine("Goodbye!\n Press any key to continue...");
-                        Console.ReadKey();
-                        return;
-                    default:
-                        if (!CheatCodeParser.getInstance().ParseCheatCode(answer))
-                            Console.WriteLine("Wrong Command!");
-                        else
-                            Console.WriteLine("Cheat code activated!");
-                        break;
-                }
-
-                Console.WriteLine("Press any key to continue...");
-                Console.ReadKey();
-            }       
-        }
+        #endregion
     }
 
 
