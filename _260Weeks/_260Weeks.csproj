@@ -4,4 +4,9 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GameLogic\Strings\FirstNames.res" />
+    <EmbeddedResource Include="GameLogic\Strings\LastNames.res" />
+    <EmbeddedResource Include="GameLogic\Strings\MassMediaTitles.res" />
+  </ItemGroup>
 </Project>

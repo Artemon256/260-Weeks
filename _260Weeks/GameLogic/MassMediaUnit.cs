@@ -70,7 +70,7 @@ namespace _260Weeks.GameLogic
 
         public static MassMediaUnit GenerateRandom()
         {
-            MassMediaUnit result = new MassMediaUnit("no name");
+            MassMediaUnit result = new MassMediaUnit(Utils.RandomFromList(StringManager.MassMediaTitles));
             result.Owner = Utils.RandomFromList(Core.getInstance().Businessmen);
             return result;
         }

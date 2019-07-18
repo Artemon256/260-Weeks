@@ -11,7 +11,7 @@ namespace _260Weeks
         public ConsoleInterface()
         {
             core = new Core(this);
-            core.Init(1, 1);
+            core.Init(8, 4);
         }
 
         private void commandShowOpinions(string[] parts)
@@ -23,41 +23,45 @@ namespace _260Weeks
                 Console.ReadKey();
                 return;
             }
-            int id = 0;
-            if (!int.TryParse(parts[3], out id))
+            uint id = 0;
+            if (!uint.TryParse(parts[3], out id))
                 Console.WriteLine(help);
             else
+            {
+                Console.WriteLine($"{core.GetMemberById(id).Name} ({core.GetMemberById(id).GetType().Name} / {id})");
+                Console.WriteLine("===");
                 switch (parts[2])
                 {
                     case "of":
-                        if (core.GetMemberById((uint)id) is President || core.GetMemberById((uint)id) is MassMediaUnit)
+                        if (core.GetMemberById(id) is President || core.GetMemberById(id) is MassMediaUnit)
                         {
                             Console.WriteLine("Not applicable");
                             break;
                         }
-                        foreach (KeyValuePair<Member, double> entry in core.GetMemberById((uint)id).Opinions)
-                            Console.WriteLine($"{entry.Key.Name} ({entry.Key.GetType()} / {entry.Key.ID}): {entry.Value}");
+                        foreach (KeyValuePair<Member, double> entry in core.GetMemberById(id).Opinions)
+                            Console.WriteLine($"{entry.Key.Name} ({entry.Key.GetType().Name} / {entry.Key.ID}): {entry.Value}");
                         break;
                     case "about":
                         foreach (Member member in core.Members)
                         {
                             double opinion = 0;
-                            if (!member.Opinions.TryGetValue(core.GetMemberById((uint)id), out opinion))
+                            if (!member.Opinions.TryGetValue(core.GetMemberById(id), out opinion))
                                 continue;
-                            Console.WriteLine($"{member.Name} ({member.GetType()} / {member.ID}): {opinion}");
+                            Console.WriteLine($"{member.Name} ({member.GetType().Name} / {member.ID}): {opinion}");
                         }
                         break;
                     default:
                         Console.WriteLine(help);
                         break;
                 }
+            }
             Console.ReadKey();
         }
 
         private void commandShowIdlist()
         {
             foreach (Member member in Core.getInstance().Members)
-                Console.WriteLine($"{member.Name} ({member.GetType().ToString()}): {member.ID}");
+                Console.WriteLine($"{member.Name} ({member.GetType().Name}): {member.ID}");
             Console.ReadKey();
         }
 

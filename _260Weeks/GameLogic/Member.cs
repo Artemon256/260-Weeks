@@ -28,6 +28,8 @@ namespace _260Weeks.GameLogic
 
         private uint id;
 
+        private double suggestibility = 0.05;
+
         public Member(string name)
         {
             this.name = name;
@@ -51,7 +53,9 @@ namespace _260Weeks.GameLogic
                 return;
             if (subject == this || subject == sender)
                 return;
-            tempOpinions[subject] += Opinions[sender] * delta;
+            double trust = Utils.RandomDouble();
+            tempOpinions[subject] += Opinions[sender] * delta * suggestibility * trust;
+            tempOpinions[subject] = Utils.Constrain(tempOpinions[subject], -1, 1);
         }
 
         public void AffectOthers()
@@ -60,7 +64,11 @@ namespace _260Weeks.GameLogic
                 return;
             foreach (Member target in Core.getInstance().Members)
                 foreach (Member subject in Core.getInstance().Members)
+                {
+                    if (target == this || subject == this || target == subject)
+                        continue;
                     target.AffectOpinion(this, subject, Opinions[subject]);
+                }
         }
 
         public abstract void InitOpinions();

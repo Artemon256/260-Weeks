@@ -16,12 +16,12 @@ namespace _260Weeks.GameLogic
 
         public override void Turn()
         {
-
+            AffectOthers();
         }
 
         public static Businessman GenerateRandom()
         {
-            return new Businessman("no name");
+            return new Businessman(Utils.RandomFromList(StringManager.FirstNames) + " " + Utils.RandomFromList(StringManager.LastNames));
         }
     }
 }
