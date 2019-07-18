@@ -50,7 +50,7 @@ namespace _260Weeks.GameLogic
         public MassMediaUnit(string name) : base(name)
         {
             activeCampaigns = new List<Campaign>();
-            presidentCampaign = new Campaign(this, Core.getInstance().Player, 0d, 260);
+            presidentCampaign = new Campaign(this, Core.getInstance().Player, 0d, Params.MaxTurns);
         }
 
         public override void Turn()
@@ -63,9 +63,16 @@ namespace _260Weeks.GameLogic
             presidentCampaign.Act();
         }
 
-        protected override void initOpinions()
+        public override void InitOpinions()
         {
             // Mass media do not have opinions because are owned by businessmen
+        }
+
+        public static MassMediaUnit GenerateRandom()
+        {
+            MassMediaUnit result = new MassMediaUnit("no name");
+            result.Owner = Utils.RandomFromList(Core.getInstance().Businessmen);
+            return result;
         }
     }
 }

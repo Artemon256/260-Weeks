@@ -12,7 +12,7 @@ namespace _260Weeks.GameLogic
             }
         }
 
-        public int ID
+        public uint ID
         {
             get
             {
@@ -26,15 +26,13 @@ namespace _260Weeks.GameLogic
 
         private string name;
 
-        private int id;
+        private uint id;
 
         public Member(string name)
         {
             this.name = name;
-            this.id = Core.getInstance().Members.Count;
+            this.id = Core.IDManager.ID;
             Opinions = new Dictionary<Member, double>();
-            initOpinions();
-            tempOpinions = new Dictionary<Member, double>(Opinions);
         }
 
         public void Commit()
@@ -65,7 +63,7 @@ namespace _260Weeks.GameLogic
                     target.AffectOpinion(this, subject, Opinions[subject]);
         }
 
-        protected abstract void initOpinions();
+        public abstract void InitOpinions();
 
         public abstract void Turn();
     }

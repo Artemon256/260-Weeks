@@ -8,10 +8,10 @@ namespace _260Weeks.GameLogic
 
         public override void Turn()
         {
-            Core.getInstance().Interface.Turn();
+            Core.getInstance().Interface.PlayerTurn();
         }
 
-        protected override void initOpinions()
+        public override void InitOpinions()
         {
             // President does not have opinions because is controlled by a player
         }

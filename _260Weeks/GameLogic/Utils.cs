@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace _260Weeks.GameLogic
 {
@@ -40,6 +41,12 @@ namespace _260Weeks.GameLogic
         public static double RandomDouble(double min, double max)
         {
             return Map(random.NextDouble(), 0, 1, min, max);
+        }
+        public static T RandomFromList<T>(List<T> list)
+        {
+            if (list == null || list.Count == 0)
+                return default(T);
+            return list[RandomInt(list.Count)];
         }
     }
 }
