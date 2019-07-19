@@ -84,13 +84,13 @@ namespace _260Weeks.GameLogic
                 throw (new InvalidOperationException("Turn is not allowed before initializion"));
             if (TurnNumber >= Params.MaxTurns)
                 return false;
+            TurnNumber++;
             foreach (Member member in Members)
                 member.Rollback();
             foreach (Member member in Members)
                 member.Turn();
             foreach (Member member in Members)
                 member.Commit();
-            TurnNumber++;
             return true;
         }
 
@@ -98,6 +98,14 @@ namespace _260Weeks.GameLogic
         {
             foreach (Member member in Members)
                 if (member.ID == id)
+                    return member;
+            return null;
+        }
+
+        public Member GetMemberByName(string name)
+        {
+            foreach (Member member in Members)
+                if (member.Name.Contains(name, StringComparison.OrdinalIgnoreCase))
                     return member;
             return null;
         }

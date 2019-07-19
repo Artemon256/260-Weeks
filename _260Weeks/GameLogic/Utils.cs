@@ -48,5 +48,15 @@ namespace _260Weeks.GameLogic
                 return default(T);
             return list[RandomInt(list.Count)];
         }
+        public static double Sigmoid(double value)
+        {
+            const double stretchingConst = 0.35;
+            return 2 / (1 + Math.Exp(-stretchingConst * value)) + 1;
+        }
+        public static double Unsigmoid(double value)
+        {
+            const double stretchingConst = 0.35;
+            return Math.Log(2 / (value + 1) - 1) / -stretchingConst;
+        }
     }
 }

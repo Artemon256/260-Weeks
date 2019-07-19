@@ -16,60 +16,69 @@ namespace _260Weeks
 
         private void commandShowOpinions(string[] parts)
         {
-            string help = "Usage: show opinions [about|of] <id>";
+            string help = "Usage: show opinions <about|of> <id|name>";
             if (parts.Length < 4)
             {
                 Console.WriteLine(help);
                 Console.ReadKey();
                 return;
             }
+
             uint id = 0;
-            if (!uint.TryParse(parts[3], out id))
-                Console.WriteLine(help);
+            Member target;
+            if (uint.TryParse(parts[3], out id))
+                target = core.GetMemberById(id);
             else
+                target = core.GetMemberByName(parts[3]);
+
+            if (target == null)
             {
-                Console.WriteLine($"{core.GetMemberById(id).Name} ({core.GetMemberById(id).GetType().Name} / {id})");
-                Console.WriteLine("===");
-                switch (parts[2])
-                {
-                    case "of":
-                        if (core.GetMemberById(id) is President || core.GetMemberById(id) is MassMediaUnit)
-                        {
-                            Console.WriteLine("Not applicable");
-                            break;
-                        }
-                        foreach (KeyValuePair<Member, double> entry in core.GetMemberById(id).Opinions)
-                            Console.WriteLine($"{entry.Key.Name} ({entry.Key.GetType().Name} / {entry.Key.ID}): {entry.Value}");
+                Console.WriteLine(help);
+                Console.ReadKey();
+                return;
+            }
+
+            Console.WriteLine($"{target.Name} ({target.GetType().Name} / {target.ID})");
+            Console.WriteLine("===");
+            switch (parts[2])
+            {
+                case "of":
+                    if (target is President || target is MassMediaUnit)
+                    {
+                        Console.WriteLine("Not applicable");
                         break;
-                    case "about":
-                        foreach (Member member in core.Members)
-                        {
-                            double opinion = 0;
-                            if (!member.Opinions.TryGetValue(core.GetMemberById(id), out opinion))
-                                continue;
-                            Console.WriteLine($"{member.Name} ({member.GetType().Name} / {member.ID}): {opinion}");
-                        }
-                        break;
-                    default:
-                        Console.WriteLine(help);
-                        break;
-                }
+                    }
+                    foreach (KeyValuePair<Member, double> entry in target.Opinions)
+                        Console.WriteLine($"{entry.Key.Name} ({entry.Key.GetType().Name} / {entry.Key.ID}): {entry.Value}");
+                    break;
+                case "about":
+                    foreach (Member member in core.Members)
+                    {
+                        double opinion = 0;
+                        if (!member.Opinions.TryGetValue(target, out opinion))
+                            continue;
+                        Console.WriteLine($"{member.Name} ({member.GetType().Name} / {member.ID}): {opinion}");
+                    }
+                    break;
+                default:
+                    Console.WriteLine(help);
+                    break;
             }
             Console.ReadKey();
         }
 
-        private void commandShowIdlist()
+        private void commandShowlist()
         {
             foreach (Member member in Core.getInstance().Members)
-                Console.WriteLine($"{member.Name} ({member.GetType().Name}): {member.ID}");
+                Console.WriteLine($"{member.Name} ({member.GetType().Name} / {member.ID})");
             Console.ReadKey();
         }
 
         private void commandShow(string[] parts)
         {
             string help =
-@"Usage: show [idlist|opinions]
-ids      in-game IDs
+@"Usage: show <list|opinions>
+list        list of game members
 opinions    opinions of/about member";
             if (parts.Length < 2)
             {
@@ -79,8 +88,8 @@ opinions    opinions of/about member";
             }
             switch (parts[1])
             {
-                case "ids":
-                    commandShowIdlist();
+                case "list":
+                    commandShowlist();
                     return;
                 case "opinions":
                     commandShowOpinions(parts);
@@ -102,7 +111,6 @@ opinions    opinions of/about member";
             string help =
 @"Available commands:
 show    show statistics on smth
-set     set in-game value (not implemented)
 turn    pass to next turn
 exit    game over";
             bool session = true;
@@ -148,6 +156,7 @@ exit    game over";
             bool gameOn = true;
             while (gameOn)
                 gameOn = Interface.Turn();
+            Console.WriteLine("Game over");
         }
     }
 }

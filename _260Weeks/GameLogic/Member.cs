@@ -28,7 +28,7 @@ namespace _260Weeks.GameLogic
 
         private uint id;
 
-        private double suggestibility = 0.05;
+        protected double flexibility = 0.05;
 
         public Member(string name)
         {
@@ -54,7 +54,7 @@ namespace _260Weeks.GameLogic
             if (subject == this || subject == sender)
                 return;
             double trust = Utils.RandomDouble();
-            tempOpinions[subject] += Opinions[sender] * delta * suggestibility * trust;
+            tempOpinions[subject] += Opinions[sender] * delta * flexibility * trust;
             tempOpinions[subject] = Utils.Constrain(tempOpinions[subject], -1, 1);
         }
 
