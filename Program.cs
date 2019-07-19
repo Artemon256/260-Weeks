@@ -152,6 +152,9 @@ exit    game over";
     {
         static void Main(string[] args)
         {
+            SocialGroup sg = new SocialGroup("Proletariat");
+            sg.InitOpinions();
+            return;
             ConsoleInterface Interface = new ConsoleInterface();
             bool gameOn = true;
             while (gameOn)

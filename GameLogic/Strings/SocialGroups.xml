@@ -1,0 +1,132 @@
+<?xml version="1.0" ?>
+
+<groups>
+
+    <group name = "Proletariat">
+        <!-- <opinion subject = "Proletariat"></opinion> -->
+        <opinion subject = "Teenagers">5.408564634</opinion>
+        <opinion subject = "LGBT">-42.3255721</opinion>
+        <opinion subject = "Aged">5.408564634</opinion>
+        <opinion subject = "Children">14.83153856</opinion>
+        <opinion subject = "Poor">-11.18847955</opinion>
+        <opinion subject = "Criminals">0.06672806475</opinion>
+        <opinion subject = "Militarists">8.259410234</opinion>
+        <opinion subject = "Mass Media">24.03135721</opinion>
+        <opinion subject = "President">-14.64242312</opinion>
+        <opinion subject = "Businessmen">-18.6909271</opinion>
+        <population>500000</population>
+        <vote_eligible>true</vote_eligible>
+    </group>
+
+    <group name = "Teenagers">
+        <opinion subject = "Proletariat">0.06672806475</opinion>
+        <!-- <opinion subject = "Teenagers"></opinion> -->
+        <opinion subject = "LGBT">18.91873241</opinion>
+        <opinion subject = "Aged">-2.568040346</opinion>
+        <opinion subject = "Children">-5.268203913</opinion>
+        <opinion subject = "Poor">-5.268203913</opinion>
+        <opinion subject = "Criminals">11.35363324</opinion>
+        <opinion subject = "Militarists">-8.10953688</opinion>
+        <opinion subject = "Mass Media">-2.568040346</opinion>
+        <opinion subject = "President">-5.268203913</opinion>
+        <opinion subject = "Businessmen">18.91873241</opinion>
+        <population>100000</population>
+        <vote_eligible>false</vote_eligible>
+    </group>
+
+    <group name = "LGBT">
+        <opinion subject = "Proletariat">-8.10953688</opinion>
+        <opinion subject = "Teenagers">11.35363324</opinion>
+        <!-- <opinion subject = "LGBT"></opinion> -->
+        <opinion subject = "Aged">0.06672806475</opinion>
+        <opinion subject = "Children">14.83153856</opinion>
+        <opinion subject = "Poor">-2.568040346</opinion>
+        <opinion subject = "Criminals">-18.6909271</opinion>
+        <opinion subject = "Militarists">-14.64242312</opinion>
+        <opinion subject = "Mass Media">-30.66903305</opinion>
+        <opinion subject = "President">2.703168621</opinion>
+        <opinion subject = "Businessmen">11.35363324</opinion>
+        <population>10000</population>
+        <vote_eligible>true</vote_eligible>
+    </group>
+
+    <group name = "Aged">
+        <opinion subject = "Proletariat">31.10523061</opinion>
+        <opinion subject = "Teenagers">5.408564634</opinion>
+        <opinion subject = "LGBT">-18.6909271</opinion>
+        <!-- <opinion subject = "Aged"></opinion> -->
+        <opinion subject = "Children">43.19874537</opinion>
+        <opinion subject = "Poor">-5.268203913</opinion>
+        <opinion subject = "Criminals">-14.64242312</opinion>
+        <opinion subject = "Militarists">11.35363324</opinion>
+        <opinion subject = "Mass Media">31.10523061</opinion>
+        <opinion subject = "President">2.703168621</opinion>
+        <opinion subject = "Businessmen">2.703168621</opinion>
+        <population>200000</population>
+        <vote_eligible>true</vote_eligible>
+    </group>
+
+    <group name = "Children">
+        <opinion subject = "Proletariat">0.06672806475</opinion>
+        <opinion subject = "Teenagers">2.703168621</opinion>
+        <opinion subject = "LGBT">-2.568040346</opinion>
+        <opinion subject = "Aged">-2.568040346</opinion>
+        <!-- <opinion subject = "Children"></opinion> -->
+        <opinion subject = "Poor">-2.568040346</opinion>
+        <opinion subject = "Criminals">0.06672806475</opinion>
+        <opinion subject = "Militarists">8.259410234</opinion>
+        <opinion subject = "Mass Media">5.408564634</opinion>
+        <opinion subject = "President">0.06672806475</opinion>
+        <opinion subject = "Businessmen">0.06672806475</opinion>
+        <population>150000</population>
+        <vote_eligible>false</vote_eligible>
+    </group>
+
+    <group name = "Poor">
+        <opinion subject = "Proletariat">-18.6909271</opinion>
+        <opinion subject = "Teenagers">-2.568040346</opinion>
+        <opinion subject = "LGBT">-18.6909271</opinion>
+        <opinion subject = "Aged">2.703168621</opinion>
+        <opinion subject = "Children">5.408564634</opinion>
+        <!-- <opinion subject = "Poor"></opinion> -->
+        <opinion subject = "Criminals">14.83153856</opinion>
+        <opinion subject = "Militarists">0.06672806475</opinion>
+        <opinion subject = "Mass Media">0.06672806475</opinion>
+        <opinion subject = "President">-42.3255721</opinion>
+        <opinion subject = "Businessmen">-42.3255721</opinion>
+        <population>100000</population>
+        <vote_eligible>true</vote_eligible>
+    </group>
+
+    <group name = "Criminals">
+        <opinion subject = "Proletariat">5.408564634</opinion>
+        <opinion subject = "Teenagers">0.06672806475</opinion>
+        <opinion subject = "LGBT">-23.73576166</opinion>
+        <opinion subject = "Aged">0.06672806475</opinion>
+        <opinion subject = "Children">0.06672806475</opinion>
+        <opinion subject = "Poor">-5.268203913</opinion>
+        <!-- <opinion subject = "Criminals"></opinion> -->
+        <opinion subject = "Militarists">-42.3255721</opinion>
+        <opinion subject = "Mass Media">-2.568040346</opinion>
+        <opinion subject = "President">-8.10953688</opinion>
+        <opinion subject = "Businessmen">-2.568040346</opinion>
+        <population>25000</population>
+        <vote_eligible>true</vote_eligible>
+    </group>
+
+    <group name = "Militarists">
+        <opinion subject = "Proletariat">2.703168621</opinion>
+        <opinion subject = "Teenagers">-2.568040346</opinion>
+        <opinion subject = "LGBT">-14.64242312</opinion>
+        <opinion subject = "Aged">8.259410234</opinion>
+        <opinion subject = "Children">8.259410234</opinion>
+        <opinion subject = "Poor">-2.568040346</opinion>
+        <opinion subject = "Criminals">-42.3255721</opinion>
+        <!-- <opinion subject = "Militarists"></opinion> -->
+        <opinion subject = "Mass Media">8.259410234</opinion>
+        <opinion subject = "President">18.91873241</opinion>
+        <opinion subject = "Businessmen">0.06672806475</opinion>
+        <population>200000</population>
+        <vote_eligible>true</vote_eligible>
+    </group>
+</groups>

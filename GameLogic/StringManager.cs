@@ -6,11 +6,13 @@ namespace _260Weeks.GameLogic
 {
     public static class StringManager
     {
-        private static string firstNamesResource = "_260Weeks.GameLogic.Strings.FirstNames.res";
-        private static string lastNamesResource = "_260Weeks.GameLogic.Strings.LastNames.res";
-        private static string massMediaTitleResource = "_260Weeks.GameLogic.Strings.MassMediaTitles.res";
+        private static string firstNamesResource = "_260Weeks.GameLogic.Strings.FirstNames.txt";
+        private static string lastNamesResource = "_260Weeks.GameLogic.Strings.LastNames.txt";
+        private static string massMediaTitleResource = "_260Weeks.GameLogic.Strings.MassMediaTitles.txt";
+        private static string socialGroupsResource = "_260Weeks.GameLogic.Strings.SocialGroups.xml";
 
         public static List<string> FirstNames, LastNames, MassMediaTitles;
+        public static string SocialGroups;
 
         private static List<string> readToList(string resource)
         {
@@ -41,6 +43,7 @@ namespace _260Weeks.GameLogic
             FirstNames = readToList(firstNamesResource);
             LastNames = readToList(lastNamesResource);
             MassMediaTitles = readToList(massMediaTitleResource);
+            SocialGroups = readToString(socialGroupsResource);
         }
     }
 }
