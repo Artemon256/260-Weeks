@@ -53,6 +53,9 @@ namespace _260Weeks.GameLogic
                 return;
             if (subject == this || subject == sender)
                 return;
+            double dummy;
+            if (!Opinions.TryGetValue(subject, out dummy) || !Opinions.TryGetValue(sender, out dummy))
+                return;
             double trust = Utils.RandomDouble();
             tempOpinions[subject] += Opinions[sender] * delta * flexibility * trust;
             tempOpinions[subject] = Utils.Constrain(tempOpinions[subject], -1, 1);
@@ -62,12 +65,12 @@ namespace _260Weeks.GameLogic
         {
             if (this is President || this is MassMediaUnit)
                 return;
-            foreach (Member target in Core.getInstance().Members)
-                foreach (Member subject in Core.getInstance().Members)
+            foreach (KeyValuePair<Member, double> targetEntry in Opinions)
+                foreach (KeyValuePair<Member, double> subjectEntry in Opinions)
                 {
-                    if (target == this || subject == this || target == subject)
+                    if (targetEntry.Key == this || subjectEntry.Key == this || targetEntry.Key == subjectEntry.Key)
                         continue;
-                    target.AffectOpinion(this, subject, Opinions[subject]);
+                    targetEntry.Key.AffectOpinion(this, subjectEntry.Key, subjectEntry.Value);
                 }
         }
 

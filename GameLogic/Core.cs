@@ -70,6 +70,8 @@ namespace _260Weeks.GameLogic
             for (uint i = 0; i < massMediaAmount; i++)
                 Members.Add(MassMediaUnit.GenerateRandom());
 
+            Members.AddRange(SocialGroup.LoadSocialGroups());
+
             Members.Add(Player);
 
             foreach (Member member in Members)
