@@ -5,6 +5,8 @@ namespace _260Weeks.GameLogic
 {
     public class SocialGroup : Member
     {
+        public double MassMediaBias = 0, BusinessmenBias = 0;
+
         public SocialGroup(string name) : base(name) { }
 
         public override void Turn()
@@ -45,16 +47,38 @@ namespace _260Weeks.GameLogic
                     continue;
                 if (opinionNode.Name != "opinion")
                     continue;
+
                 string name = opinionNode.Attributes.GetNamedItem("subject").Value;
-                if (name == "Mass Media" || name == "President" || name == "Businessmen")
-                    continue;
-                SocialGroup subject = Core.getInstance().GetMemberByName(name) as SocialGroup;
                 double opinion = 0;
-                if (double.TryParse(opinionNode.InnerText, out opinion))
-                    Opinions[subject] = opinion;
-                else
+
+                if (!double.TryParse(opinionNode.InnerText, out opinion))
                     throw (new XmlException("Malformed SocialGroups.xml resource"));
+
+                if (name == "Mass Media")
+                {
+                    MassMediaBias = opinion;
+                    continue;
+                }
+                if (name == "Businessmen")
+                {
+                    BusinessmenBias = opinion;
+                    continue;
+                }
+                if (name == "President")
+                {
+                    Opinions[Core.getInstance().Player] = opinion;
+                    continue;
+                }
+
+                SocialGroup subject = Core.getInstance().GetMemberByName(name) as SocialGroup;
+                Opinions[subject] = opinion;
             }
+
+            foreach (Businessman businessman in Core.getInstance().Businessmen)
+                Opinions[businessman] = BusinessmenBias + businessman.Opinions[this];
+
+            foreach (MassMediaUnit media in Core.getInstance().MassMedia)
+                Opinions[media] = BusinessmenBias + media.Owner.Opinions[this];
         }
 
         public static List<SocialGroup> LoadSocialGroups()

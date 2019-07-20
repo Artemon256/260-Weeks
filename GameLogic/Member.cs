@@ -35,29 +35,40 @@ namespace _260Weeks.GameLogic
             this.name = name;
             this.id = Core.IDManager.ID;
             Opinions = new Dictionary<Member, double>();
+            tempOpinions = new Dictionary<Member, double>();
         }
 
         public void Commit()
         {
-            Opinions = new Dictionary<Member, double>(tempOpinions);
+            foreach (KeyValuePair<Member, double> entry in tempOpinions)
+                Opinions[entry.Key] = Utils.Constrain(entry.Value, -1, 1);
         }
 
         public void Rollback()
         {
-            tempOpinions = new Dictionary<Member, double>(Opinions);
+            foreach (KeyValuePair<Member, double> entry in Opinions)
+                tempOpinions[entry.Key] = Utils.Constrain(entry.Value, -1, 1);
         }
 
         public void AffectOpinion(Member sender, Member subject, double delta)
         {
-            if (this is President || this is MassMediaUnit)
+            if (this is President || this is MassMediaUnit) // President and mass media don't have opinions
                 return;
             if (subject == this || subject == sender)
                 return;
             double dummy;
             if (!Opinions.TryGetValue(subject, out dummy) || !Opinions.TryGetValue(sender, out dummy))
                 return;
+
+            if (Opinions[sender] < -0.2) // If member doesn't like sender
+                return; // Ignore him
+
+            double opinion = Opinions[sender];
+            if (opinion < 0)
+                opinion += 0.1; // "Chance" bias
+
             double trust = Utils.RandomDouble();
-            tempOpinions[subject] += Opinions[sender] * delta * flexibility * trust;
+            tempOpinions[subject] += opinion * delta * flexibility * trust;
             tempOpinions[subject] = Utils.Constrain(tempOpinions[subject], -1, 1);
         }
 

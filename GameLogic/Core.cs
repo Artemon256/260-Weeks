@@ -64,6 +64,8 @@ namespace _260Weeks.GameLogic
 
             Player = new President();
 
+            // Order is important: Businessmen, mass media, social groups, president
+
             for (uint i = 0; i < businessmenAmount; i++)
                 Members.Add(Businessman.GenerateRandom());
 
