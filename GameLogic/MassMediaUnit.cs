@@ -11,6 +11,15 @@ namespace _260Weeks.GameLogic
             Pro = 1
         }
 
+        public enum CampaignRunResult
+        {
+            OK,
+            RefusedServicePoints,
+            RefusedOpinionSender,
+            RefusedOpinionSubject,
+            RefusedTooManyCampaigns
+        }
+
         public class Campaign
         {
             public double Delta;
@@ -59,6 +68,9 @@ namespace _260Weeks.GameLogic
                 throw (new NullReferenceException($"Mass media' owner is null ({Name})"));
             foreach (Campaign campaign in activeCampaigns)
                 campaign.Act();
+
+            activeCampaigns.RemoveAll(campaign => campaign.TurnsLeft <= 0);
+
             presidentCampaign.Delta = Owner.Opinions[Core.getInstance().Player];
             presidentCampaign.Act();
         }
@@ -66,6 +78,32 @@ namespace _260Weeks.GameLogic
         public override void InitOpinions()
         {
             // Mass media do not have opinions because are owned by businessmen
+        }
+
+        public CampaignRunResult RunCampaign(Member sender, Member subject, CampaignMode mode, uint duration)
+        {
+            if (activeCampaigns.Count >= 2)
+                return CampaignRunResult.RefusedTooManyCampaigns;
+
+            if (Owner.Opinions[sender] < -Params.OpinionThreshold)
+                return CampaignRunResult.RefusedOpinionSender;
+
+            if (mode == CampaignMode.Pro && Owner.Opinions[subject] < -Params.OpinionThreshold)
+                return CampaignRunResult.RefusedOpinionSubject;
+
+            if (mode == CampaignMode.Against && Owner.Opinions[subject] > Params.OpinionThreshold)
+                return CampaignRunResult.RefusedOpinionSubject;
+
+            if (Owner.PresidentServicePoints + Utils.Unsigmoid(Owner.Opinions[sender]) < duration)
+                return CampaignRunResult.RefusedServicePoints;
+
+            activeCampaigns.Add(new Campaign(this, subject, mode, duration));
+            return CampaignRunResult.OK;
+        }
+
+        public List<Campaign> GetCampaigns()
+        {
+            return new List<Campaign>(activeCampaigns);
         }
 
         public static MassMediaUnit GenerateRandom()

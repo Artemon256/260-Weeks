@@ -2,7 +2,7 @@ namespace _260Weeks.GameLogic
 {
     public class President : Member
     {
-        public President() : base("Mr. President")
+        public President() : base(Params.DefaultPresidentName)
         {
         }
 

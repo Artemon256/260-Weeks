@@ -28,7 +28,7 @@ namespace _260Weeks.GameLogic
 
         private uint id;
 
-        protected double flexibility = 0.05;
+        protected double flexibility = Params.DefaultFlexibility;
 
         public Member(string name)
         {
@@ -60,12 +60,9 @@ namespace _260Weeks.GameLogic
             if (!Opinions.TryGetValue(subject, out dummy) || !Opinions.TryGetValue(sender, out dummy))
                 return;
 
-            if (Opinions[sender] < -0.2) // If member doesn't like sender
-                return; // Ignore him
-
             double opinion = Opinions[sender];
             if (opinion < 0)
-                opinion += 0.1; // "Chance" bias
+                opinion += Params.ChanceBias; // "Chance" bias
 
             double trust = Utils.RandomDouble();
             tempOpinions[subject] += opinion * delta * flexibility * trust;

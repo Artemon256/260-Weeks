@@ -33,6 +33,18 @@ namespace _260Weeks.GameLogic
             }
         }
 
+        public List<SocialGroup> SocialGroups
+        {
+            get
+            {
+                List<SocialGroup> result = new List<SocialGroup>();
+                foreach (Member member in Members)
+                    if (member is SocialGroup)
+                        result.Add(member as SocialGroup);
+                return result;
+            }
+        }
+
         public static class IDManager
         {
             public static uint ID

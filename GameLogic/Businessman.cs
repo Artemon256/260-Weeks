@@ -2,7 +2,7 @@ namespace _260Weeks.GameLogic
 {
     public class Businessman : Member
     {
-        public double PresidentServicePoints = 20;
+        public double PresidentServicePoints = Params.DefaultPresidentServicePoints;
 
         public Businessman(string name) : base(name)
         {
@@ -13,7 +13,7 @@ namespace _260Weeks.GameLogic
         {
             foreach (Member subject in Core.getInstance().Members)
                 if (subject != this)
-                    Opinions[subject] = Utils.RandomDouble(-0.2, 0.2);
+                    Opinions[subject] = Utils.RandomDouble(-Params.OpinionInitRange, Params.OpinionInitRange);
         }
 
         private void servicePointsToFriendship()

@@ -20,7 +20,6 @@ namespace _260Weeks
             if (parts.Length < 4)
             {
                 Console.WriteLine(help);
-                Console.ReadKey();
                 return;
             }
 
@@ -34,7 +33,6 @@ namespace _260Weeks
             if (target == null)
             {
                 Console.WriteLine(help);
-                Console.ReadKey();
                 return;
             }
 
@@ -64,27 +62,153 @@ namespace _260Weeks
                     Console.WriteLine(help);
                     break;
             }
-            Console.ReadKey();
         }
 
-        private void commandShowlist()
+        private void commandShowMembers()
         {
             foreach (Member member in Core.getInstance().Members)
                 if (member is SocialGroup)
                 {
-                    string eligibility = (member as SocialGroup).VoteEligible ? "eligible" : "not eligible";
-                    Console.WriteLine($"{member.Name} ({member.GetType().Name} / {member.ID}) - population: {(member as SocialGroup).Population}, {eligibility}");
+                    string eligibility = (member as SocialGroup).VoteEligible ? "Eligible" : "Not eligible";
+                    Console.WriteLine($"{member.Name} ({member.GetType().Name} / {member.ID}) - Population: {(member as SocialGroup).Population}, {eligibility}");
                 }
+                else if (member is MassMediaUnit)
+                    Console.WriteLine($"{member.Name} ({member.GetType().Name} / {member.ID}) - Owner: {(member as MassMediaUnit).Owner.Name} ({(member as MassMediaUnit).Owner.ID})");
                 else
                     Console.WriteLine($"{member.Name} ({member.GetType().Name} / {member.ID})");
+        }
+
+        private void commandShowCampaigns()
+        {
+            foreach (MassMediaUnit media in core.MassMedia)
+            {
+                Console.WriteLine($"{media.Name} ({media.GetType().Name} / {media.ID})");
+                Console.WriteLine("===");
+                foreach (MassMediaUnit.Campaign campaign in media.GetCampaigns())
+                    Console.WriteLine($"{campaign.Subject.Name} ({campaign.Subject.GetType().Name} / {campaign.Subject.ID}) - Delta: {campaign.Delta}, Turns left: {campaign.TurnsLeft}");
+                Console.WriteLine();
+            }
+        }
+
+        private void commandActCampaign(string[] parts)
+        {
+            string help = "Usage: act campaign <id of mass media|name of mass media> <pro|against> <id of subject|name of subject> <duration>";
+            if (parts.Length < 6)
+            {
+                Console.WriteLine(help);
+                return;
+            }
+
+            uint id = 0;
+            Member member;
+            if (uint.TryParse(parts[2], out id))
+                member = core.GetMemberById(id);
+            else
+                member = core.GetMemberByName(parts[2]);
+
+            if (member == null || !(member is MassMediaUnit))
+            {
+                Console.WriteLine(help);
+                return;
+            }
+
+            MassMediaUnit media = member as MassMediaUnit;
+
+            id = 0;
+            Member subject;
+            if (uint.TryParse(parts[4], out id))
+                subject = core.GetMemberById(id);
+            else
+                subject = core.GetMemberByName(parts[4]);
+
+            uint duration = 0;
+
+            if (!uint.TryParse(parts[5], out duration))
+            {
+                Console.WriteLine(help);
+                return;
+            }
+
+            if (subject == null)
+            {
+                Console.WriteLine(help);
+                return;
+            }
+
+            switch (parts[3])
+            {
+                case "pro":
+                    switch (media.RunCampaign(core.Player, subject, MassMediaUnit.CampaignMode.Pro, duration))
+                    {
+                        case MassMediaUnit.CampaignRunResult.OK:
+                            Console.WriteLine("Success: Campaign started");
+                            break;
+                        case MassMediaUnit.CampaignRunResult.RefusedOpinionSender:
+                            Console.WriteLine("Fail: Owner of mass media hates you");
+                            break;
+                        case MassMediaUnit.CampaignRunResult.RefusedOpinionSubject:
+                            Console.WriteLine("Fail: Owner of mass media has different opinion about subject");
+                            break;
+                        case MassMediaUnit.CampaignRunResult.RefusedServicePoints:
+                            Console.WriteLine("Fail: Owner of mass media doesn't owe you");
+                            break;
+                        case MassMediaUnit.CampaignRunResult.RefusedTooManyCampaigns:
+                            Console.WriteLine($"Fail: Mass media already have {Params.MaxCampaignsPerUnit} campaigns");
+                            break;
+                    }
+                    break;
+                case "against":
+                    switch (media.RunCampaign(core.Player, subject, MassMediaUnit.CampaignMode.Against, duration))
+                    {
+                        case MassMediaUnit.CampaignRunResult.OK:
+                            Console.WriteLine("Success: Campaign started");
+                            break;
+                        case MassMediaUnit.CampaignRunResult.RefusedOpinionSender:
+                            Console.WriteLine("Fail: Owner of mass media hates you");
+                            break;
+                        case MassMediaUnit.CampaignRunResult.RefusedOpinionSubject:
+                            Console.WriteLine("Fail: Owner of mass media has different opinion about subject");
+                            break;
+                        case MassMediaUnit.CampaignRunResult.RefusedServicePoints:
+                            Console.WriteLine("Fail: Owner of mass media doesn't owe you");
+                            break;
+                        case MassMediaUnit.CampaignRunResult.RefusedTooManyCampaigns:
+                            Console.WriteLine($"Fail: Mass media already have {Params.MaxCampaignsPerUnit} campaigns");
+                            break;
+                    }
+                    break;
+            }
+        }
+
+        private void commandAct(string[] parts)
+        {
+            string help =
+@"Usage: act <campaign>
+campaign    Run new campaign";
+            if (parts.Length < 2)
+            {
+                Console.WriteLine(help);
+                Console.ReadKey();
+                return;
+            }
+            switch (parts[1])
+            {
+                case "campaign":
+                    commandActCampaign(parts);
+                    break;
+                default:
+                    Console.WriteLine(help);
+                    break;
+            }
             Console.ReadKey();
         }
 
         private void commandShow(string[] parts)
         {
             string help =
-@"Usage: show <list|opinions>
-list        list of game members
+@"Usage: show <members|campaigns|opinions>
+members     list of game members
+campaigns   list of active campaigns
 opinions    opinions of/about member";
             if (parts.Length < 2)
             {
@@ -94,12 +218,15 @@ opinions    opinions of/about member";
             }
             switch (parts[1])
             {
-                case "list":
-                    commandShowlist();
-                    return;
+                case "campaigns":
+                    commandShowCampaigns();
+                    break;
+                case "members":
+                    commandShowMembers();
+                    break;
                 case "opinions":
                     commandShowOpinions(parts);
-                    return;
+                    break;
                 default:
                     Console.WriteLine(help);
                     break;
@@ -107,16 +234,12 @@ opinions    opinions of/about member";
             Console.ReadKey();
         }
 
-        private void commandSet(string[] parts)
-        {
-
-        }
-
         public void PlayerTurn()
         {
             string help =
 @"Available commands:
 show    show statistics on smth
+act     run action
 turn    pass to next turn
 exit    game over";
             bool session = true;
@@ -138,11 +261,11 @@ exit    game over";
                         session = false;
                         core.GameOver();
                         break;
+                    case "act":
+                        commandAct(parts);
+                        break;
                     case "show":
                         commandShow(parts);
-                        break;
-                    case "set":
-                        commandSet(parts);
                         break;
                 }
             }
