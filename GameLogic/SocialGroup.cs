@@ -7,6 +7,10 @@ namespace _260Weeks.GameLogic
     {
         public double MassMediaBias = 0, BusinessmenBias = 0;
 
+        public bool VoteEligible = false;
+
+        public uint Population;
+
         public SocialGroup(string name) : base(name) { }
 
         public override void Turn()
@@ -41,37 +45,38 @@ namespace _260Weeks.GameLogic
             if (groupNode == null)
                 throw (new XmlException("Malformed SocialGroups.xml resource"));
 
-            foreach (XmlNode opinionNode in groupNode.ChildNodes)
+            foreach (XmlNode node in groupNode.ChildNodes)
             {
-                if (opinionNode is XmlComment || opinionNode is XmlDeclaration)
+                if (node is XmlComment || node is XmlDeclaration)
                     continue;
-                if (opinionNode.Name != "opinion")
-                    continue;
-
-                string name = opinionNode.Attributes.GetNamedItem("subject").Value;
-                double opinion = 0;
-
-                if (!double.TryParse(opinionNode.InnerText, out opinion))
-                    throw (new XmlException("Malformed SocialGroups.xml resource"));
-
-                if (name == "Mass Media")
+                if (node.Name == "opinion")
                 {
-                    MassMediaBias = opinion;
-                    continue;
-                }
-                if (name == "Businessmen")
-                {
-                    BusinessmenBias = opinion;
-                    continue;
-                }
-                if (name == "President")
-                {
-                    Opinions[Core.getInstance().Player] = opinion;
-                    continue;
-                }
+                    string name = node.Attributes.GetNamedItem("subject").Value;
+                    double opinion = double.Parse(node.InnerText);
 
-                SocialGroup subject = Core.getInstance().GetMemberByName(name) as SocialGroup;
-                Opinions[subject] = opinion;
+                    if (name == "Mass Media")
+                    {
+                        MassMediaBias = opinion;
+                        continue;
+                    }
+                    if (name == "Businessmen")
+                    {
+                        BusinessmenBias = opinion;
+                        continue;
+                    }
+                    if (name == "President")
+                    {
+                        Opinions[Core.getInstance().Player] = opinion;
+                        continue;
+                    }
+
+                    SocialGroup subject = Core.getInstance().GetMemberByName(name) as SocialGroup;
+                    Opinions[subject] = opinion;
+                }
+                if (node.Name == "vote_eligible")
+                    VoteEligible = bool.Parse(node.InnerText);
+                if (node.Name == "population")
+                    Population = uint.Parse(node.InnerText);
             }
 
             foreach (Businessman businessman in Core.getInstance().Businessmen)

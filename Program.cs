@@ -70,7 +70,13 @@ namespace _260Weeks
         private void commandShowlist()
         {
             foreach (Member member in Core.getInstance().Members)
-                Console.WriteLine($"{member.Name} ({member.GetType().Name} / {member.ID})");
+                if (member is SocialGroup)
+                {
+                    string eligibility = (member as SocialGroup).VoteEligible ? "eligible" : "not eligible";
+                    Console.WriteLine($"{member.Name} ({member.GetType().Name} / {member.ID}) - population: {(member as SocialGroup).Population}, {eligibility}");
+                }
+                else
+                    Console.WriteLine($"{member.Name} ({member.GetType().Name} / {member.ID})");
             Console.ReadKey();
         }
 
