@@ -1,20 +1,18 @@
 all: release
 
 run: release
-	exec source/bin/Release/The260WeeksGame.exe
+	dotnet bin/Release/netcoreapp2.2/_260Weeks.dll
 
 release:
-	msbuild -p:Configuration=Release
-	chmod 755 source/bin/Release/The260WeeksGame.exe
+	dotnet build -p:Configuration=Release
+	chmod 775 bin/Release/netcoreapp2.2/_260Weeks.dll
 
 debug:
-	mcs -debug source/*.cs source/The260WeeksGame/*.cs -resource:"source/The260WeeksGame/String data/First Names.txt" -resource:"source/The260WeeksGame/String data/Media Names.txt" -resource:"source/The260WeeksGame/String data/Second Names.txt" -resource:"source/The260WeeksGame/String data/Social Groups.xml"
+	dotnet build -p:Configuration=Debug
+	chmod 775 bin/Debug/netcoreapp2.2/_260Weeks.dll
 
 clean:
-	rm -rf source/bin
-	rm -rf source/obj
-	rm source/Program.exe
-	rm source/Program.exe.mdb
+	dotnet clean
 
-# build:
-# 	msbuild
+restore:
+	dotnet restore
