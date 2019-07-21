@@ -59,11 +59,11 @@ namespace _260Weeks.GameLogic
 
         public President Player;
 
-        public PlayerInterface Interface;
+        public IPlayerInterface Interface;
 
         private bool initialized = false, gameOn = true;
 
-        public Core(PlayerInterface Interface)
+        public Core(IPlayerInterface Interface)
         {
             instance = this;
             this.Interface = Interface;

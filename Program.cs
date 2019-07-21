@@ -4,7 +4,7 @@ using _260Weeks.GameLogic;
 
 namespace _260Weeks
 {
-    class ConsoleInterface : PlayerInterface
+    class ConsoleInterface : IPlayerInterface
     {
         private Core core;
 

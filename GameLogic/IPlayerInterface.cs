@@ -1,6 +1,6 @@
 namespace _260Weeks.GameLogic
 {
-    public interface PlayerInterface
+    public interface IPlayerInterface
     {
         void PlayerTurn();
     }
