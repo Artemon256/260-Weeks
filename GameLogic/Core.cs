@@ -70,7 +70,7 @@ namespace _260Weeks.GameLogic
             Members = new List<Member>();
         }
 
-        public void Init(uint businessmenAmount, uint massMediaAmount)
+        public void Init(uint numberOfBusinessmen, uint numberOfMassMedia)
         {
             initialized = true;
 
@@ -78,15 +78,18 @@ namespace _260Weeks.GameLogic
 
             // Order is important: Businessmen, mass media, social groups, president
 
-            for (uint i = 0; i < businessmenAmount; i++)
+            for (uint i = 0; i < numberOfBusinessmen; i++)
                 Members.Add(Businessman.GenerateRandom());
 
-            for (uint i = 0; i < massMediaAmount; i++)
+            for (uint i = 0; i < numberOfMassMedia; i++)
                 Members.Add(MassMediaUnit.GenerateRandom());
 
             Members.AddRange(SocialGroup.LoadSocialGroups());
 
             Members.Add(Player);
+
+            foreach (Member member in Members)
+                member.CheckValid();
 
             foreach (Member member in Members)
                 member.InitOpinions();
