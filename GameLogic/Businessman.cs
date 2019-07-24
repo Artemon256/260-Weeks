@@ -16,6 +16,11 @@ namespace _260Weeks.GameLogic
                     Opinions[subject] = Utils.RandomDouble(-Params.OpinionInitRange, Params.OpinionInitRange);
         }
 
+        public override void CheckValid()
+        {
+
+        }
+
         private void servicePointsToFriendship()
         {
             double random = Utils.RandomDouble();

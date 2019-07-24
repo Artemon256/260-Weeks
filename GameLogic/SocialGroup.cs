@@ -17,7 +17,10 @@ namespace _260Weeks.GameLogic
         {
 
         }
+        public override void CheckValid()
+        {
 
+        }
         public override void InitOpinions()
         {
             XmlDocument document = new XmlDocument();

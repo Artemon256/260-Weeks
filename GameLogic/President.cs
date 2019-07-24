@@ -15,5 +15,9 @@ namespace _260Weeks.GameLogic
         {
             // President does not have opinions because is controlled by a player
         }
+        public override void CheckValid()
+        {
+
+        }
     }
 }

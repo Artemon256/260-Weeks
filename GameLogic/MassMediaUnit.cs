@@ -64,8 +64,6 @@ namespace _260Weeks.GameLogic
 
         public override void Turn()
         {
-            if (Owner == null)
-                throw (new NullReferenceException($"Mass media' owner is null ({Name})"));
             foreach (Campaign campaign in activeCampaigns)
                 campaign.Act();
 
@@ -104,6 +102,12 @@ namespace _260Weeks.GameLogic
         public List<Campaign> GetCampaigns()
         {
             return new List<Campaign>(activeCampaigns);
+        }
+
+        public override void CheckValid()
+        {
+            if (Owner == null)
+                throw (new NullReferenceException($"Mass media' owner is null ({Name})"));
         }
 
         public static MassMediaUnit GenerateRandom()

@@ -83,7 +83,7 @@ namespace _260Weeks.GameLogic
         }
 
         public abstract void InitOpinions();
-
+        public abstract void CheckValid();
         public abstract void Turn();
     }
 }
